@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+let child_process = require('child_process');
 
 /*
  |--------------------------------------------------------------------------
@@ -18,7 +19,8 @@ mix.js('resources/js/app.js', 'public/js')
         require('tailwindcss'),
         require('autoprefixer'),
     ])
-    .webpackConfig(require('./webpack.config'));
+    .webpackConfig(require('./webpack.config'))
+    .then(() => child_process.exec('php artisan lang:js public/js/lang.js -c'));
 
 if (mix.inProduction()) {
     mix.version();
