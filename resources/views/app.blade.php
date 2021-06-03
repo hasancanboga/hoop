@@ -12,6 +12,8 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        
+        <script src="js/lang.js" defer></script>
 
         <!-- Scripts -->
         @routes

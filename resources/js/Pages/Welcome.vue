@@ -7,11 +7,11 @@
 
             <template v-else>
                 <inertia-link :href="route('login')" class="text-sm text-gray-700 underline">
-                    Log in
+                    {{ lang.get('misc.login') }}
                 </inertia-link>
 
                 <inertia-link v-if="canRegister" :href="route('register')" class="ml-4 text-sm text-gray-700 underline">
-                    Register
+                    {{ lang.get('misc.register') }}
                 </inertia-link>
             </template>
         </div>
@@ -183,6 +183,11 @@
             errors: Object,
             laravelVersion: String,
             phpVersion: String,
+        }, 
+        data(){
+            return{
+                lang: Lang
+            }
         }
     }
 </script>
