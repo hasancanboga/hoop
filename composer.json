@@ -15,6 +15,7 @@
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
         "mariuzzo/laravel-js-localization": "^1.8",
+        "propaganistas/laravel-phone": "^4.3",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
