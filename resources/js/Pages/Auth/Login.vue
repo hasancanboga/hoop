@@ -17,12 +17,7 @@
       </div>
     </div>
 
-    <div class="block mt-4">
-      <label class="flex items-center">
-        <breeze-checkbox name="remember" v-model:checked="form.remember" />
-        <span class="ml-2 text-sm text-gray-600">Remember me</span>
-      </label>
-    </div>
+
 
     <div class="flex items-center justify-end mt-4">
       <breeze-button class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"> Log in </breeze-button>
@@ -34,7 +29,6 @@
 import BreezeButton from "@/Components/Button";
 import BreezeGuestLayout from "@/Layouts/Guest";
 import BreezeInput from "@/Components/Input";
-import BreezeCheckbox from "@/Components/Checkbox";
 import BreezeLabel from "@/Components/Label";
 import BreezeValidationErrors from "@/Components/ValidationErrors";
 
@@ -44,7 +38,6 @@ export default {
   components: {
     BreezeButton,
     BreezeInput,
-    BreezeCheckbox,
     BreezeLabel,
     BreezeValidationErrors,
   },
@@ -59,7 +52,7 @@ export default {
     return {
       form: this.$inertia.form({
         phone: "",
-        remember: false,
+        phone_country: "TR",
       }),
     };
   },

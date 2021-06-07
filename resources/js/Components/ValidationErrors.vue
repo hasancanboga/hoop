@@ -1,6 +1,6 @@
 <template>
     <div v-if="hasErrors">
-        <div class="font-medium text-red-600">Whoops! Something went wrong.</div>
+        <div class="font-medium text-red-600">{{ lang.get('misc.whoops') }}</div>
 
         <ul class="mt-3 list-disc list-inside text-sm text-red-600">
             <li v-for="(error, key) in errors" :key="key">{{ error }}</li>
@@ -10,6 +10,11 @@
 
 <script>
     export default {
+        data(){
+            return {
+                lang: Lang,
+            }
+        },
         computed: {
             errors() {
                 return this.$page.props.errors

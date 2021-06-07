@@ -1,37 +1,12 @@
 <template>
-  <div
-    class="
-      relative
-      flex
-      items-top
-      justify-center
-      min-h-screen
-      bg-gray-100
-      dark:bg-gray-900
-      sm:items-center
-      sm:pt-0
-    "
-  >
+  <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
     <div v-if="canLogin" class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
       <template v-if="$page.props.auth.user">
-        <inertia-link href="/dashboard" class="text-sm text-gray-700 underline">
-          Dashboard
-        </inertia-link>
+        <inertia-link href="/dashboard" class="text-sm text-gray-700 underline"> Dashboard </inertia-link>
       </template>
       <template v-else>
-        <inertia-link
-          :href="route('login')"
-          class="text-sm text-gray-700 underline"
-        >
-          {{ lang.get("misc.login") }}
-        </inertia-link>
-
-        <inertia-link
-          v-if="canRegister"
-          :href="route('register')"
-          class="ml-4 text-sm text-gray-700 underline"
-        >
-          {{ lang.get("misc.register") }}
+        <inertia-link :href="route('login')" class="text-sm text-gray-700 underline">
+          {{ lang.get("auth.login") }}
         </inertia-link>
       </template>
     </div>

@@ -1,12 +1,19 @@
 <template>
-  <div class="mb-4 text-sm text-gray-600">This is a secure area of the application. Please confirm your password before continuing.</div>
+  <div class="mb-4 text-sm text-gray-600">Please enter the one-time password you have received via SMS</div>
 
   <breeze-validation-errors class="mb-4" />
 
   <form @submit.prevent="submit">
     <div>
-      <breeze-label for="password" value="Password" />
-      <breeze-input id="password" type="password" class="mt-1 block w-full" v-model="form.password" required autocomplete="current-password" autofocus />
+      <breeze-label for="otp" value="Password" />
+      <breeze-input id="otp" type="text" class="mt-1 block w-full" v-model="form.otp" required autocomplete="current-otp" autofocus />
+    </div>
+
+    <div class="block mt-4">
+      <label class="flex items-center">
+        <breeze-checkbox name="remember" v-model:checked="form.remember" />
+        <span class="ml-2 text-sm text-gray-600">Remember me</span>
+      </label>
     </div>
 
     <div class="flex justify-end mt-4">
@@ -20,6 +27,7 @@ import BreezeButton from "@/Components/Button";
 import BreezeGuestLayout from "@/Layouts/Guest";
 import BreezeInput from "@/Components/Input";
 import BreezeLabel from "@/Components/Label";
+import BreezeCheckbox from "@/Components/Checkbox";
 import BreezeValidationErrors from "@/Components/ValidationErrors";
 
 export default {
@@ -28,11 +36,13 @@ export default {
   components: {
     BreezeButton,
     BreezeInput,
+    BreezeCheckbox,
     BreezeLabel,
     BreezeValidationErrors,
   },
 
   props: {
+    temp_user: Object,
     auth: Object,
     errors: Object,
   },
@@ -40,14 +50,16 @@ export default {
   data() {
     return {
       form: this.$inertia.form({
-        password: "",
+        phone: this.temp_user?.phone,
+        otp: "",
+        remember: false,
       }),
     };
   },
 
   methods: {
     submit() {
-      this.form.post(this.route("password.confirm"), {
+      this.form.post(this.route("otp.confirm"), {
         onFinish: () => this.form.reset(),
       });
     },

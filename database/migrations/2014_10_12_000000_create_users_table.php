@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('phone')->unique();
             $table->string('name')->nullable();
             $table->string('email')->unique()->nullable();
-            $table->integer('otp_token')->unique()->nullable();
+            $table->string('otp')->unique()->nullable();
             $table->dateTime('otp_expiry')->nullable();
             $table->rememberToken();
             $table->timestamps();

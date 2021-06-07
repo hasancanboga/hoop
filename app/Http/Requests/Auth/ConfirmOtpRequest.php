@@ -2,19 +2,16 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\Models\User;
 use Illuminate\Support\Str;
-use App\Services\SmsService;
-use App\Exceptions\SmsException;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Hash;
 
-class LoginRequest extends FormRequest
+class ConfirmOtpRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -33,46 +30,39 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone' => 'required|string|phone',
-            'phone_country' => 'required_with:phone',
+            'otp' => 'required|string',
         ];
     }
 
-    /** Fire off the OTP after validating the phone.
-     * 
+    /**
+     * Attempt to authenticate the request's credentials.
+     *
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function loginOrRegister()
+    public function authenticate()
     {
         $this->ensureIsNotRateLimited();
 
-        $user = User::firstOrCreate([
-            'phone' => phone($this->phone, $this->phone_country)->formatE164(),
-        ]);
-
-        $otp = env('APP_ENV') == 'local' ? 1234 : rand(1000, 9999);
-        $user->otp = Hash::make($otp);
-        $user->otp_expiry = now()->addSeconds(120);
-        $user->save();
-
-        $this->setUserResolver(fn () => $user);
-
-        $sms = new SmsService; // todo: turn this into a facade
-
-        try {
-            $sms->send($user->phone, $otp);
-        } catch (SmsException $e) {
+        if (!Auth::attempt(
+            [
+                'phone' => $this->phone,
+                'password' => $this->otp
+            ],
+            $this->boolean('remember')
+        )) {
             RateLimiter::hit($this->throttleKey());
             throw ValidationException::withMessages([
-                'phone' => __('misc.unknown_error'),
+                'phone' => __('auth.failed'),
             ]);
         }
 
         RateLimiter::clear($this->throttleKey());
     }
 
-
     /**
-     * Ensure the login request is not rate limited.
+     * Ensure the OTP request is not rate limited.
      *
      * @return void
      *
@@ -80,7 +70,7 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited()
     {
-        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 3)) {
+        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
 

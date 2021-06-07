@@ -20,7 +20,8 @@ class User extends Authenticatable
         'phone',
         'name',
         'email',
-        'password',
+        'otp',
+        'otp_expiry',
     ];
 
     /**
@@ -41,4 +42,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function username()
+    {
+        return $this->phone;
+    }
+
+    public function getAuthPassword()
+    {
+        return $this->otp;
+    }
 }
