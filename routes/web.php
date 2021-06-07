@@ -13,7 +13,7 @@ Route::get('/test', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
-    Route::get('/complete_registration', [CompleteRegistrationController::class, 'create'])
+    Route::get('/complete-registration', [CompleteRegistrationController::class, 'create'])
         ->name('register.complete');
     Route::post('/complete-registration', [CompleteRegistrationController::class, 'store']);
 });
