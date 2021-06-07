@@ -12,12 +12,14 @@ Route::get('/test', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
-
-    Route::get('/complete-registration', [CompleteRegistrationController::class, 'create'])
-    ->name('complete-registration');
+    Route::get('/complete_registration', [CompleteRegistrationController::class, 'create'])
+        ->name('register.complete');
     Route::post('/complete-registration', [CompleteRegistrationController::class, 'store']);
+});
+
+Route::middleware(['auth', 'register.completed'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
 Route::middleware(['guest'])->group(function () {

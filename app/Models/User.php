@@ -71,4 +71,9 @@ class User extends Authenticatable
     {
         return "{$this->first_name} {$this->last_name}";
     }
+
+    public function hasCompletedRegistration() 
+    {
+        return $this->first_name && $this->last_name && $this->gender && $this->date_of_birth;
+    }
 }

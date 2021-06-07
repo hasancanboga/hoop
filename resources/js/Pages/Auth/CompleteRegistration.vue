@@ -12,7 +12,9 @@
       <breeze-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autocomplete="username" />
     </div>
 
-    <div class="flex items-center justify-end mt-4">
+    <div class="flex items-center justify-between mt-4">
+      <inertia-link :href="route('logout')" method="post" class="underline text-sm text-gray-600 hover:text-gray-900">Logout</inertia-link>
+
       <breeze-button class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"> Complete Registration </breeze-button>
     </div>
   </form>
@@ -54,7 +56,7 @@ export default {
 
   methods: {
     submit() {
-      this.form.post(this.route("register"), {
+      this.form.post(this.route("register.complete"), {
         onFinish: () => this.form.reset("password", "password_confirmation"),
       });
     },
