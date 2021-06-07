@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 
-class RegisteredUserController extends Controller
+class CompleteRegistrationController extends Controller
 {
     /**
      * Display the registration view.
@@ -21,7 +21,7 @@ class RegisteredUserController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Auth/Register');
+        return Inertia::render('Auth/CompleteRegistration');
     }
 
     /**

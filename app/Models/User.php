@@ -18,7 +18,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'phone',
-        'name',
+        'first_name',
+        'last_name',
+        'gender',
+        'date_of_birth',
         'email',
         'otp',
         'otp_expiry',
@@ -30,7 +33,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password',
+        'otp',
+        'otp_expiry',
         'remember_token',
     ];
 
@@ -51,5 +55,20 @@ class User extends Authenticatable
     public function getAuthPassword()
     {
         return $this->otp;
+    }
+
+    public function setFirstNameAttribute($value)
+    {
+        $this->attributes['first_name'] = ucfirst($value);
+    }
+
+    public function setLastNameAttribute($value)
+    {
+        $this->attributes['last_name'] = ucfirst($value);
+    }
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
     }
 }

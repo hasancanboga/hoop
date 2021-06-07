@@ -1,47 +1,31 @@
 <?php
 
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
-use App\Http\Controllers\Web\HomeController;
+use App\Http\Controllers\Web\WelcomeController;
 use App\Http\Controllers\Web\DashboardController;
-use App\Http\Controllers\Web\Auth\RegisteredUserController;
-use App\Http\Controllers\Web\Auth\ConfirmableOtpController;
-use App\Http\Controllers\Web\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Web\Auth\CompleteRegistrationController;
+use App\Http\Controllers\Web\Auth\ConfirmOtpController;
+use App\Http\Controllers\Web\Auth\LoginController;
 
 Route::get('/test', function () {
     return view('test');
 });
 
-Route::get('/', [HomeController::class, 'index']);
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+    Route::get('/complete-registration', [CompleteRegistrationController::class, 'create'])
+    ->name('complete-registration');
+    Route::post('/complete-registration', [CompleteRegistrationController::class, 'store']);
+});
 
-Route::get('/login', [AuthenticatedSessionController::class, 'create'])
-    ->middleware('guest')
-    ->name('login');
+Route::middleware(['guest'])->group(function () {
+    Route::get('/', [WelcomeController::class, 'index']);
 
-Route::post('/login', [AuthenticatedSessionController::class, 'store'])
-    ->middleware('guest');
+    Route::get('/login', [LoginController::class, 'create'])->name('login');
+    Route::post('/login', [LoginController::class, 'store'])->middleware('guest');
 
-Route::get('/confirm-otp', [ConfirmableOtpController::class, 'show'])
-    ->middleware('guest')
-    ->name('otp');
-
-Route::post('/confirm-otp', [ConfirmableOtpController::class, 'store'])
-    ->middleware('guest')
-    ->name('otp.confirm');
-
-Route::get('/register', [RegisteredUserController::class, 'create'])
-    ->middleware('guest')
-    ->name('register');
-
-Route::post('/register', [RegisteredUserController::class, 'store'])
-    ->middleware('guest');
-
-
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
-    ->middleware('auth')
-    ->name('logout');
+    Route::get('/confirm-otp', [ConfirmOtpController::class, 'show'])->name('otp');
+    Route::post('/confirm-otp', [ConfirmOtpController::class, 'store'])->name('otp.confirm');
+});

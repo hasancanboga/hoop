@@ -10,7 +10,7 @@ use App\Providers\RouteServiceProvider;
 use App\Http\Requests\Auth\ConfirmOtpRequest;
 use Illuminate\Validation\ValidationException;
 
-class ConfirmableOtpController extends Controller
+class ConfirmOtpController extends Controller
 {
     /**
      * Show the confirm password view.
