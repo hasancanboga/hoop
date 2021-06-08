@@ -3,33 +3,37 @@
 
   <form @submit.prevent="submit">
     <div>
-      <breeze-label for="first_name" value="First Name" />
+      <breeze-label for="first_name" value="First Name" class="inline-block" />
+      <font-awesome-icon icon="exclamation-circle" class="mx-2 text-gray-500" />
       <breeze-input id="first_name" type="text" class="mt-1 block w-full" v-model="form.first_name" required autofocus autocomplete="first_name" />
     </div>
 
     <div class="mt-4">
-      <breeze-label for="last_name" value="Last Name" />
+      <breeze-label for="last_name" value="Last Name" class="inline-block" />
+      <font-awesome-icon icon="exclamation-circle" class="mx-2 text-gray-500" />
       <breeze-input id="last_name" type="text" class="mt-1 block w-full" v-model="form.last_name" required autofocus autocomplete="last_name" />
     </div>
 
     <div class="mt-4">
-      <breeze-label for="date_of_birth" value="Date of Birth" />
+      <breeze-label for="date_of_birth" value="Date of Birth" class="inline-block" />
+      <font-awesome-icon icon="exclamation-circle" class="mx-2 text-gray-500" />
       <breeze-input id="date_of_birth" type="text" class="mt-1 block w-full" v-model="form.date_of_birth" required autofocus autocomplete="date_of_birth" />
     </div>
 
     <div class="mt-4">
-      <breeze-label for="gender" value="Gender" />
+      <breeze-label for="gender" value="Gender" class="inline-block" />
+      <font-awesome-icon icon="exclamation-circle" class="mx-2 text-gray-500" />
       <breeze-input id="gender" type="text" class="mt-1 block w-full" v-model="form.gender" required autofocus autocomplete="gender" />
     </div>
 
     <div class="mt-4">
-      <breeze-label for="city" value="City" />
-      <breeze-input id="city" type="text" class="mt-1 block w-full" v-model="form.city"  autofocus autocomplete="city" />
+      <breeze-label for="email" value="Email" />
+      <breeze-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" autocomplete="username" />
     </div>
 
     <div class="mt-4">
-      <breeze-label for="email" value="Email" />
-      <breeze-input id="email" type="email" class="mt-1 block w-full" v-model="form.email"  autocomplete="username" />
+      <breeze-label for="city" value="City" />
+      <breeze-input id="city" type="text" class="mt-1 block w-full" v-model="form.city" autofocus autocomplete="city" />
     </div>
 
     <div class="flex items-center justify-between mt-4">
