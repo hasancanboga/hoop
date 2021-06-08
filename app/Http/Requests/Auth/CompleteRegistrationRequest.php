@@ -25,9 +25,12 @@ class CompleteRegistrationRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:100',
-            // 'last_name' => 'required|string|max:100',
-            'email' => 'required|string|email|max:255|unique:users',
+            'username' => 'required|string|max:100|min:3|alpha_dash',
+            'first_name' => 'required|string|max:100',
+            'last_name' => 'required|string|max:100',
+            'birth_year' => 'required|numeric|min:1920|max:2020',
+            'gender' => 'required|string|in:m,f',
+            'email' => 'nullable|string|email|max:255|unique:users',
         ];
     }
 }

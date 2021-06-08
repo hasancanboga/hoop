@@ -2,28 +2,34 @@
   <breeze-validation-errors class="mb-4" />
 
   <form @submit.prevent="submit">
+    <div class="mb-4 text-xl text-gray-600">Complete Registration</div>
     <div>
+      <breeze-label for="username" value="Username" class="inline-block" />
+      <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2" />
+      <breeze-input id="username" type="text" class="mt-1 block w-full" v-model="form.username" required autofocus autocomplete="username" />
+    </div>
+    <div class="mt-4">
       <breeze-label for="first_name" value="First Name" class="inline-block" />
-      <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2" /> 
-      <breeze-input id="first_name" type="text" class="mt-1 block w-full" v-model="form.first_name" required autofocus autocomplete="first_name" />
+      <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2" />
+      <breeze-input id="first_name" type="text" class="mt-1 block w-full" v-model="form.first_name" required autocomplete="first_name" />
     </div>
 
     <div class="mt-4">
       <breeze-label for="last_name" value="Last Name" class="inline-block" />
-      <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2" /> 
-      <breeze-input id="last_name" type="text" class="mt-1 block w-full" v-model="form.last_name" required autofocus autocomplete="last_name" />
+      <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2" />
+      <breeze-input id="last_name" type="text" class="mt-1 block w-full" v-model="form.last_name" required autocomplete="last_name" />
     </div>
 
     <div class="mt-4">
-      <breeze-label for="date_of_birth" value="Date of Birth" class="inline-block" />
-      <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2" /> 
-      <breeze-input id="date_of_birth" type="text" class="mt-1 block w-full" v-model="form.date_of_birth" required autofocus autocomplete="date_of_birth" />
+      <breeze-label for="birth_year" value="Birth Year" class="inline-block" />
+      <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2" />
+      <breeze-input id="birth_year" type="text" class="mt-1 block w-full" v-model="form.birth_year" required autocomplete="birth_year" />
     </div>
 
     <div class="mt-4">
       <breeze-label for="gender" value="Gender" class="inline-block" />
-      <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2" /> 
-      <breeze-input id="gender" type="text" class="mt-1 block w-full" v-model="form.gender" required autofocus autocomplete="gender" />
+      <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2" />
+      <breeze-input id="gender" type="text" class="mt-1 block w-full" v-model="form.gender" required autocomplete="gender" />
     </div>
 
     <div class="mt-4">
@@ -33,7 +39,7 @@
 
     <div class="mt-4">
       <breeze-label for="city" value="City" />
-      <breeze-input id="city" type="text" class="mt-1 block w-full" v-model="form.city" autofocus autocomplete="city" />
+      <breeze-input id="city" type="text" class="mt-1 block w-full" v-model="form.city" autocomplete="city" />
     </div>
 
     <div class="flex items-center justify-between mt-4">
@@ -71,10 +77,13 @@ export default {
   data() {
     return {
       form: this.$inertia.form({
-        name: "",
+        username: "",
+        first_name: "",
+        last_name: "",
+        birth_year: "",
+        gender: "",
         email: "",
-        password: "",
-        password_confirmation: "",
+        city: "",
         terms: false,
       }),
     };
