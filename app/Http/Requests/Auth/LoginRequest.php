@@ -7,14 +7,20 @@ use Illuminate\Support\Str;
 use App\Services\SmsService;
 use App\Exceptions\SmsException;
 use Illuminate\Auth\Events\Lockout;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Hash;
 
 class LoginRequest extends FormRequest
 {
+    protected $smsService;
+
+    public function __construct(SmsService $smsService)
+    {
+        $this->smsService = $smsService;
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -49,17 +55,15 @@ class LoginRequest extends FormRequest
             'phone' => phone($this->phone, $this->phone_country)->formatE164(),
         ]);
 
-        $otp = env('APP_ENV') == 'local' ? 1234 : rand(1000, 9999);
-        $user->otp = Hash::make($otp);
+        $otp = otp();
+        $user->otp = bcrypt($otp);
         $user->otp_expiry = now()->addSeconds(120);
         $user->save();
 
         $this->setUserResolver(fn () => $user);
 
-        $sms = new SmsService; // todo: turn this into a facade
-
         try {
-            $sms->send($user->phone, $otp);
+            $this->smsService->send($user->phone, $otp);
         } catch (SmsException $e) {
             RateLimiter::hit($this->throttleKey());
             throw ValidationException::withMessages([
