@@ -4,25 +4,25 @@
   <form @submit.prevent="submit">
     <div>
       <breeze-label for="first_name" value="First Name" class="inline-block" />
-      <font-awesome-icon icon="exclamation-circle" class="mx-2 text-gray-500" />
+      <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2" /> 
       <breeze-input id="first_name" type="text" class="mt-1 block w-full" v-model="form.first_name" required autofocus autocomplete="first_name" />
     </div>
 
     <div class="mt-4">
       <breeze-label for="last_name" value="Last Name" class="inline-block" />
-      <font-awesome-icon icon="exclamation-circle" class="mx-2 text-gray-500" />
+      <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2" /> 
       <breeze-input id="last_name" type="text" class="mt-1 block w-full" v-model="form.last_name" required autofocus autocomplete="last_name" />
     </div>
 
     <div class="mt-4">
       <breeze-label for="date_of_birth" value="Date of Birth" class="inline-block" />
-      <font-awesome-icon icon="exclamation-circle" class="mx-2 text-gray-500" />
+      <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2" /> 
       <breeze-input id="date_of_birth" type="text" class="mt-1 block w-full" v-model="form.date_of_birth" required autofocus autocomplete="date_of_birth" />
     </div>
 
     <div class="mt-4">
       <breeze-label for="gender" value="Gender" class="inline-block" />
-      <font-awesome-icon icon="exclamation-circle" class="mx-2 text-gray-500" />
+      <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2" /> 
       <breeze-input id="gender" type="text" class="mt-1 block w-full" v-model="form.gender" required autofocus autocomplete="gender" />
     </div>
 
@@ -50,11 +50,13 @@ import BreezeGuestLayout from "@/Layouts/Guest";
 import BreezeInput from "@/Components/Input";
 import BreezeLabel from "@/Components/Label";
 import BreezeValidationErrors from "@/Components/ValidationErrors";
+import { ExclamationCircleIcon } from "@heroicons/vue/outline";
 
 export default {
   layout: BreezeGuestLayout,
 
   components: {
+    ExclamationCircleIcon,
     BreezeButton,
     BreezeInput,
     BreezeLabel,
