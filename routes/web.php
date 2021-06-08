@@ -1,15 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use PragmaRX\Countries\Package\Countries;
 use App\Http\Controllers\Web\WelcomeController;
 use App\Http\Controllers\Web\DashboardController;
-use App\Http\Controllers\Web\Auth\CompleteRegistrationController;
-use App\Http\Controllers\Web\Auth\ConfirmOtpController;
 use App\Http\Controllers\Web\Auth\LoginController;
+use App\Http\Controllers\Web\Auth\ConfirmOtpController;
+use App\Http\Controllers\Web\Auth\CompleteRegistrationController;
 
-Route::get('/test', function () {
-    return view('test');
-});
 
 Route::middleware(['auth'])->group(function () {
     Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
@@ -31,3 +29,7 @@ Route::middleware(['guest'])->group(function () {
     Route::get('/confirm-otp', [ConfirmOtpController::class, 'show'])->name('otp');
     Route::post('/confirm-otp', [ConfirmOtpController::class, 'store'])->name('otp.confirm');
 });
+
+if (app()->environment('local')) {
+    require __DIR__ . '/test.php';
+}
