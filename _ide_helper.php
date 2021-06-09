@@ -15294,7 +15294,440 @@
      
 }
 
-        namespace Facade\Ignition\Facades { 
+        namespace MenaraSolutions\Geographer\Integrations { 
+            /**
+     * Class LaravelFacade
+     *
+     * @package Dusterio\LinkPreview\Integrations
+     * @codeCoverageIgnore 
+     */ 
+        class LaravelFacade {
+                    /**
+         * 
+         *
+         * @return \MenaraSolutions\Geographer\Collections\MemberCollection 
+         * @static 
+         */ 
+        public static function getCountries()
+        {
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->getCountries();
+        }
+                    /**
+         * 
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getShortName()
+        {
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->getShortName();
+        }
+                    /**
+         * 
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getLongName()
+        {
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->getLongName();
+        }
+                    /**
+         * 
+         *
+         * @return string 
+         * @static 
+         */ 
+        public static function getCode()
+        {
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->getCode();
+        }
+                    /**
+         * 
+         *
+         * @return null 
+         * @static 
+         */ 
+        public static function getParentCode()
+        {
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->getParentCode();
+        }
+                    /**
+         * 
+         *
+         * @return \MenaraSolutions\Geographer\Collections\MemberCollection 
+         * @static 
+         */ 
+        public static function getAfrica()
+        {
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->getAfrica();
+        }
+                    /**
+         * 
+         *
+         * @return \MenaraSolutions\Geographer\Collections\MemberCollection 
+         * @static 
+         */ 
+        public static function getNorthAmerica()
+        {
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->getNorthAmerica();
+        }
+                    /**
+         * 
+         *
+         * @return \MenaraSolutions\Geographer\Collections\MemberCollection 
+         * @static 
+         */ 
+        public static function getSouthAmerica()
+        {
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->getSouthAmerica();
+        }
+                    /**
+         * 
+         *
+         * @return \MenaraSolutions\Geographer\Collections\MemberCollection 
+         * @static 
+         */ 
+        public static function getAsia()
+        {
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->getAsia();
+        }
+                    /**
+         * 
+         *
+         * @return \MenaraSolutions\Geographer\Collections\MemberCollection 
+         * @static 
+         */ 
+        public static function getEurope()
+        {
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->getEurope();
+        }
+                    /**
+         * 
+         *
+         * @return \MenaraSolutions\Geographer\Collections\MemberCollection 
+         * @static 
+         */ 
+        public static function getOceania()
+        {
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->getOceania();
+        }
+                    /**
+         * 
+         *
+         * @return static 
+         * @static 
+         */ 
+        public static function withoutMicro()
+        {
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->withoutMicro();
+        }
+                    /**
+         * 
+         *
+         * @inheritdoc 
+         * @static 
+         */ 
+        public static function build($id, $config = null)
+        {
+                        return \MenaraSolutions\Geographer\Earth::build($id, $config);
+        }
+                    /**
+         * 
+         *
+         * @return \MenaraSolutions\Geographer\Collections\MemberCollection 
+         * @static 
+         */ 
+        public static function getMembers()
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->getMembers();
+        }
+                    /**
+         * Best effort name
+         *
+         * @param string $locale
+         * @return string 
+         * @static 
+         */ 
+        public static function getName($locale = null)
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->getName($locale);
+        }
+                    /**
+         * 
+         *
+         * @return bool 
+         * @static 
+         */ 
+        public static function expectsLongNames()
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->expectsLongNames();
+        }
+                    /**
+         * 
+         *
+         * @return \MenaraSolutions\Geographer\Divisible 
+         * @static 
+         */ 
+        public static function parent()
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->parent();
+        }
+                    /**
+         * 
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getMeta()
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->getMeta();
+        }
+                    /**
+         * 
+         *
+         * @param string $locale
+         * @return string 
+         * @static 
+         */ 
+        public static function translate($locale = null)
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->translate($locale);
+        }
+                    /**
+         * 
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function getCodes()
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->getCodes();
+        }
+                    /**
+         * 
+         *
+         * @return \MenaraSolutions\Geographer\ManagerInterface 
+         * @static 
+         */ 
+        public static function getManager()
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->getManager();
+        }
+                    /**
+         * 
+         *
+         * @param \MenaraSolutions\Geographer\ManagerInterface $manager
+         * @return \MenaraSolutions\Geographer\Earth 
+         * @static 
+         */ 
+        public static function setManager($manager)
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->setManager($manager);
+        }
+                    /**
+         * 
+         *
+         * @param string $locale
+         * @return \MenaraSolutions\Geographer\Earth 
+         * @static 
+         */ 
+        public static function setLocale($locale)
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->setLocale($locale);
+        }
+                    /**
+         * 
+         *
+         * @param string $standard
+         * @return \MenaraSolutions\Geographer\Earth 
+         * @static 
+         */ 
+        public static function setStandard($standard)
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->setStandard($standard);
+        }
+                    /**
+         * 
+         *
+         * @param string $form
+         * @return \MenaraSolutions\Geographer\Earth 
+         * @static 
+         */ 
+        public static function inflict($form)
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->inflict($form);
+        }
+                    /**
+         * 
+         *
+         * @return \MenaraSolutions\Geographer\Earth 
+         * @static 
+         */ 
+        public static function useLongNames()
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->useLongNames();
+        }
+                    /**
+         * 
+         *
+         * @return \MenaraSolutions\Geographer\Earth 
+         * @static 
+         */ 
+        public static function useShortNames()
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->useShortNames();
+        }
+                    /**
+         * 
+         *
+         * @return \MenaraSolutions\Geographer\Earth 
+         * @static 
+         */ 
+        public static function excludePrepositions()
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->excludePrepositions();
+        }
+                    /**
+         * 
+         *
+         * @return \MenaraSolutions\Geographer\Earth 
+         * @static 
+         */ 
+        public static function includePrepositions()
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->includePrepositions();
+        }
+                    /**
+         * 
+         *
+         * @param mixed $offset
+         * @return boolean 
+         * @static 
+         */ 
+        public static function offsetExists($offset)
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->offsetExists($offset);
+        }
+                    /**
+         * 
+         *
+         * @param mixed $offset
+         * @return mixed 
+         * @static 
+         */ 
+        public static function offsetGet($offset)
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->offsetGet($offset);
+        }
+                    /**
+         * 
+         *
+         * @param mixed $offset <p>
+         * @param mixed $value <p>
+         * @return void 
+         * @static 
+         */ 
+        public static function offsetSet($offset, $value)
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        $instance->offsetSet($offset, $value);
+        }
+                    /**
+         * 
+         *
+         * @param mixed $offset
+         * @return void 
+         * @static 
+         */ 
+        public static function offsetUnset($offset)
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        $instance->offsetUnset($offset);
+        }
+                    /**
+         * 
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function toArray()
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->toArray();
+        }
+                    /**
+         * 
+         *
+         * @param int $options
+         * @return string 
+         * @static 
+         */ 
+        public static function toJson($options = 0)
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->toJson($options);
+        }
+                    /**
+         * 
+         *
+         * @param array $params
+         * @return mixed 
+         * @static 
+         */ 
+        public static function find($params = [])
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->find($params);
+        }
+                    /**
+         * 
+         *
+         * @param array $params
+         * @return mixed 
+         * @static 
+         */ 
+        public static function findOne($params = [])
+        {            //Method inherited from \MenaraSolutions\Geographer\Divisible         
+                        /** @var \MenaraSolutions\Geographer\Earth $instance */
+                        return $instance->findOne($params);
+        }
+         
+    }
+     
+}
+
+    namespace Facade\Ignition\Facades { 
             /**
      * Class Flare.
      *
@@ -19238,6 +19671,7 @@ namespace  {
             class URL extends \Illuminate\Support\Facades\URL {}
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}
+            class Geographer extends \MenaraSolutions\Geographer\Integrations\LaravelFacade {}
             class Flare extends \Facade\Ignition\Facades\Flare {}
             class Clockwork extends \Clockwork\Support\Laravel\Facade {}
      

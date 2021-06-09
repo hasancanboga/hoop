@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name')->nullable();
             $table->string('email')->unique()->nullable();
             $table->char('gender')->nullable();
-            $table->date('date_of_birth')->nullable();
+            $table->integer('birth_year')->nullable();
             $table->string('otp')->unique()->nullable();
             $table->dateTime('otp_expiry')->nullable();
             $table->rememberToken();

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dcb5ac210fd1153e047e7543d5d0059c",
+    "content-hash": "5b71a8bff327dc1c9dcbaaab8565f772",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1813,6 +1813,174 @@
             "time": "2021-03-06T18:25:22+00:00"
         },
         {
+            "name": "menarasolutions/geographer",
+            "version": "v0.3.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MenaraSolutions/geographer.git",
+                "reference": "25a2ed4b8c529af076143b0e6189cf5060b43e9e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MenaraSolutions/geographer/zipball/25a2ed4b8c529af076143b0e6189cf5060b43e9e",
+                "reference": "25a2ed4b8c529af076143b0e6189cf5060b43e9e",
+                "shasum": ""
+            },
+            "require": {
+                "menarasolutions/geographer-data": "^0.1.0",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "dev-master",
+                "illuminate/support": "5.*",
+                "menarasolutions/geographer-de": "0.*",
+                "menarasolutions/geographer-nl": "0.*",
+                "menarasolutions/geographer-ru": "0.*",
+                "phpunit/phpunit": "4.*|5.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MenaraSolutions\\Geographer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Denis Mysenko",
+                    "email": "denis@menara.com.au",
+                    "homepage": "https://www.menara.com.au"
+                }
+            ],
+            "description": "A PHP library that knows how any country, state or city is called in any language",
+            "homepage": "https://github.com/MenaraSolutions/geographer",
+            "keywords": [
+                "geo",
+                "geolocation",
+                "geonames",
+                "localization"
+            ],
+            "support": {
+                "issues": "https://github.com/MenaraSolutions/geographer/issues",
+                "source": "https://github.com/MenaraSolutions/geographer/tree/v0.3.10"
+            },
+            "time": "2021-04-14T00:52:38+00:00"
+        },
+        {
+            "name": "menarasolutions/geographer-data",
+            "version": "v0.1.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MenaraSolutions/geographer-data.git",
+                "reference": "0566c0e657f46355dffe94ce816cae8374fa5ff7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MenaraSolutions/geographer-data/zipball/0566c0e657f46355dffe94ce816cae8374fa5ff7",
+                "reference": "0566c0e657f46355dffe94ce816cae8374fa5ff7",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MenaraSolutions\\Geographer\\Helpers\\": "helpers/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Denis Mysenko",
+                    "email": "denis@menara.com.au",
+                    "homepage": "https://www.menara.com.au"
+                }
+            ],
+            "description": "Basic data package for Geographer - countries and their subdivisions",
+            "homepage": "https://github.com/MenaraSolutions/geographer-data",
+            "keywords": [
+                "geographer",
+                "geolocation",
+                "localization"
+            ],
+            "support": {
+                "issues": "https://github.com/MenaraSolutions/geographer-data/issues",
+                "source": "https://github.com/MenaraSolutions/geographer-data/tree/v0.1.11"
+            },
+            "time": "2021-04-14T00:47:58+00:00"
+        },
+        {
+            "name": "menarasolutions/geographer-laravel",
+            "version": "0.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MenaraSolutions/geographer-laravel.git",
+                "reference": "6eeb5fadd0509384f95f00803ed90e3a267c759c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MenaraSolutions/geographer-laravel/zipball/6eeb5fadd0509384f95f00803ed90e3a267c759c",
+                "reference": "6eeb5fadd0509384f95f00803ed90e3a267c759c",
+                "shasum": ""
+            },
+            "require": {
+                "menarasolutions/geographer": "^0.3.0",
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "illuminate/support": "5.*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MenaraSolutions\\Geographer\\Integrations\\LaravelServiceProvider"
+                    ],
+                    "aliases": {
+                        "Geographer": "MenaraSolutions\\Geographer\\Integrations\\LaravelFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "MenaraSolutions\\Geographer\\Integrations\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Denis Mysenko",
+                    "email": "denis@menara.com.au",
+                    "homepage": "https://www.menara.com.au"
+                }
+            ],
+            "description": "Geographer integration classes for Laravel and Lumen",
+            "homepage": "https://github.com/MenaraSolutions/geographer-laravel",
+            "keywords": [
+                "geographer",
+                "geolocation",
+                "laravel",
+                "localization"
+            ],
+            "support": {
+                "issues": "https://github.com/MenaraSolutions/geographer-laravel/issues",
+                "source": "https://github.com/MenaraSolutions/geographer-laravel/tree/master"
+            },
+            "time": "2018-07-23T11:51:54+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "2.2.0",
             "source": {
@@ -1910,16 +2078,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "2.48.1",
+            "version": "2.49.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "8d1f50f1436fb4b05e7127360483dd9c6e73da16"
+                "reference": "93d9db91c0235c486875d22f1e08b50bdf3e6eee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/8d1f50f1436fb4b05e7127360483dd9c6e73da16",
-                "reference": "8d1f50f1436fb4b05e7127360483dd9c6e73da16",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/93d9db91c0235c486875d22f1e08b50bdf3e6eee",
+                "reference": "93d9db91c0235c486875d22f1e08b50bdf3e6eee",
                 "shasum": ""
             },
             "require": {
@@ -1999,7 +2167,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-26T22:08:38+00:00"
+            "time": "2021-06-02T07:31:40+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -7105,16 +7273,16 @@
         },
         {
             "name": "laravel/breeze",
-            "version": "v1.2.3",
+            "version": "v1.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/breeze.git",
-                "reference": "e87021e61e50a202e87896bd2e0763e423ac0c27"
+                "reference": "31083193c2050a970bfd38378a93ecf166b5c985"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/breeze/zipball/e87021e61e50a202e87896bd2e0763e423ac0c27",
-                "reference": "e87021e61e50a202e87896bd2e0763e423ac0c27",
+                "url": "https://api.github.com/repos/laravel/breeze/zipball/31083193c2050a970bfd38378a93ecf166b5c985",
+                "reference": "31083193c2050a970bfd38378a93ecf166b5c985",
                 "shasum": ""
             },
             "require": {
@@ -7158,7 +7326,7 @@
                 "issues": "https://github.com/laravel/breeze/issues",
                 "source": "https://github.com/laravel/breeze"
             },
-            "time": "2021-06-08T13:45:26+00:00"
+            "time": "2021-06-08T20:27:33+00:00"
         },
         {
             "name": "mockery/mockery",

@@ -167,6 +167,7 @@ return [
          */
 
         Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider::class,
+        MenaraSolutions\Geographer\Integrations\LaravelServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -229,7 +230,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'Geographer' => MenaraSolutions\Geographer\Integrations\LaravelFacade::class,
     ],
 
 ];

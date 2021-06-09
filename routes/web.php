@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use PragmaRX\Countries\Package\Countries;
 use App\Http\Controllers\Web\WelcomeController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\Auth\LoginController;
