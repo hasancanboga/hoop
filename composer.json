@@ -18,7 +18,6 @@
         "laravel/sanctum": "^2.6",
         "laravel/tinker": "^2.5",
         "mariuzzo/laravel-js-localization": "^1.8",
-        "pragmarx/countries-laravel": "^0.7.0",
         "propaganistas/laravel-phone": "^4.3",
         "tightenco/ziggy": "^1.0"
     },
