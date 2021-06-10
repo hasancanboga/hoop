@@ -29,7 +29,16 @@
     <div class="mt-4">
       <breeze-label for="gender" value="Gender" class="inline-block" />
       <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2" />
-      <breeze-input id="gender" type="text" class="mt-1 block w-full" v-model="form.gender" required autocomplete="gender" />
+      <div class="mt-2">
+        <label class="inline-flex items-center">
+          <input type="radio" class="" name="gender" value="m" checked v-model="form.gender" />
+          <span class="ml-2">Male</span>
+        </label>
+        <label class="inline-flex items-center ml-6">
+          <input type="radio" class="" name="gender" value="f"  v-model="form.gender" />
+          <span class="ml-2">Female</span>
+        </label>
+      </div>
     </div>
 
     <div class="mt-4">
@@ -55,6 +64,7 @@ import BreezeButton from "@/Components/Button";
 import BreezeGuestLayout from "@/Layouts/Guest";
 import BreezeInput from "@/Components/Input";
 import BreezeLabel from "@/Components/Label";
+import BreezeDropdown from "@/Components/Dropdown";
 import BreezeValidationErrors from "@/Components/ValidationErrors";
 import { ExclamationCircleIcon } from "@heroicons/vue/outline";
 
@@ -66,6 +76,7 @@ export default {
     BreezeButton,
     BreezeInput,
     BreezeLabel,
+    BreezeDropdown,
     BreezeValidationErrors,
   },
 
@@ -81,7 +92,7 @@ export default {
         first_name: "",
         last_name: "",
         birth_year: "",
-        gender: "",
+        gender: "m",
         email: "",
         locality: "",
         terms: false,
@@ -95,6 +106,9 @@ export default {
         onFinish: () => this.form.reset("password", "password_confirmation"),
       });
     },
+  },
+  created() {
+    // BreezeDropdown.props.align.default = "left";
   },
 };
 </script>

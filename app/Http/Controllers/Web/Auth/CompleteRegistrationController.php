@@ -28,6 +28,7 @@ class CompleteRegistrationController extends Controller
         if (auth()->user()->hasCompletedRegistration()) {
             return redirect(RouteServiceProvider::HOME);
         }
+
         return Inertia::render('Auth/CompleteRegistration');
     }
 
@@ -44,6 +45,7 @@ class CompleteRegistrationController extends Controller
         if ($request->user()->hasCompletedRegistration()) {
             return redirect(RouteServiceProvider::HOME);
         }
+
         $this->userService->completeRegistration($request);
         return redirect(RouteServiceProvider::HOME);
     }

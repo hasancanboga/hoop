@@ -17,15 +17,13 @@ class LocalityService
         $this->code = $code;
     }
 
-
-
     public function store(User $user)
     {
         if (!$locality = $this->buildLocality()) {
             return false;
         }
 
-        if($locality instanceof State){
+        if ($locality instanceof State) {
             $countryCode = $locality->parent()->code;
             $stateCode = $locality->code;
             $cityCode = null;
@@ -34,7 +32,7 @@ class LocalityService
             $stateCode = $locality->parent()->code;
             $cityCode =  $locality->code;
         }
-        
+
         return Locality::create([
             'user_id' => $user->id,
             'country_code' => $countryCode,
