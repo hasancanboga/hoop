@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Rules\GeonamesCodeExists;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CompleteRegistrationRequest extends FormRequest
@@ -25,12 +26,13 @@ class CompleteRegistrationRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'required|string|max:100|min:3|alpha_dash',
+            // 'username' => 'required|string|max:100|min:3|alpha_dash',
             'first_name' => 'required|string|max:100',
             'last_name' => 'required|string|max:100',
             'birth_year' => 'required|numeric|min:1920|max:2020',
             'gender' => 'required|string|in:m,f',
             'email' => 'nullable|string|email|max:255|unique:users',
+            'locality' => ['nullable', new GeonamesCodeExists],
         ];
     }
 }

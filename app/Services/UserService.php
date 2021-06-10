@@ -10,15 +10,13 @@ class UserService
 {
     public function completeRegistration(CompleteRegistrationRequest $request)
     {
-        dd($request->validated());
-        // $request->user()->update([
-        //     'first_name' => $request->first_name,
-        //     'last_name' => $request->last_name,
-        //     // 'date_of_birth' => $request->date_of_birth,
-        //     'gender' => $request->gender,
-        //     'email' => $request->email,
-        //     'city' => $request->city,
-        // ]);
+        if ($geonamesCode = $request->validated()['locality']) {
+            $localityService = new LocalityService($geonamesCode);
+            $localityService->store($request->user());
+        }
+
+        $request->user()->update($request->validated());
+
         event(new Registered($request->user()));
     }
 }

@@ -2,12 +2,12 @@
   <breeze-validation-errors class="mb-4" />
 
   <form @submit.prevent="submit">
-    <div class="mb-4 text-xl text-gray-600">Complete Registration</div>
-    <div>
+    <div class="text-xl text-gray-600">Complete Registration</div>
+    <!--  <div class="mt-4">
       <breeze-label for="username" value="Username" class="inline-block" />
       <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2" />
       <breeze-input id="username" type="text" class="mt-1 block w-full" v-model="form.username" required autofocus autocomplete="username" />
-    </div>
+    </div> -->
     <div class="mt-4">
       <breeze-label for="first_name" value="First Name" class="inline-block" />
       <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2" />
@@ -34,12 +34,12 @@
 
     <div class="mt-4">
       <breeze-label for="email" value="Email" />
-      <breeze-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" autocomplete="username" />
+      <breeze-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" autocomplete="email" />
     </div>
 
     <div class="mt-4">
-      <breeze-label for="city" value="City" />
-      <breeze-input id="city" type="text" class="mt-1 block w-full" v-model="form.city" autocomplete="city" />
+      <breeze-label for="locality" value="City" />
+      <breeze-input id="locality" type="text" class="mt-1 block w-full" v-model="form.locality" autocomplete="locality" />
     </div>
 
     <div class="flex items-center justify-between mt-4">
@@ -77,13 +77,13 @@ export default {
   data() {
     return {
       form: this.$inertia.form({
-        username: "",
+        // username: "",
         first_name: "",
         last_name: "",
         birth_year: "",
         gender: "",
         email: "",
-        city: "",
+        locality: "",
         terms: false,
       }),
     };

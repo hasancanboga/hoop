@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -21,8 +20,9 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'gender',
-        'date_of_birth',
+        'birth_year',
         'email',
+        'locality_id',
         'otp',
         'otp_expiry',
     ];
@@ -57,6 +57,11 @@ class User extends Authenticatable
         return $this->otp;
     }
 
+    public function locality()
+    {
+        return $this->hasOne(Locality::class);
+    }
+
     public function setFirstNameAttribute($value)
     {
         $this->attributes['first_name'] = ucfirst($value);
@@ -74,6 +79,6 @@ class User extends Authenticatable
 
     public function hasCompletedRegistration() 
     {
-        return $this->first_name && $this->last_name && $this->gender && $this->date_of_birth;
+        return $this->first_name && $this->last_name && $this->gender && $this->birth_year;
     }
 }

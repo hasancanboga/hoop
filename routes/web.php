@@ -22,7 +22,7 @@ Route::middleware(['guest'])->group(function () {
     Route::get('/', [WelcomeController::class, 'index']);
 
     Route::get('/login', [LoginController::class, 'create'])->name('login');
-    Route::post('/login', [LoginController::class, 'store'])->middleware('guest');
+    Route::post('/login', [LoginController::class, 'store']);
 
     Route::get('/confirm-otp', [ConfirmOtpController::class, 'show'])->name('otp');
     Route::post('/confirm-otp', [ConfirmOtpController::class, 'store'])->name('otp.confirm');
