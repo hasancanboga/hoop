@@ -52,7 +52,7 @@
         <template #trigger>
           <span class="inline-flex rounded-md">
             <button type="button" class="inline-flex items-center mt-2 px-3 py-2 border text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-              Select a City
+              {{ this.selectedLocalityName ?? "Select a City" }}
 
               <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -62,7 +62,7 @@
         </template>
 
         <template #content>
-          <breeze-dropdown-link v-for="locality in localities" :key="locality.id" href="" @click="selectLocality" as="button"> {{ locality.name }} </breeze-dropdown-link>
+          <DropdownItem v-for="locality in localities" :key="locality.id" href="" @click="selectLocality(locality)" as="button"> {{ locality.name }} </DropdownItem>
         </template>
       </breeze-dropdown>
 
@@ -82,7 +82,7 @@ import BreezeGuestLayout from "@/Layouts/Guest";
 import BreezeInput from "@/Components/Input";
 import BreezeLabel from "@/Components/Label";
 import BreezeDropdown from "@/Components/Dropdown";
-import BreezeDropdownLink from "@/Components/DropdownLink";
+import DropdownItem from "@/Components/DropdownItem";
 import BreezeValidationErrors from "@/Components/ValidationErrors";
 import { ExclamationCircleIcon } from "@heroicons/vue/outline";
 
@@ -95,7 +95,7 @@ export default {
     BreezeInput,
     BreezeLabel,
     BreezeDropdown,
-    BreezeDropdownLink,
+    DropdownItem,
     BreezeValidationErrors,
   },
 
@@ -107,6 +107,8 @@ export default {
 
   data() {
     return {
+      selectedLocalityName: null,
+
       form: this.$inertia.form({
         // username: "",
         first_name: "",
@@ -126,8 +128,9 @@ export default {
         onFinish: () => this.form.reset("password", "password_confirmation"),
       });
     },
-    selectLocality() {
-      console.log("hi");
+    selectLocality(locality) {
+      this.form.locality = locality.code;
+      this.selectedLocalityName = locality.name;
     },
   },
 };
