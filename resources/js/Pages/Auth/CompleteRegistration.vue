@@ -35,7 +35,7 @@
           <span class="ml-2">Male</span>
         </label>
         <label class="inline-flex items-center ml-6">
-          <input type="radio" class="" name="gender" value="f"  v-model="form.gender" />
+          <input type="radio" class="" name="gender" value="f" v-model="form.gender" />
           <span class="ml-2">Female</span>
         </label>
       </div>
@@ -52,7 +52,7 @@
     </div>
 
     <div class="flex items-center justify-between mt-4">
-      <inertia-link :href="route('logout')" method="post" class="underline text-sm text-gray-600 hover:text-gray-900">Logout</inertia-link>
+      <inertia-link :href="route('logout')" method="post" class="underline text-sm text-gray-600 hover:text-gray-900" as="button">Logout</inertia-link>
 
       <breeze-button class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"> Complete Registration </breeze-button>
     </div>
