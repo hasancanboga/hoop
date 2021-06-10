@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Services\UserService;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use MenaraSolutions\Geographer\Country;
 use App\Http\Requests\Auth\CompleteRegistrationRequest;
 
 class CompleteRegistrationController extends Controller
@@ -29,7 +30,9 @@ class CompleteRegistrationController extends Controller
             return redirect(RouteServiceProvider::HOME);
         }
 
-        return Inertia::render('Auth/CompleteRegistration');
+        return Inertia::render('Auth/CompleteRegistration', [
+            'localities' => Country::build('TR')->getStates()->sortBy('isoCode')->toArray()
+        ]);
     }
 
     /**

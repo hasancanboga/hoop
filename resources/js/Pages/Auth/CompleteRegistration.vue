@@ -48,12 +48,29 @@
 
     <div class="mt-4">
       <breeze-label for="locality" value="City" />
-      <breeze-input id="locality" type="text" class="mt-1 block w-full" v-model="form.locality" autocomplete="locality" />
+      <breeze-dropdown align="left" width="48">
+        <template #trigger>
+          <span class="inline-flex rounded-md">
+            <button type="button" class="inline-flex items-center mt-2 px-3 py-2 border text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+              Select a City
+
+              <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </button>
+          </span>
+        </template>
+
+        <template #content>
+          <breeze-dropdown-link v-for="locality in localities" :key="locality.id" href="" @click="selectLocality" as="button"> {{ locality.name }} </breeze-dropdown-link>
+        </template>
+      </breeze-dropdown>
+
+      <!-- <breeze-input id="locality" type="text" class="mt-1 block w-full" v-model="form.locality" autocomplete="locality" /> -->
     </div>
 
     <div class="flex items-center justify-between mt-4">
       <inertia-link :href="route('logout')" method="post" class="underline text-sm text-gray-600 hover:text-gray-900" as="button">Logout</inertia-link>
-
       <breeze-button class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"> Complete Registration </breeze-button>
     </div>
   </form>
@@ -65,6 +82,7 @@ import BreezeGuestLayout from "@/Layouts/Guest";
 import BreezeInput from "@/Components/Input";
 import BreezeLabel from "@/Components/Label";
 import BreezeDropdown from "@/Components/Dropdown";
+import BreezeDropdownLink from "@/Components/DropdownLink";
 import BreezeValidationErrors from "@/Components/ValidationErrors";
 import { ExclamationCircleIcon } from "@heroicons/vue/outline";
 
@@ -77,11 +95,13 @@ export default {
     BreezeInput,
     BreezeLabel,
     BreezeDropdown,
+    BreezeDropdownLink,
     BreezeValidationErrors,
   },
 
   props: {
     auth: Object,
+    localities: Object,
     errors: Object,
   },
 
@@ -106,9 +126,9 @@ export default {
         onFinish: () => this.form.reset("password", "password_confirmation"),
       });
     },
-  },
-  created() {
-    // BreezeDropdown.props.align.default = "left";
+    selectLocality() {
+      console.log("hi");
+    },
   },
 };
 </script>
