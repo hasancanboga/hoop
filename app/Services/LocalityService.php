@@ -45,10 +45,10 @@ class LocalityService
     {
         try {
             return State::build($this->code);
-        } catch (Exception) {
+        } catch (Exception $e) {
             try {
                 return City::build($this->code);
-            } catch (Exception) {
+            } catch (Exception $e) {
                 return false;
             }
         }

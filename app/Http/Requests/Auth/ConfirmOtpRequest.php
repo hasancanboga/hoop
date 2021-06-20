@@ -30,6 +30,7 @@ class ConfirmOtpRequest extends FormRequest
     public function rules()
     {
         return [
+            'phone' => 'required|string',
             'otp' => 'required|string',
         ];
     }
