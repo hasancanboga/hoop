@@ -37,6 +37,6 @@ class GeonamesCodeExists implements Rule
      */
     public function message()
     {
-        return 'The entered city or state does not exist.';
+        return __('misc.geocode_not_found');
     }
 }

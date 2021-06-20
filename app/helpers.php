@@ -11,10 +11,16 @@ function otp()
 }
 
 /**
- * shorthand for response(["message" => "foo"]);
+ * Shorthand for ["message" => "foo"]
+ * 
+ * @param string $message
+ * @return array
  */
-// function message($text, $code = 200, $extras = [])
-// {   
-//     $extras['message'] = $text;
-//     return response($extras, $code);
-// }
+function message($message, $extras = [])
+{
+    $final = ['message' => $message];
+    foreach ($extras as $key => $value) {
+        $final[$key] = $value;
+    }
+    return $final;
+}
