@@ -12,4 +12,9 @@ class LoginController extends Controller
     {
         $request->loginOrRegister();
     }
+
+    public function destroy()
+    {
+        auth()->user()->tokens()->delete();
+    }
 }
