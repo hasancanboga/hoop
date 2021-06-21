@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Web;
 
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -11,6 +11,7 @@ class AuthenticationTest extends TestCase
 {
     use RefreshDatabase;
 
+
     public function test_login_screen_can_be_rendered()
     {
         $response = $this->get('/login');
@@ -18,13 +19,25 @@ class AuthenticationTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_users_can_authenticate_using_the_login_screen()
+    public function test_otp_screen_can_be_rendered()
     {
         $user = User::factory()->create();
 
         $response = $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'password',
+            'phone' => $user->phone,
+            'phone_country' =>  phone($user->phone)->getCountry(),
+        ]);
+
+        $response->assertRedirect(route('otp'));
+    }
+
+    public function test_users_can_authenticate_using_the_otp_screen()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->post('/confirm-otp', [
+            'phone' => $user->phone,
+            'otp' => '1234',
         ]);
 
         $this->assertAuthenticated();
@@ -35,9 +48,9 @@ class AuthenticationTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $this->post('/login', [
-            'email' => $user->email,
-            'password' => 'wrong-password',
+        $this->post('/confirm-otp', [
+            'phone' => $user->phone,
+            'otp' => 'wrong-otp',
         ]);
 
         $this->assertGuest();
