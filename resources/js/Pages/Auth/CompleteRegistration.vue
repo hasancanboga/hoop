@@ -1,4 +1,5 @@
 <template>
+  <inertia-head title="Complete Registration" />
   <breeze-validation-errors class="mb-4" />
 
   <form @submit.prevent="submit">

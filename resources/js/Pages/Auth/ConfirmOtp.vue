@@ -1,4 +1,5 @@
 <template>
+  <inertia-head title="Confirm Login" />
   <div class="mb-4 text-sm text-gray-600">Please enter the one-time password you have received via SMS</div>
 
   <breeze-validation-errors class="mb-4" />
