@@ -82,8 +82,18 @@ class User extends Authenticatable
         return "{$this->first_name} {$this->last_name}";
     }
 
-    public function hasCompletedRegistration() 
+    public function hasCompletedRegistration()
     {
         return $this->first_name && $this->last_name && $this->gender && $this->birth_year;
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function timeline()
+    {
+        return Post::where('user_id', $this->id)->latest()->get();
     }
 }

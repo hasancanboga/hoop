@@ -48,4 +48,15 @@ class UserFactory extends Factory
             ];
         });
     }
+
+    public function dev() 
+    {
+        return $this->state([
+            'phone' => config('seeding.dev.phone'),
+            'first_name' => config('seeding.dev.first_name'),
+            'last_name' => config('seeding.dev.last_name'),
+            'email' => config('seeding.dev.email'),
+        ]);
+    }
+
 }
