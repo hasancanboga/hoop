@@ -88,14 +88,36 @@ class User extends Authenticatable
         return $this->first_name && $this->last_name && $this->gender && $this->birth_year;
     }
 
+    public function timeline($withUsers = false)
+    {
+        $followedIds = $this->follows()->pluck('id');
+
+        $posts = Post::when($withUsers, function ($query) {
+            return $query->with('user');
+        })
+            ->whereIn('user_id', $followedIds)
+            ->orWhere('user_id', $this->id);
+
+        return $posts->latest()->get();
+    }
+
     public function posts()
     {
         return $this->hasMany(Post::class);
     }
 
-    public function getAvatarAttribute() 
+    public function getAvatarAttribute()
     {
         return "https://i.pravatar.cc/120?u=" . $this->phone;
     }
 
+    public function follow(User $user)
+    {
+        return $this->follows()->save($user);
+    }
+
+    public function follows()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'user_id', 'following_user_id')->withTimestamps();
+    }
 }

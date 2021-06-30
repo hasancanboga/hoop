@@ -19,8 +19,5 @@ class UserController extends Controller
         //
     }
 
-    public function timeline()
-    {
-        return Post::with('user')->where('user_id', auth()->user()->id)->latest()->get();
-    }
+
 }

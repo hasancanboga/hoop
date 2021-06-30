@@ -15,8 +15,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/logout', [LoginController::class, 'destroy']);
     Route::post('/complete-registration', [CompleteRegistrationController::class, 'store']);
-    
-    Route::get('/timeline', [UserController::class, 'timeline']);
 
+    Route::get('/posts', [PostController::class, 'index']);
     Route::post('/posts', [PostController::class, 'store']);
 });
