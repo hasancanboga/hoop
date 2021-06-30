@@ -49,7 +49,8 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'full_name'
+        'full_name',
+        'avatar'
     ];
 
     public function username()
@@ -92,8 +93,9 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
-    public function timeline()
+    public function getAvatarAttribute() 
     {
-        return Post::where('user_id', $this->id)->latest()->get();
+        return "https://i.pravatar.cc/120?u=" . $this->phone;
     }
+
 }

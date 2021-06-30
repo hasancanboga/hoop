@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {
-
-    public function timeline() 
+    public function store(Request $request)
     {
-        return auth()->user()->timeline();
+        $validated = $request->validate([
+            'body' => 'required|max:255'
+        ]);
+        
+        Post::create([
+            'user_id' => auth()->id(),
+            'body' => $validated['body'],
+        ]);
     }
-
 }
