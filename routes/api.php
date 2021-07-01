@@ -11,11 +11,13 @@ Route::post('/confirm-otp', [ConfirmOtpController::class, 'store']);
 
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('/user', fn () => request()->user());
+    Route::get('/user', [UserController::class, 'self']);
+    Route::get('/user/{user}', [UserController::class, 'show']);
 
     Route::post('/logout', [LoginController::class, 'destroy']);
     Route::post('/complete-registration', [CompleteRegistrationController::class, 'store']);
 
     Route::get('/posts', [PostController::class, 'index']);
+    Route::get('/posts/timeline', [PostController::class, 'timeline']);
     Route::post('/posts', [PostController::class, 'store']);
 });

@@ -11,6 +11,11 @@ class PostController extends Controller
 
     public function index()
     {
+        return auth()->user()->posts;
+    }
+
+    public function timeline()
+    {
         return auth()->user()->timeline(true);
     }
 
