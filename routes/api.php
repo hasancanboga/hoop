@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FollowsController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\Auth\LoginController;
@@ -12,7 +13,10 @@ Route::post('/confirm-otp', [ConfirmOtpController::class, 'store']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'self']);
-    Route::get('/user/{user}', [UserController::class, 'show']);
+    Route::get('/users/{user}', [UserController::class, 'show']);
+
+    Route::post('/users/{user}/follow', [FollowsController::class, 'store']);
+    Route::post('/users/{user}/unfollow', [FollowsController::class, 'destroy']);
 
     Route::post('/logout', [LoginController::class, 'destroy']);
     Route::post('/complete-registration', [CompleteRegistrationController::class, 'store']);
