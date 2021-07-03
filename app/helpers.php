@@ -10,6 +10,11 @@ function otp()
     return config('app.env') === 'local' ? 1234 : rand(1000, 9999);
 }
 
+function current_user()
+{
+    return auth()->user();
+}
+
 /**
  * Shorthand for ["message" => "foo"]
  * 

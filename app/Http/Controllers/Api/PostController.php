@@ -8,6 +8,10 @@ use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {
+    public function show(int $id)
+    {
+        return Post::with('user')->find($id);
+    }
 
     public function index()
     {
