@@ -13,10 +13,10 @@ Route::post('/confirm-otp', [ConfirmOtpController::class, 'store']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user', [UserController::class, 'self']);
-    Route::get('/users/{user}', [UserController::class, 'show']);
+    Route::get('/users/{user:username}', [UserController::class, 'show']);
 
-    Route::post('/users/{user}/follow', [FollowController::class, 'store']);
-    Route::post('/users/{user}/unfollow', [FollowController::class, 'destroy']);
+    Route::post('/users/{user:username}/follow', [FollowController::class, 'store']);
+    Route::post('/users/{user:username}/unfollow', [FollowController::class, 'destroy']);
 
     Route::post('/logout', [LoginController::class, 'destroy']);
     Route::post('/complete-registration', [CompleteRegistrationController::class, 'store']);

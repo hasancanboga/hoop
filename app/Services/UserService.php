@@ -16,7 +16,7 @@ class UserService
         }
 
         $request->user()->update($request->validated());
-
+        $request->user()->generateUniqueUsername();
         event(new Registered($request->user()));
     }
 }

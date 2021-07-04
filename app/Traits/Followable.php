@@ -8,7 +8,9 @@ trait Followable
 {
     public function follow(User $user)
     {
-        return $this->follows()->save($user);
+        if (!$this->isFollowing($user)) {
+            return $this->follows()->save($user);
+        }
     }
 
     public function unfollow(User $user)

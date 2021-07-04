@@ -86,8 +86,7 @@ class User extends Authenticatable
 
     public function hasCompletedRegistration()
     {
-        return $this->first_name && $this->last_name && $this->gender && $this->birth_year;
-        // return $this->first_name && $this->last_name && $this->gender && $this->birth_year && $this->username;
+        return $this->first_name && $this->last_name && $this->gender && $this->birth_year && $this->username;
     }
 
     public function timeline($withUsers = false)
@@ -115,6 +114,21 @@ class User extends Authenticatable
 
     public function generateUniqueUsername()
     {
-        
+        $username = strtolower(preg_replace(
+            "/[^A-Za-z]/",
+            '',
+            $this->full_name
+        ));
+
+        if (strlen($username) < 3) {
+            $username = strtolower(config('app.name') . 'user') . rand(111111, 999999);
+        }
+
+        $i = 0;
+        while (static::whereUsername($username)->exists()) {
+            $username = $username . ++$i;
+        }
+        $this->username = $username;
+        $this->save();
     }
 }

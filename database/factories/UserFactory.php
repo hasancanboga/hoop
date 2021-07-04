@@ -35,6 +35,15 @@ class UserFactory extends Factory
         ];
     }
 
+    public function configure()
+    {
+        return $this->afterMaking(function (User $user) {
+            $user->generateUniqueUsername();
+        })->afterCreating(function (User $user) {
+            //
+        });
+    }
+
     /**
      * Indicate that the model's email address should be unverified.
      *
@@ -49,7 +58,7 @@ class UserFactory extends Factory
         });
     }
 
-    public function dev() 
+    public function dev()
     {
         return $this->state([
             'phone' => config('seeding.dev.phone'),
@@ -59,4 +68,12 @@ class UserFactory extends Factory
         ]);
     }
 
+    public function dev_interact()
+    {
+        return $this->state([
+            'first_name' => config('seeding.dev.first_name'),
+            'last_name' => config('seeding.dev.last_name') . ' Interact',
+            'email' => 'interact.' . config('seeding.dev.email'),
+        ]);
+    }
 }
