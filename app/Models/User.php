@@ -87,6 +87,7 @@ class User extends Authenticatable
     public function hasCompletedRegistration()
     {
         return $this->first_name && $this->last_name && $this->gender && $this->birth_year;
+        // return $this->first_name && $this->last_name && $this->gender && $this->birth_year && $this->username;
     }
 
     public function timeline($withUsers = false)
@@ -110,5 +111,10 @@ class User extends Authenticatable
     public function getAvatarAttribute()
     {
         return "https://i.pravatar.cc/120?u=" . $this->phone;
+    }
+
+    public function generateUniqueUsername()
+    {
+        
     }
 }
