@@ -20,6 +20,7 @@
         "mariuzzo/laravel-js-localization": "^1.8",
         "menarasolutions/geographer-laravel": "^0.2.1",
         "propaganistas/laravel-phone": "^4.3",
+        "spatie/laravel-permission": "^4.2",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
