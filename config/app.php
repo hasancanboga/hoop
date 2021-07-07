@@ -2,6 +2,13 @@
 
 return [
 
+    /**
+     * Added to be able to run project on a subdirectory
+     * such as localhost/foo/public
+     * see https://laravel.com/docs/8.x/mix#custom-mix-base-urls
+     */
+    'mix_url' => env('APP_URL', 'http://localhost'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
