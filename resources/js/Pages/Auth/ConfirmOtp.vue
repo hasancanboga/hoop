@@ -1,24 +1,24 @@
 <template>
   <inertia-head title="Confirm Login" />
-  <div class="mb-4 text-sm text-gray-600">Please enter the one-time password you have received via SMS</div>
+  <div class="mb-4 text-sm text-gray-600">{{ lang.get('auth.otp_prompt') }}</div>
 
   <breeze-validation-errors class="mb-4" />
 
   <form @submit.prevent="submit">
     <div>
-      <breeze-label for="otp" value="Password" />
+      <breeze-label for="otp" :value="lang.get('misc.password')" />
       <breeze-input id="otp" type="text" class="mt-1 block w-full" v-model="form.otp" required autocomplete="current-otp" autofocus />
     </div>
 
     <div class="block mt-4">
       <label class="flex items-center">
         <breeze-checkbox name="remember" v-model:checked="form.remember" />
-        <span class="ml-2 text-sm text-gray-600">Remember me</span>
+        <span class="ml-2 text-sm text-gray-600">{{ lang.get('misc.remember_me') }}</span>
       </label>
     </div>
 
     <div class="flex justify-end mt-4">
-      <breeze-button class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"> Confirm </breeze-button>
+      <breeze-button class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"> {{ lang.get('misc.confirm') }} </breeze-button>
     </div>
   </form>
 </template>
@@ -50,6 +50,7 @@ export default {
 
   data() {
     return {
+      lang: Lang,
       form: this.$inertia.form({
         phone: this.temp_user?.phone,
         otp: "",

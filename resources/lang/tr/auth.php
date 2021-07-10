@@ -20,5 +20,6 @@ return [
     'login' => 'Giriş Yap',
     'logout' => 'Çıkış Yap',
     'complete_registration' => 'Kaydı Tamamla',
-    'registration_already_completed' => "Kaydınız zaten tamamlanmış."
+    'registration_already_completed' => "Kaydınız zaten tamamlanmış.",
+    "otp_prompt" => "Lütfen size SMS ile iletilen kodu giriniz.",
 ];

@@ -9,17 +9,17 @@
   <form @submit.prevent="submit">
     <div class="flex flex-wrap">
       <div class="w-1/4 px-3 mb-6 md:mb-0">
-        <breeze-label for="country" value="Country " />
+        <breeze-label for="country" :value="lang.get('validation.attributes.country')" />
         <breeze-input id="country" type="text" class="bg-gray-200 mt-1 block w-full" v-model="form.country" required autocomplete="country" placeholder="+90" disabled />
       </div>
       <div class="w-3/4 px-3">
-        <breeze-label for="phone" value="Phone" />
+        <breeze-label for="phone" :value="lang.get('validation.attributes.phone')"  />
         <breeze-input id="phone" type="text" class="mt-1 block w-full" v-model="form.phone" required autofocus autocomplete="phone" placeholder="5XXXXXXXXX" />
       </div>
     </div>
 
     <div class="flex items-center justify-end mt-4">
-      <breeze-button class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"> Log in </breeze-button>
+      <breeze-button class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"> {{ lang.get('auth.login') }} </breeze-button>
     </div>
   </form>
 </template>
@@ -49,6 +49,7 @@ export default {
 
   data() {
     return {
+      lang: Lang,
       form: this.$inertia.form({
         phone: "",
         phone_country: "TR",

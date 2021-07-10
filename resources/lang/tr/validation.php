@@ -156,12 +156,14 @@ return [
     */
 
     'attributes' => [
-        'phone' => "Telefon Numarası",
+        'phone' => "Telefon",
+        'email' => "Email",
         'first_name' => "İsim",
         'last_name' => "Soyisim",
         'birth_year' => "Doğum Yılı",
         'gender' => "Cinsiyet",
         'city' => "Şehir",
+        'country' => "Ülke",
     ],
 
 ];

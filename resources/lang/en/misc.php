@@ -8,4 +8,8 @@ return [
     "welcome" => "Welcome",
     "male" => "Male",
     "female" => "Female",
+    "password" => "Password",
+    "remember_me" => "Remember Me",
+    "confirm" => "Confirm",
+    "dashboard" => "Dashboard",
 ];

@@ -8,4 +8,8 @@ return [
     "welcome" => "Hoş geldiniz",
     "male" => "Erkek",
     "female" => "Kadın",
+    "password" => "Şifre",
+    "remember_me" => "Beni Hatırla",
+    "confirm" => "Onayla",
+    "dashboard" => "Anasayfa",
 ];

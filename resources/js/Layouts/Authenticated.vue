@@ -16,7 +16,7 @@
 
               <!-- Navigation Links -->
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                <breeze-nav-link :href="route('dashboard')" :active="route().current('dashboard')"> Dashboard </breeze-nav-link>
+                <breeze-nav-link :href="route('dashboard')" :active="route().current('dashboard')"> {{ lang.get('misc.dashboard') }} </breeze-nav-link>
               </div>
             </div>
 
@@ -37,7 +37,7 @@
                   </template>
 
                   <template #content>
-                    <breeze-dropdown-link :href="route('logout')" method="post" as="button"> Log Out </breeze-dropdown-link>
+                    <breeze-dropdown-link :href="route('logout')" method="post" as="button"> {{ lang.get('auth.logout') }} </breeze-dropdown-link>
                   </template>
                 </breeze-dropdown>
               </div>
@@ -58,7 +58,7 @@
         <!-- Responsive Navigation Menu -->
         <div :class="{ block: showingNavigationDropdown, hidden: !showingNavigationDropdown }" class="sm:hidden">
           <div class="pt-2 pb-3 space-y-1">
-            <breeze-responsive-nav-link :href="route('dashboard')" :active="route().current('dashboard')"> Dashboard </breeze-responsive-nav-link>
+            <breeze-responsive-nav-link :href="route('dashboard')" :active="route().current('dashboard')"> {{ lang.get('misc.dashboard') }} </breeze-responsive-nav-link>
           </div>
 
           <!-- Responsive Settings Options -->
@@ -69,7 +69,7 @@
             </div>
 
             <div class="mt-3 space-y-1">
-              <breeze-responsive-nav-link :href="route('logout')" method="post" as="button"> Log Out </breeze-responsive-nav-link>
+              <breeze-responsive-nav-link :href="route('logout')" method="post" as="button"> {{ lang.get('logout') }} </breeze-responsive-nav-link>
             </div>
           </div>
         </div>
@@ -108,6 +108,7 @@ export default {
 
   data() {
     return {
+      lang: Lang,
       showingNavigationDropdown: false,
     };
   },
