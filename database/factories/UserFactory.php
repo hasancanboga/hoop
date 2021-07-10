@@ -31,6 +31,7 @@ class UserFactory extends Factory
             'gender' => $this->faker->randomElement(['m', 'f']),
             'birth_year' => $this->faker->numberBetween(1921, 2020),
             'otp' => bcrypt('1234'),
+            'otp_expiry' => now()->addSeconds(120),
             'remember_token' => Str::random(10),
         ];
     }

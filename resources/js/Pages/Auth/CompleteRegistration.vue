@@ -3,41 +3,41 @@
   <breeze-validation-errors class="mb-4" />
 
   <form @submit.prevent="submit">
-    <div class="text-xl text-gray-600">Complete Registration</div>
+    <div class="text-xl text-gray-600">{{ lang.get('auth.complete_registration') }}</div>
     <!--  <div class="mt-4">
       <breeze-label for="username" value="Username" class="inline-block" />
       <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2" />
       <breeze-input id="username" type="text" class="mt-1 block w-full" v-model="form.username" required autofocus autocomplete="username" />
     </div> -->
     <div class="mt-4">
-      <breeze-label for="first_name" value="First Name" class="inline-block" />
+      <breeze-label for="first_name" :value="lang.get('validation.attributes.first_name')" class="inline-block" />
       <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2" />
       <breeze-input id="first_name" type="text" class="mt-1 block w-full" v-model="form.first_name" required autocomplete="first_name" />
     </div>
 
     <div class="mt-4">
-      <breeze-label for="last_name" value="Last Name" class="inline-block" />
+      <breeze-label for="last_name" :value="lang.get('validation.attributes.last_name')" class="inline-block" />
       <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2" />
       <breeze-input id="last_name" type="text" class="mt-1 block w-full" v-model="form.last_name" required autocomplete="last_name" />
     </div>
 
     <div class="mt-4">
-      <breeze-label for="birth_year" value="Birth Year" class="inline-block" />
+      <breeze-label for="birth_year" :value="lang.get('validation.attributes.birth_year')" class="inline-block" />
       <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2" />
       <breeze-input id="birth_year" type="text" class="mt-1 block w-full" v-model="form.birth_year" required autocomplete="birth_year" />
     </div>
 
     <div class="mt-4">
-      <breeze-label for="gender" value="Gender" class="inline-block" />
+      <breeze-label for="gender" :value="lang.get('validation.attributes.gender')" class="inline-block" />
       <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2" />
       <div class="mt-2">
         <label class="inline-flex items-center">
           <input type="radio" class="" name="gender" value="m" checked v-model="form.gender" />
-          <span class="ml-2">Male</span>
+          <span class="ml-2">{{ lang.get("misc.male") }}</span>
         </label>
         <label class="inline-flex items-center ml-6">
           <input type="radio" class="" name="gender" value="f" v-model="form.gender" />
-          <span class="ml-2">Female</span>
+          <span class="ml-2">{{ lang.get("misc.female") }}</span>
         </label>
       </div>
     </div>
@@ -48,7 +48,7 @@
     </div>
 
     <div class="mt-4">
-      <breeze-label for="locality" value="City" />
+      <breeze-label for="locality" :value="lang.get('validation.attributes.city')" />
       <breeze-dropdown align="left" width="48">
         <template #trigger>
           <span class="inline-flex rounded-md">
@@ -71,8 +71,8 @@
     </div>
 
     <div class="flex items-center justify-between mt-4">
-      <inertia-link :href="route('logout')" method="post" class="underline text-sm text-gray-600 hover:text-gray-900">Logout</inertia-link>
-      <breeze-button class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"> Complete Registration </breeze-button>
+      <inertia-link :href="route('logout')" method="post" class="underline text-sm text-gray-600 hover:text-gray-900">{{ lang.get('auth.logout') }}</inertia-link>
+      <breeze-button class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">{{ lang.get('auth.complete_registration') }}</breeze-button>
     </div>
   </form>
 </template>
@@ -109,7 +109,7 @@ export default {
   data() {
     return {
       selectedLocalityName: null,
-
+      lang: Lang,
       form: this.$inertia.form({
         // username: "",
         first_name: "",

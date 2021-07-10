@@ -18,6 +18,8 @@ return [
     'otp_expired' => 'The provided password has expired. Please retry the login process.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'login' => 'Log in',
+    'logout' => 'Logout',
+    'complete_registration' => 'Complete Registration',
     'registration_already_completed' => "Your registration is already completed."
 
 ];

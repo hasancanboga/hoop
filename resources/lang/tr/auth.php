@@ -13,10 +13,12 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'password' => 'The provided password is incorrect.',
+    'failed' => 'Girdiğiniz bilgilerle giriş yapılamadı.',
+    'password' => 'Girdiğiniz şifre yanlış.',
     'otp_expired' => 'Şifrenizin süresi dolmuş. Lütfen tekrardan giriş yapmayı deneyin.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'throttle' => 'Çok fazla giriş denemesi yapıldı. Lütfen :seconds saniye sonra tekrar deneyiniz.',
     'login' => 'Giriş Yap',
+    'logout' => 'Çıkış Yap',
+    'complete_registration' => 'Kaydı Tamamla',
     'registration_already_completed' => "Kaydınız zaten tamamlanmış."
 ];

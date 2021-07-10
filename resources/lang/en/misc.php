@@ -6,5 +6,6 @@ return [
     "whoops" => "Whoops! Something went wrong.",
     "geocode_not_found" => "The entered city or state does not exist.",
     "welcome" => "Welcome",
-
+    "male" => "Male",
+    "female" => "Female",
 ];

@@ -6,4 +6,6 @@ return [
     "whoops" => "Bir hata oluştu.",
     "geocode_not_found" => "Girilen şehir veya eyalet bulunamadı.",
     "welcome" => "Hoş geldiniz",
+    "male" => "Erkek",
+    "female" => "Kadın",
 ];

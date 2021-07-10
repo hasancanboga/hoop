@@ -139,6 +139,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        // 'email' => [
+        //     'unique' => 'This email is already registered...etc',
+        // ],
     ],
 
     /*
@@ -152,6 +155,12 @@ return [
     |
     */
 
-    'attributes' => [],
-
+    'attributes' => [
+        'phone' => "Phone",
+        'first_name' => "First Name",
+        'last_name' => "Last Name",
+        'birth_year' => "Birth Year",
+        'gender' => "Gender",
+        'city' => "City",
+    ],
 ];
