@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
@@ -46,6 +48,8 @@ class ConfirmOtpRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
+        $this->ensureOtpNotExpired();
+        
         if (!Auth::attempt(
             [
                 'phone' => $this->phone,
@@ -80,11 +84,29 @@ class ConfirmOtpRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'phone' => trans('auth.throttle', [
+            'phone' => __('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
         ]);
+    }
+
+    /**
+     * Ensure the OTP is not expired
+     *
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function ensureOtpNotExpired()
+    {
+        $user = User::where('phone', $this->phone)->first();
+        if (now() > Carbon::createFromTimeString($user->otp_expiry)) {
+            logger('throwing');
+            throw ValidationException::withMessages([
+                'phone' => __('auth.otp_expired'),
+            ]);
+        }
     }
 
     /**

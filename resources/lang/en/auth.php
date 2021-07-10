@@ -15,6 +15,7 @@ return [
 
     'failed' => 'These credentials do not match our records.',
     'password' => 'The provided password is incorrect.',
+    'otp_expired' => 'The provided password has expired. Please retry the login process.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'login' => 'Log in',
     'registration_already_completed' => "Your registration is already completed."
