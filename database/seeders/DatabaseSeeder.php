@@ -21,5 +21,8 @@ class DatabaseSeeder extends Seeder
         Post::factory(['user_id' => $dev2->id])->count(10)->create();
 
         User::factory(10)->hasPosts(5)->create();
+        User::factory()->juvenile()->hasPosts(5)->create();
+        User::factory()->juvenile()->hasPosts(5)->create();
+        User::factory()->juvenile()->hasPosts(5)->create();
     }
 }

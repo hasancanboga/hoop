@@ -27,6 +27,9 @@ class User extends Authenticatable
         'locality_id',
         'otp',
         'otp_expiry',
+        'parent_phone',
+        'parent_first_name',
+        'parent_last_name',
     ];
 
     /**
@@ -51,7 +54,8 @@ class User extends Authenticatable
 
     protected $appends = [
         'full_name',
-        'avatar'
+        'parent_full_name',
+        // 'avatar',
     ];
 
     public function username()
@@ -84,9 +88,27 @@ class User extends Authenticatable
         return "{$this->first_name} {$this->last_name}";
     }
 
+    public function getParentFullNameAttribute()
+    {
+        if ($this->parent_first_name && $this->parent_last_name) {
+            return "{$this->parent_first_name} {$this->parent_last_name}";
+        }
+        return null;
+    }
+
     public function hasCompletedRegistration()
     {
         return $this->first_name && $this->last_name && $this->gender && $this->birth_year && $this->username;
+    }
+
+    public function hasRegisteredParent()
+    {
+        return $this->parent_first_name && $this->parent_last_name && $this->parent_phone;
+    }
+
+    public function getAgeAttribute()
+    {
+        return now()->year - $this->birth_year;
     }
 
     public function timeline($withUsers = false)

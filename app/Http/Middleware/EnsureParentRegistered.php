@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class EnsureCompletedRegistration
+class EnsureParentRegistered
 {
     /**
      * Handle an incoming request.
@@ -17,11 +17,11 @@ class EnsureCompletedRegistration
      */
     public function handle(Request $request, Closure $next, ...$guards)
     {
-        if (auth()->check() && !auth()->user()->hasCompletedRegistration()) {
+        if (auth()->check() && auth()->user()->age < 13 && !auth()->user()->hasRegisteredParent()) {
             if($guards[0] == 'api'){
-                return response(['message' => 'complete_registration'], 400);
+                return response(['message' => 'parent_registration'], 400);
             }
-            return redirect(route('register.complete'));
+            return redirect(route('register.parent'));
         }
 
         return $next($request);

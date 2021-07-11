@@ -9,7 +9,17 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AuthenticationTest extends TestCase
 {
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
+
+    public function test_register_request()
+    {
+        $response = $this->postJson('/api/login', [
+            'phone' => $this->faker->unique()->numerify('53########'),
+            'phone_country' => 'TR',
+        ]);
+
+        $response->assertStatus(200);
+    }
 
     public function test_login_request()
     {

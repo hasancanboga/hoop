@@ -18,7 +18,7 @@ class CompleteRegistrationController extends Controller
     public function store(CompleteRegistrationRequest $request)
     {
         if ($request->user()->hasCompletedRegistration()) {
-            return response(message(__('auth.registration_already_completed')), 403);
+            return response(message(__('auth.registration_already_completed')), 409);
         }
         $this->userService->completeRegistration($request);
     }

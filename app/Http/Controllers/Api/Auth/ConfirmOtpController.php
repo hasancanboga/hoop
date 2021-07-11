@@ -17,8 +17,9 @@ class ConfirmOtpController extends Controller
     public function store(ConfirmOtpRequest $request)
     {
         $request->authenticate();
-        return response([
-            'token' => $request->user()->createToken($request->phone)->plainTextToken
-        ], 201);
+        
+        return response(null, 201)->withHeaders([
+            'Auth' => $request->user()->createToken($request->phone)->plainTextToken
+        ]);
     }
 }

@@ -29,7 +29,7 @@ class UserFactory extends Factory
             'last_name' => $this->faker->lastName(),
             'email' => $this->faker->unique()->safeEmail(),
             'gender' => $this->faker->randomElement(['m', 'f']),
-            'birth_year' => $this->faker->numberBetween(1921, 2020),
+            'birth_year' => $this->faker->numberBetween(1921, 2006),
             'otp' => bcrypt('1234'),
             'otp_expiry' => now()->addSeconds(120),
             'remember_token' => Str::random(10),
@@ -75,6 +75,17 @@ class UserFactory extends Factory
             'first_name' => config('seeding.dev.first_name'),
             'last_name' => config('seeding.dev.last_name') . ' Interact',
             'email' => 'interact.' . config('seeding.dev.email'),
+        ]);
+    }
+
+    public function juvenile()
+    {
+        return $this->state([
+            'birth_year' =>  $this->faker->numberBetween(now()->year - 12, now()->year - 5),
+            'parent_first_name' => $this->faker->firstName(),
+            'parent_last_name' => $this->faker->lastName(),
+            'parent_phone' => phone($this->faker->unique()
+                ->numerify('53########'), 'TR')->formatE164(),
         ]);
     }
 }

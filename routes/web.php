@@ -16,7 +16,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/complete-registration', [CompleteRegistrationController::class, 'store']);
 });
 
-Route::middleware(['auth', 'register.completed'])->group(function () {
+Route::middleware(['auth', 'register.completed:web'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 

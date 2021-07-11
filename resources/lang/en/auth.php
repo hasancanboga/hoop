@@ -21,5 +21,6 @@ return [
     'logout' => 'Log Out',
     'complete_registration' => 'Complete Registration',
     'registration_already_completed' => "Your registration is already completed.",
+    'parent_registration_already_completed' => "Parent registration is already completed.",
     "otp_prompt" => "Please enter the one-time password you have received via SMS",
 ];
