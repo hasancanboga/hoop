@@ -10,11 +10,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      lang: Lang,
-    };
-  },
   computed: {
     errors() {
       return this.$page.props.errors;

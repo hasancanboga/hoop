@@ -27,11 +27,6 @@ export default {
     BreezeAuthenticatedLayout,
     LanguageSelector,
   },
-  data() {
-    return {
-      lang: Lang,
-    };
-  },
   props: {
     auth: Object,
     errors: Object,

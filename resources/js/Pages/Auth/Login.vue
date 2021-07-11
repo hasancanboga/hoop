@@ -52,7 +52,6 @@ export default {
 
   data() {
     return {
-      lang: Lang,
       form: this.$inertia.form({
         phone: "",
         phone_country: "TR",

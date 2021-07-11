@@ -108,7 +108,6 @@ export default {
 
   data() {
     return {
-      lang: Lang,
       showingNavigationDropdown: false,
     };
   },

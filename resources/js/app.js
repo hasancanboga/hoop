@@ -14,7 +14,16 @@ createApp({
             resolveComponent: (name) => require(`./Pages/${name}`).default,
         }),
 })
-    .mixin({ methods: { route } })
+    .mixin({
+        data() {
+            return {
+                lang: Lang,
+            }
+        },
+        methods: {
+            route
+        }
+    })
     .use(InertiaPlugin)
     .mount(el);
 

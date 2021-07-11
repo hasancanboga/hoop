@@ -50,7 +50,6 @@ export default {
 
   data() {
     return {
-      lang: Lang,
       form: this.$inertia.form({
         phone: this.temp_user?.phone,
         otp: "",

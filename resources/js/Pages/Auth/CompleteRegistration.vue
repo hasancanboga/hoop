@@ -109,7 +109,6 @@ export default {
   data() {
     return {
       selectedLocalityName: null,
-      lang: Lang,
       form: this.$inertia.form({
         // username: "",
         first_name: "",

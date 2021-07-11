@@ -88,10 +88,5 @@ export default {
     laravelVersion: String,
     phpVersion: String,
   },
-  data() {
-    return {
-      lang: Lang,
-    };
-  },
 };
 </script>
