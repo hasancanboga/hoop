@@ -18,8 +18,8 @@ class SetLocale
     {
         if (request()->has('locale')) {
             app()->setLocale(request('locale'));
-        } else if (session()->has('locale')) {
-            app()->setLocale(session('locale'));
+        } else if (request()->cookie('locale')) {
+            app()->setLocale($request->cookie('locale'));
         } else {
             // defaults to the locale or falback_locale in config/app.php
         }

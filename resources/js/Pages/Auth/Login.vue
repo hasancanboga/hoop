@@ -18,7 +18,8 @@
       </div>
     </div>
 
-    <div class="flex items-center justify-end mt-4">
+    <div class="flex items-center justify-between mt-4">
+      <LanguageSelector />
       <breeze-button class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing"> {{ lang.get('auth.login') }} </breeze-button>
     </div>
   </form>
@@ -30,6 +31,7 @@ import BreezeGuestLayout from "@/Layouts/Guest";
 import BreezeInput from "@/Components/Input";
 import BreezeLabel from "@/Components/Label";
 import BreezeValidationErrors from "@/Components/ValidationErrors";
+import LanguageSelector from "@/Components/LanguageSelector";
 
 export default {
   layout: BreezeGuestLayout,
@@ -39,6 +41,7 @@ export default {
     BreezeInput,
     BreezeLabel,
     BreezeValidationErrors,
+    LanguageSelector,
   },
 
   props: {
