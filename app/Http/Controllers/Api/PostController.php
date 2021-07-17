@@ -2,25 +2,28 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Post;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Post;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function show(int $id)
+    public function show(int $id): Model|Collection|Builder|array|null
     {
         return Post::with('user')->find($id);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return auth()->user()->posts;
+        return $request->user()->posts;
     }
 
-    public function timeline()
+    public function timeline(Request $request)
     {
-        return auth()->user()->timeline(true);
+        return $request->user()->timeline(true);
     }
 
     public function store(Request $request)

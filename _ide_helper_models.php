@@ -14,6 +14,7 @@ namespace App\Models{
 /**
  * App\Models\Locality
  *
+ * @mixin IdeHelperLocality
  * @property int $id
  * @property int $user_id
  * @property string $country_code
@@ -33,13 +34,14 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Locality whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Locality whereUserId($value)
  */
-	class Locality extends \Eloquent {}
+	class IdeHelperLocality extends \Eloquent {}
 }
 
 namespace App\Models{
 /**
  * App\Models\Post
  *
+ * @mixin IdeHelperPost
  * @property int $id
  * @property int $user_id
  * @property string $body
@@ -56,13 +58,14 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereUserId($value)
  */
-	class Post extends \Eloquent {}
+	class IdeHelperPost extends \Eloquent {}
 }
 
 namespace App\Models{
 /**
  * App\Models\User
  *
+ * @mixin IdeHelperUser
  * @property int $id
  * @property string $phone
  * @property string|null $username
@@ -115,6 +118,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUsername($value)
  */
-	class User extends \Eloquent {}
+	class IdeHelperUser extends \Eloquent {}
 }
 

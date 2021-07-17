@@ -1,19 +1,21 @@
-<?php
+<?php /** @noinspection PhpPossiblePolymorphicInvocationInspection */
+/** @noinspection PhpUndefinedMethodInspection */
+
+/** @noinspection PhpParamsInspection */
 
 namespace Tests\Feature\Api;
 
-use Tests\TestCase;
+use App\Http\Controllers\Api\PostController;
 use App\Models\Post;
 use App\Models\User;
-use Laravel\Sanctum\Sanctum;
-use App\Http\Controllers\Api\PostController;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
+use Tests\TestCase;
 
 class ShowPostsTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     public function test_sanctum_authorization()
     {
         $response = $this->getJson(action([PostController::class, 'store']));

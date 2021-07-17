@@ -2,24 +2,26 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\Services\UserService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\CompleteRegistrationRequest;
+use App\Services\UserService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\Response;
 
 class CompleteRegistrationController extends Controller
 {
-    protected $userService;
 
-    public function __construct(UserService $userService)
-    {
-        $this->userService = $userService;
-    }
-
-    public function store(CompleteRegistrationRequest $request)
+    public function store(CompleteRegistrationRequest $request):
+    Response|Application|ResponseFactory
     {
         if ($request->user()->hasCompletedRegistration()) {
             return response(message(__('auth.registration_already_completed')), 409);
         }
-        $this->userService->completeRegistration($request);
+
+        $userService = new UserService();
+        $userService->completeRegistration($request);
+
+        return response(null);
     }
 }

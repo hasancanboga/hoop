@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 namespace Tests\Feature\Api;
 
@@ -13,6 +13,7 @@ class AuthenticationTest extends TestCase
 
     public function test_register_request()
     {
+        /** @noinspection PhpUndefinedMethodInspection */
         $response = $this->postJson('/api/login', [
             'phone' => $this->faker->unique()->numerify('53########'),
             'phone_country' => 'TR',
@@ -27,7 +28,7 @@ class AuthenticationTest extends TestCase
 
         $response = $this->postJson('/api/login', [
             'phone' => $user->phone,
-            'phone_country' =>  phone($user->phone)->getCountry(),
+            'phone_country' => phone($user->phone)->getCountry(),
         ]);
 
         $response->assertStatus(200);

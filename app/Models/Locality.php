@@ -2,50 +2,59 @@
 
 namespace App\Models;
 
-use MenaraSolutions\Geographer\City;
-use MenaraSolutions\Geographer\State;
-use Illuminate\Database\Eloquent\Model;
-use MenaraSolutions\Geographer\Country;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use MenaraSolutions\Geographer\City;
+use MenaraSolutions\Geographer\Country;
+use MenaraSolutions\Geographer\State;
 
+/**
+ * @mixin IdeHelperLocality
+ */
 class Locality extends Model
 {
     use HasFactory;
 
 
     protected $guarded = [];
-    protected $name = "";
+    protected string $name = "";
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function getCity()
+    public function getCity(): City|null
     {
         return $this->city_code ? City::build($this->city_code) : null;
     }
 
-    public function getState()
+    public function getState(): State|null
     {
         return $this->state_code ? State::build($this->state_code) : null;
     }
 
-    public function getCountry()
+    /** @noinspection PhpUnused */
+    public function getCountry(): Country|null
     {
         return $this->country_code ? Country::build($this->country_code) : null;
     }
 
-    public function getName()
+    public function getName(): string
     {
         $fields = [];
 
         if ($this->city_code) {
-            $fields[] = $this->getCity()->name;
+            if (isset($this->getCity()->name)) {
+                $fields[] = $this->getCity()->name;
+            }
         }
 
         if ($this->state_code) {
-            $fields[] = $this->getState()->name;
+            if (isset($this->getState()->name)) {
+                $fields[] = $this->getState()->name;
+            }
         }
 
         // if ($this->country_code) {

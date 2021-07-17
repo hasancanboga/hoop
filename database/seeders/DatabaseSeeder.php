@@ -12,6 +12,8 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      *
      * @return void
+     * @noinspection PhpUndefinedMethodInspection
+     * @noinspection PhpPossiblePolymorphicInvocationInspection
      */
     public function run()
     {

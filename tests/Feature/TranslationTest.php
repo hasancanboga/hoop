@@ -18,16 +18,16 @@ class TranslationTest extends TestCase
         }
 
         $i = 0;
-        foreach ($langs as  $lang) {
+        foreach ($langs as $lang) {
             if (++$i != count($langs)) {
-                foreach (new DirectoryIterator(resource_path("lang/{$lang}")) as $fileinfo) {
+                foreach (new DirectoryIterator(resource_path("lang/" . $lang)) as $fileinfo) {
                     if ($fileinfo->isFile()) {
 
-                        $currentLangFileSize =  count(
+                        $currentLangFileSize = count(
                             Lang::get($fileinfo->getBasename('.php'), [], $lang)
                         );
 
-                        $nextLangFileSize =  count(
+                        $nextLangFileSize = count(
                             Lang::get($fileinfo->getBasename('.php'), [], $langs[$i])
                         );
 
@@ -38,11 +38,11 @@ class TranslationTest extends TestCase
                         );
 
                         if ($fileinfo->getBasename('.php') == 'validation') {
-                            $currentLangValidationAttributesSize =  count(
+                            $currentLangValidationAttributesSize = count(
                                 Lang::get($fileinfo->getBasename('.php'), [], $lang)['attributes']
                             );
 
-                            $nextLangValidationAttributesSize =  count(
+                            $nextLangValidationAttributesSize = count(
                                 Lang::get($fileinfo->getBasename('.php'), [], $langs[$i])['attributes']
                             );
                             $this->assertEquals(

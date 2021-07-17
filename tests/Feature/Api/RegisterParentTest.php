@@ -1,12 +1,12 @@
-<?php
+<?php /** @noinspection PhpParamsInspection */
 
 namespace Tests\Feature\Api;
 
-use Tests\TestCase;
 use App\Models\User;
-use Laravel\Sanctum\Sanctum;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
+use Tests\TestCase;
 
 class RegisterParentTest extends TestCase
 {
@@ -26,6 +26,7 @@ class RegisterParentTest extends TestCase
             ])
         );
 
+        /** @noinspection PhpUndefinedMethodInspection */
         $response = $this->postJson('/api/register-parent', [
             'parent_first_name' => $this->faker->firstName(),
             'parent_last_name' => $this->faker->lastName(),

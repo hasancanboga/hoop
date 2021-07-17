@@ -2,22 +2,24 @@
 
 namespace App\Services;
 
-use Exception;
-use App\Models\User;
 use App\Models\Locality;
+use App\Models\User;
+use Exception;
+use Illuminate\Database\Eloquent\Model;
 use MenaraSolutions\Geographer\City;
+use MenaraSolutions\Geographer\Country;
 use MenaraSolutions\Geographer\State;
 
 class LocalityService
 {
-    protected $code;
+    protected int $code;
 
     public function __construct(int $code)
     {
         $this->code = $code;
     }
 
-    public function store(User $user)
+    public function store(User $user): Model|bool|Locality
     {
         if (!$locality = $this->buildLocality()) {
             return false;
@@ -25,12 +27,12 @@ class LocalityService
 
         if ($locality instanceof State) {
             $countryCode = $locality->parent()->code;
-            $stateCode = $locality->code;
+            $stateCode = $locality->code ?? null;
             $cityCode = null;
         } else {
-            $countryCode = $locality->parent()->parent()->code;
-            $stateCode = $locality->parent()->code;
-            $cityCode =  $locality->code;
+            $countryCode = $locality->parent()->parent()->code ?? null;
+            $stateCode = $locality->parent()->code ?? null;
+            $cityCode = $locality->code ?? null;
         }
 
         return Locality::create([
@@ -41,14 +43,14 @@ class LocalityService
         ]);
     }
 
-    public function buildLocality()
+    public function buildLocality(): Country|bool|City|State
     {
         try {
             return State::build($this->code);
-        } catch (Exception $e) {
+        } catch (Exception) {
             try {
                 return City::build($this->code);
-            } catch (Exception $e) {
+            } catch (Exception) {
                 return false;
             }
         }

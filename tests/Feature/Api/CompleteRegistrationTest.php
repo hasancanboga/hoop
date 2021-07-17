@@ -2,12 +2,11 @@
 
 namespace Tests\Feature\Api;
 
-use Tests\TestCase;
 use App\Models\User;
-use Laravel\Sanctum\Sanctum;
-use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
+use Tests\TestCase;
 
 class CompleteRegistrationTest extends TestCase
 {
@@ -19,6 +18,10 @@ class CompleteRegistrationTest extends TestCase
         $response->assertUnauthorized();
     }
 
+    /**
+     * @noinspection PhpParamsInspection
+     * @noinspection PhpUndefinedMethodInspection
+     */
     public function test_new_users_can_complete_registration()
     {
         Sanctum::actingAs(
@@ -43,6 +46,7 @@ class CompleteRegistrationTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /** @noinspection PhpParamsInspection */
     public function test_complete_registration_validation_rules()
     {
         Sanctum::actingAs(

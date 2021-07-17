@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection PhpUndefinedNamespaceInspection */
+/** @noinspection PhpUndefinedClassInspection */
 return [
 
     'cache' => [
@@ -9,7 +11,7 @@ return [
 
         'duration' => 180,
 
-        'directory' => sys_get_temp_dir().'/__PRAGMARX_COUNTRIES__/cache',
+        'directory' => sys_get_temp_dir() . '/__PRAGMARX_COUNTRIES__/cache',
     ],
 
     'hydrate' => [
@@ -39,15 +41,15 @@ return [
     'validation' => [
         'enabled' => true,
         'rules' => [
-            'country'           => 'name.common',
-            'name'              => 'name.common',
-            'nameCommon'        => 'name.common',
+            'country' => 'name.common',
+            'name' => 'name.common',
+            'nameCommon' => 'name.common',
             'cca2',
             'cca3',
             'ccn3',
             'cioc',
-            'currencies'        => 'ISO4217',
-            'language_short'    => 'ISO639_3',
+            'currencies' => 'ISO4217',
+            'language_short' => 'ISO639_3',
         ],
     ],
 

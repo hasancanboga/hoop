@@ -11,6 +11,10 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * @property mixed phone
+ * @property mixed otp
+ */
 class ConfirmOtpRequest extends FormRequest
 {
 
@@ -19,7 +23,7 @@ class ConfirmOtpRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -28,8 +32,9 @@ class ConfirmOtpRequest extends FormRequest
      * Get the validation rules that apply to the request.
      *
      * @return array
+     * @noinspection PhpArrayShapeAttributeCanBeAddedInspection
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'phone' => 'required|string',
@@ -42,14 +47,14 @@ class ConfirmOtpRequest extends FormRequest
      *
      * @return void
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function authenticate()
     {
         $this->ensureIsNotRateLimited();
 
         $this->ensureOtpNotExpired();
-        
+
         if (!Auth::attempt(
             [
                 'phone' => $this->phone,
@@ -71,7 +76,7 @@ class ConfirmOtpRequest extends FormRequest
      *
      * @return void
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function ensureIsNotRateLimited()
     {
@@ -96,7 +101,7 @@ class ConfirmOtpRequest extends FormRequest
      *
      * @return void
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function ensureOtpNotExpired()
     {
@@ -114,7 +119,7 @@ class ConfirmOtpRequest extends FormRequest
      *
      * @return string
      */
-    public function throttleKey()
+    public function throttleKey(): string
     {
         return Str::lower($this->input('phone')) . '|' . $this->ip();
     }

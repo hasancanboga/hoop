@@ -1,18 +1,17 @@
-<?php
+<?php /** @noinspection PhpParamsInspection */
 
 namespace Tests\Feature\Api;
 
-use Tests\TestCase;
-use App\Models\User;
-use Laravel\Sanctum\Sanctum;
 use App\Http\Controllers\Api\PostController;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
+use Tests\TestCase;
 
 class CreatePostTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     public function test_sanctum_authorization()
     {
         $response = $this->postJson(action([PostController::class, 'store']));

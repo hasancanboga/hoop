@@ -4,6 +4,9 @@ namespace App\Rules;
 
 use App\Services\LocalityService;
 use Illuminate\Contracts\Validation\Rule;
+use MenaraSolutions\Geographer\City;
+use MenaraSolutions\Geographer\Country;
+use MenaraSolutions\Geographer\State;
 
 class GeonamesCodeExists implements Rule
 {
@@ -20,11 +23,10 @@ class GeonamesCodeExists implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
-     * @return bool
+     * @param string $attribute
+     * @param mixed $value
      */
-    public function passes($attribute, $value)
+    public function passes($attribute, $value): bool|Country|City|State
     {
         $localityService = new LocalityService($value);
         return $localityService->buildLocality();
@@ -35,7 +37,7 @@ class GeonamesCodeExists implements Rule
      *
      * @return string
      */
-    public function message()
+    public function message(): string
     {
         return __('misc.geocode_not_found');
     }

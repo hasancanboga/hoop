@@ -1,27 +1,30 @@
 <?php
 
+use Illuminate\Contracts\Auth\Authenticatable;
+
 /**
  * Generates a one-time password
- * 
+ *
  * @return int
  */
-function otp()
+function otp(): int
 {
     return config('app.env') === 'local' ? 1234 : rand(1000, 9999);
 }
 
-function current_user()
+function current_user(): ?Authenticatable
 {
     return auth()->user();
 }
 
 /**
  * Shorthand for ["message" => "foo"]
- * 
+ *
  * @param string $message
+ * @param array $extras
  * @return array
  */
-function message($message, $extras = [])
+function message(string $message, array $extras = []): array
 {
     $final = ['message' => $message];
     foreach ($extras as $key => $value) {

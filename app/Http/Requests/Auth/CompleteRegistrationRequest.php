@@ -13,7 +13,7 @@ class CompleteRegistrationRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         // no authorization needed, because the users can only update themselves with this request.
         return true;
@@ -23,8 +23,9 @@ class CompleteRegistrationRequest extends FormRequest
      * Get the validation rules that apply to the request.
      *
      * @return array
+     * @noinspection PhpArrayShapeAttributeCanBeAddedInspection
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'first_name' => ['required', 'string', 'max:100', new RealName],

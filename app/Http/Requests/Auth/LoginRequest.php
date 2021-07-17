@@ -2,31 +2,24 @@
 
 namespace App\Http\Requests\Auth;
 
-use App\Models\User;
-use Illuminate\Support\Str;
-use App\Services\SmsService;
 use App\Exceptions\SmsException;
+use App\Models\User;
+use App\Services\SmsService;
 use Illuminate\Auth\Events\Lockout;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class LoginRequest extends FormRequest
 {
-    protected $smsService;
-
-    public function __construct(SmsService $smsService)
-    {
-        $this->smsService = $smsService;
-    }
 
     /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -35,8 +28,9 @@ class LoginRequest extends FormRequest
      * Get the validation rules that apply to the request.
      *
      * @return array
+     * @noinspection PhpArrayShapeAttributeCanBeAddedInspection
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'phone' => 'required|string|phone',
@@ -45,7 +39,9 @@ class LoginRequest extends FormRequest
     }
 
     /** Fire off the OTP after validating the phone.
-     * 
+     *
+     * @throws ValidationException
+     * @noinspection PhpUndefinedFieldInspection
      */
     public function loginOrRegister()
     {
@@ -60,11 +56,13 @@ class LoginRequest extends FormRequest
         $user->otp_expiry = now()->addSeconds(120);
         $user->save();
 
-        $this->setUserResolver(fn () => $user);
+        $this->setUserResolver(fn() => $user);
+
+        $smsService = new SmsService();
 
         try {
-            $this->smsService->send($user->phone, $otp);
-        } catch (SmsException $e) {
+            $smsService->send($user->phone, $otp);
+        } catch (SmsException) {
             RateLimiter::hit($this->throttleKey());
             throw ValidationException::withMessages([
                 'phone' => __('misc.unknown_error'),
@@ -80,7 +78,7 @@ class LoginRequest extends FormRequest
      *
      * @return void
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function ensureIsNotRateLimited()
     {
@@ -105,7 +103,7 @@ class LoginRequest extends FormRequest
      *
      * @return string
      */
-    public function throttleKey()
+    public function throttleKey(): string
     {
         return Str::lower($this->input('phone')) . '|' . $this->ip();
     }

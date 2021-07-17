@@ -19,8 +19,10 @@ class UserFactory extends Factory
      * Define the model's default state.
      *
      * @return array
+     * @noinspection PhpArrayShapeAttributeCanBeAddedInspection
+     * @noinspection PhpUndefinedMethodInspection
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'phone' => phone($this->faker->unique()
@@ -36,7 +38,7 @@ class UserFactory extends Factory
         ];
     }
 
-    public function configure()
+    public function configure(): UserFactory
     {
         return $this->afterMaking(function (User $user) {
             $user->generateUniqueUsername();
@@ -48,9 +50,11 @@ class UserFactory extends Factory
     /**
      * Indicate that the model's email address should be unverified.
      *
-     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     * @return Factory
+     * @noinspection PhpUnused
+     * @noinspection PhpUnusedParameterInspection
      */
-    public function unverified()
+    public function unverified(): Factory
     {
         return $this->state(function (array $attributes) {
             return [
@@ -59,7 +63,7 @@ class UserFactory extends Factory
         });
     }
 
-    public function dev()
+    public function dev(): UserFactory
     {
         return $this->state([
             'phone' => config('seeding.dev.phone'),
@@ -69,7 +73,7 @@ class UserFactory extends Factory
         ]);
     }
 
-    public function dev_interact()
+    public function dev_interact(): UserFactory
     {
         return $this->state([
             'first_name' => config('seeding.dev.first_name'),
@@ -78,10 +82,11 @@ class UserFactory extends Factory
         ]);
     }
 
-    public function juvenile()
+    /** @noinspection PhpUndefinedMethodInspection */
+    public function juvenile(): UserFactory
     {
         return $this->state([
-            'birth_year' =>  $this->faker->numberBetween(now()->year - 12, now()->year - 5),
+            'birth_year' => $this->faker->numberBetween(now()->year - 12, now()->year - 5),
             'parent_first_name' => $this->faker->firstName(),
             'parent_last_name' => $this->faker->lastName(),
             'parent_phone' => phone($this->faker->unique()

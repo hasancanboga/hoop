@@ -8,13 +8,13 @@ use App\Http\Controllers\Controller;
 
 class FollowController extends Controller
 {
-    public function store(User $user)
+    public function store(Request $request, User $user)
     {
-        auth()->user()->follow($user);
+        $request->user()->follow($user);
     }
-    
-    public function destroy(User $user)
+
+    public function destroy(Request $request, User $user)
     {
-        auth()->user()->unfollow($user);
+        $request->user()->unfollow($user);
     }
 }

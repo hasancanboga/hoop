@@ -1,13 +1,18 @@
-<?php
+<?php /** @noinspection PhpUnused */
 
 namespace App\Models;
 
 use App\Traits\Followable;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @mixin IdeHelperUser
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, Followable;
@@ -58,17 +63,17 @@ class User extends Authenticatable
         // 'avatar',
     ];
 
-    public function username()
+    public function username(): string
     {
         return $this->phone;
     }
 
-    public function getAuthPassword()
+    public function getAuthPassword(): ?string
     {
         return $this->otp;
     }
 
-    public function locality()
+    public function locality(): HasOne
     {
         return $this->hasOne(Locality::class);
     }
@@ -83,30 +88,30 @@ class User extends Authenticatable
         $this->attributes['last_name'] = ucfirst($value);
     }
 
-    public function getFullNameAttribute()
+    public function getFullNameAttribute(): string
     {
-        return "{$this->first_name} {$this->last_name}";
+        return "$this->first_name $this->last_name";
     }
 
-    public function getParentFullNameAttribute()
+    public function getParentFullNameAttribute(): ?string
     {
         if ($this->parent_first_name && $this->parent_last_name) {
-            return "{$this->parent_first_name} {$this->parent_last_name}";
+            return $this->parent_first_name . " " . $this->parent_last_name;
         }
         return null;
     }
 
-    public function hasCompletedRegistration()
+    public function hasCompletedRegistration(): bool
     {
         return $this->first_name && $this->last_name && $this->gender && $this->birth_year && $this->username;
     }
 
-    public function hasRegisteredParent()
+    public function hasRegisteredParent(): bool
     {
         return $this->parent_first_name && $this->parent_last_name && $this->parent_phone;
     }
 
-    public function getAgeAttribute()
+    public function getAgeAttribute(): int
     {
         return now()->year - $this->birth_year;
     }
@@ -124,12 +129,12 @@ class User extends Authenticatable
         return $posts->latest()->get();
     }
 
-    public function posts()
+    public function posts(): HasMany
     {
         return $this->hasMany(Post::class)->latest();
     }
 
-    public function getAvatarAttribute()
+    public function getAvatarAttribute(): string
     {
         return "https://i.pravatar.cc/120?u=" . $this->phone;
     }

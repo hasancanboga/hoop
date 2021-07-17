@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 
 namespace Tests\Feature\Web;
 
@@ -25,7 +25,7 @@ class AuthenticationTest extends TestCase
 
         $response = $this->post('/login', [
             'phone' => $user->phone,
-            'phone_country' =>  phone($user->phone)->getCountry(),
+            'phone_country' => phone($user->phone)->getCountry(),
         ]);
 
         $response->assertRedirect(route('otp'));

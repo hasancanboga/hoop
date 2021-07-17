@@ -19,11 +19,11 @@ class RealName implements Rule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
+     * @param string $attribute
+     * @param mixed $value
      * @return bool
      */
-    public function passes($attribute, $value)
+    public function passes($attribute, $value): bool
     {
         return preg_match("/^[\p{L} ,.'-]+$/u", $value);
     }
@@ -33,7 +33,7 @@ class RealName implements Rule
      *
      * @return string
      */
-    public function message()
+    public function message(): string
     {
         return __('validation.real_name');
     }

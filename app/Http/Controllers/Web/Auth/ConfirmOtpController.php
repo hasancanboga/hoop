@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers\Web\Auth;
 
-use Inertia\Inertia;
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use App\Http\Requests\Auth\ConfirmOtpRequest;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Validation\ValidationException;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class ConfirmOtpController extends Controller
 {
     /**
      * Show the confirm password view.
-     *
-     * @return \Illuminate\View\View
+     * @return Response
      */
-    public function show()
+    public function show(): Response
     {
         return Inertia::render('Auth/ConfirmOtp', [
             'temp_user' => session('temp_user'),
@@ -24,10 +26,11 @@ class ConfirmOtpController extends Controller
     /**
      * Confirm the user's password.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return mixed
+     * @param ConfirmOtpRequest $request
+     * @return RedirectResponse
+     * @throws ValidationException
      */
-    public function store(ConfirmOtpRequest $request)
+    public function store(ConfirmOtpRequest $request): RedirectResponse
     {
         $request->authenticate();
         $request->session()->regenerate();

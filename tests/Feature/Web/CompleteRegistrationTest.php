@@ -1,12 +1,12 @@
-<?php
+<?php /** @noinspection PhpParamsInspection */
 
 namespace Tests\Feature\Web;
 
-use Tests\TestCase;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 class CompleteRegistrationTest extends TestCase
 {
@@ -51,6 +51,7 @@ class CompleteRegistrationTest extends TestCase
             "birth_year" => null,
         ]);
 
+        /** @noinspection PhpUndefinedMethodInspection */
         $response = $this->actingAs($user)->post(route('register.complete'), [
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),

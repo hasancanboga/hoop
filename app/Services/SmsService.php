@@ -6,11 +6,14 @@ use App\Exceptions\SmsException;
 
 class SmsService
 {
-    public function send(string $phone, string $data) 
+    /**
+     * @throws SmsException
+     */
+    public function send(string $phone, string $data)
     {
         logger("sending '$data' to '$phone'");
 
-        if(false){
+        if ($phone === "123456789") {
             throw new SmsException();
         }
     }

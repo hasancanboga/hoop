@@ -2,48 +2,52 @@
 
 namespace App\Http\Controllers\Web\Auth;
 
-use Inertia\Inertia;
-use App\Services\UserService;
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
-use MenaraSolutions\Geographer\Country;
 use App\Http\Requests\Auth\CompleteRegistrationRequest;
+use App\Providers\RouteServiceProvider;
+use App\Services\UserService;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
+use Inertia\Inertia;
+use Inertia\Response;
+use MenaraSolutions\Geographer\Country;
 
 class CompleteRegistrationController extends Controller
 {
-    protected $userService;
+    protected UserService $userService;
 
     public function __construct(UserService $userService)
     {
         $this->userService = $userService;
     }
 
-
     /**
      * Display the registration view.
      *
-     * @return \Illuminate\View\View
+     * @param Request $request
+     * @return Response|Redirector|RedirectResponse|Application
      */
-    public function create()
+    public function create(Request $request): Response|Redirector|RedirectResponse|Application
     {
-        if (auth()->user()->hasCompletedRegistration()) {
+        if ($request->user()->hasCompletedRegistration()) {
             return redirect(RouteServiceProvider::HOME);
         }
 
-        return Inertia::render('Auth/CompleteRegistration', [
-            'localities' => Country::build('TR')->getStates()->sortBy('isoCode')->toArray()
+        return Inertia::render('Auth/CompleteRegistphpration', [
+            'localities' => Country::build('TR')
+                ->getStates()->sortBy('isoCode')->toArray()
         ]);
     }
 
     /**
      * Handle an incoming registration request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     *
-     * @throws \Illuminate\Validation\ValidationException
+     * @param CompleteRegistrationRequest $request
+     * @return RedirectResponse
      */
-    public function store(CompleteRegistrationRequest $request)
+    public function store(CompleteRegistrationRequest $request): RedirectResponse
     {
         if ($request->user()->hasCompletedRegistration()) {
             return redirect(RouteServiceProvider::HOME);

@@ -2,9 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\User;
-use Illuminate\Auth\Events\Registered;
 use App\Http\Requests\Auth\CompleteRegistrationRequest;
+use Illuminate\Auth\Events\Registered;
 
 class UserService
 {
