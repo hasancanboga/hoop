@@ -1,5 +1,5 @@
 <template>
-    <inertia-link :class="classes">
+    <inertia-link :class="classes" href="">
         <slot/>
     </inertia-link>
 </template>

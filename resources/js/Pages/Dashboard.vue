@@ -1,5 +1,6 @@
 <template>
     <breeze-authenticated-layout>
+        <!--suppress HtmlUnknownTag -->
         <inertia-head title="Dashboard"/>
         <template #header>
             <div class="flex justify-between">

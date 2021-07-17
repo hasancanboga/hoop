@@ -1,4 +1,6 @@
+<!--suppress JSUnresolvedVariable -->
 <template>
+    <!--suppress HtmlUnknownTag -->
     <inertia-head title="Confirm Login"/>
     <div class="mb-4 text-sm text-gray-600">{{ lang.get('auth.otp_prompt') }}</div>
 
@@ -52,6 +54,7 @@ export default {
     },
 
     data() {
+        // noinspection JSUnresolvedFunction
         return {
             form: this.$inertia.form({
                 phone: this.temp_user?.phone,

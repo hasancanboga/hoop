@@ -1,4 +1,6 @@
+<!--suppress JSUnresolvedVariable -->
 <template>
+    <!--suppress HtmlUnknownTag -->
     <inertia-head title="Login"/>
     <breeze-validation-errors class="mb-4"/>
 
@@ -55,6 +57,7 @@ export default {
     },
 
     data() {
+        // noinspection JSUnresolvedFunction
         return {
             form: this.$inertia.form({
                 phone: "",

@@ -1,3 +1,4 @@
+<!--suppress ALL -->
 <template>
     <inertia-head title="Hoop"/>
     <div

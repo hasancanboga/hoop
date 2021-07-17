@@ -1,3 +1,4 @@
+<!--suppress HtmlUnknownTag -->
 <template>
     <inertia-head title="Complete Registration"/>
     <breeze-validation-errors class="mb-4"/>
@@ -7,6 +8,7 @@
     Please use the mobile app to register your parents.
     <br/>
     <br/>
+    <!--suppress JSUnresolvedFunction -->
     <inertia-link :href="route('logout')" method="post" class="underline text-sm text-gray-600 hover:text-gray-900">
         {{ lang.get("auth.logout") }}
     </inertia-link>

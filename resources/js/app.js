@@ -7,6 +7,7 @@ import {InertiaProgress} from '@inertiajs/progress';
 
 const el = document.getElementById('app');
 
+// noinspection JSUnresolvedVariable
 createApp({
     render: () =>
         h(InertiaApp, {
