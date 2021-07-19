@@ -35,7 +35,7 @@ class CompleteRegistrationController extends Controller
             return redirect(RouteServiceProvider::HOME);
         }
 
-        return Inertia::render('Auth/CompleteRegistphpration', [
+        return Inertia::render('Auth/CompleteRegistration', [
             'localities' => Country::build('TR')
                 ->getStates()->sortBy('isoCode')->toArray()
         ]);

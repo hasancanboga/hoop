@@ -22,7 +22,7 @@ class RegisterParentTest extends TestCase
     {
         Sanctum::actingAs(
             User::factory()->create([
-                "birth_year" => now()->year - 6,
+                "date_of_birth" => today()->subYears(6),
             ])
         );
 
@@ -41,7 +41,7 @@ class RegisterParentTest extends TestCase
     {
         Sanctum::actingAs(
             User::factory()->create([
-                "birth_year" => now()->year - 6,
+                "date_of_birth" => today()->subYears(6),
             ])
         );
 

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Followable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -27,7 +28,7 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'gender',
-        'birth_year',
+        'date_of_birth',
         'email',
         'locality_id',
         'otp',
@@ -103,7 +104,7 @@ class User extends Authenticatable
 
     public function hasCompletedRegistration(): bool
     {
-        return $this->first_name && $this->last_name && $this->gender && $this->birth_year && $this->username;
+        return $this->first_name && $this->last_name && $this->gender && $this->date_of_birth && $this->username;
     }
 
     public function hasRegisteredParent(): bool
@@ -113,7 +114,7 @@ class User extends Authenticatable
 
     public function getAgeAttribute(): int
     {
-        return now()->year - $this->birth_year;
+        return Carbon::parse($this->date_of_birth)->age;
     }
 
     public function timeline($withUsers = false)

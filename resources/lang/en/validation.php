@@ -160,7 +160,7 @@ return [
         'email' => "Email",
         'first_name' => "First Name",
         'last_name' => "Last Name",
-        'birth_year' => "Birth Year",
+        'date_of_birth' => "Birth Date",
         'gender' => "Gender",
         'city' => "City",
         'country' => "Country",

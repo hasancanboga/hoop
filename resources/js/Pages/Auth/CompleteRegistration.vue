@@ -26,10 +26,10 @@
         </div>
 
         <div class="mt-4">
-            <breeze-label for="birth_year" :value="lang.get('validation.attributes.birth_year')" class="inline-block"/>
+            <breeze-label for="date_of_birth" :value="lang.get('validation.attributes.date_of_birth')" class="inline-block"/>
             <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2"/>
-            <breeze-input id="birth_year" type="text" class="mt-1 block w-full" v-model="form.birth_year" required
-                          autocomplete="birth_year"/>
+            <breeze-input id="date_of_birth" type="text" class="mt-1 block w-full" v-model="form.date_of_birth" required
+                          autocomplete="date_of_birth"/>
         </div>
 
         <div class="mt-4">
@@ -128,7 +128,7 @@ export default {
                 // username: "",
                 first_name: "",
                 last_name: "",
-                birth_year: "",
+                date_of_birth: "",
                 gender: "m",
                 email: "",
                 locality: "",

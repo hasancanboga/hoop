@@ -73,7 +73,7 @@ namespace App\Models{
  * @property string|null $last_name
  * @property string|null $email
  * @property string|null $gender
- * @property int|null $birth_year
+ * @property string|null $date_of_birth
  * @property string|null $parent_first_name
  * @property string|null $parent_last_name
  * @property string|null $parent_phone
@@ -85,10 +85,10 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|User[] $follows
  * @property-read int|null $follows_count
- * @property-read mixed $age
- * @property-read mixed $avatar
- * @property-read mixed $full_name
- * @property-read mixed $parent_full_name
+ * @property-read int $age
+ * @property-read string $avatar
+ * @property-read string $full_name
+ * @property-read string|null $parent_full_name
  * @property-read \App\Models\Locality|null $locality
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
@@ -100,8 +100,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
- * @method static \Illuminate\Database\Eloquent\Builder|User whereBirthYear($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereDateOfBirth($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereFirstName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereGender($value)

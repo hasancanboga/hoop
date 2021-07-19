@@ -160,7 +160,7 @@ return [
         'email' => "Email",
         'first_name' => "İsim",
         'last_name' => "Soyisim",
-        'birth_year' => "Doğum Yılı",
+        'date_of_birth' => "Doğum Tarihi",
         'gender' => "Cinsiyet",
         'city' => "Şehir",
         'country' => "Ülke",

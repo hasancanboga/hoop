@@ -31,7 +31,9 @@ class UserFactory extends Factory
             'last_name' => $this->faker->lastName(),
             'email' => $this->faker->unique()->safeEmail(),
             'gender' => $this->faker->randomElement(['m', 'f']),
-            'birth_year' => $this->faker->numberBetween(1921, 2006),
+            'date_of_birth' => $this->faker
+                ->dateTimeBetween('-80 years', '-6 years')
+                ->format('Y-m-d'),
             'otp' => bcrypt('1234'),
             'otp_expiry' => now()->addSeconds(120),
             'remember_token' => Str::random(10),
@@ -86,7 +88,9 @@ class UserFactory extends Factory
     public function juvenile(): UserFactory
     {
         return $this->state([
-            'birth_year' => $this->faker->numberBetween(now()->year - 12, now()->year - 5),
+            'date_of_birth' => $this->faker
+                ->dateTimeBetween('-12 years', '-6 years')
+                ->format('Y-m-d'),
             'parent_first_name' => $this->faker->firstName(),
             'parent_last_name' => $this->faker->lastName(),
             'parent_phone' => phone($this->faker->unique()

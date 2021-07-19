@@ -26,7 +26,7 @@ class CompleteRegistrationTest extends TestCase
             "last_name" => null,
             "email" => null,
             "gender" => null,
-            "birth_year" => null,
+            "date_of_birth" => null,
         ]);
 
         $response = $this->actingAs($user)->get(RouteServiceProvider::HOME);
@@ -48,7 +48,7 @@ class CompleteRegistrationTest extends TestCase
             "last_name" => null,
             "email" => null,
             "gender" => null,
-            "birth_year" => null,
+            "date_of_birth" => null,
         ]);
 
         /** @noinspection PhpUndefinedMethodInspection */
@@ -57,7 +57,9 @@ class CompleteRegistrationTest extends TestCase
             'last_name' => $this->faker->lastName(),
             'gender' => $this->faker->randomElement(['m', 'f']),
             'email' => $this->faker->unique()->safeEmail(),
-            'birth_year' => $this->faker->numberBetween(1921, 2020),
+            'date_of_birth' => $this->faker
+                ->dateTimeBetween('-80 years', '-6 years')
+                ->format('Y-m-d'),
             'locality' => "",
         ]);
 
@@ -71,11 +73,11 @@ class CompleteRegistrationTest extends TestCase
             "last_name" => null,
             "email" => null,
             "gender" => null,
-            "birth_year" => null,
+            "date_of_birth" => null,
         ]);
 
         $response = $this->actingAs($user)->post(route('register.complete'));
 
-        $response->assertSessionHasErrors(['first_name', 'last_name', 'gender', 'birth_year']);
+        $response->assertSessionHasErrors(['first_name', 'last_name', 'gender', 'date_of_birth']);
     }
 }

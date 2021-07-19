@@ -12,11 +12,10 @@ use MenaraSolutions\Geographer\State;
 
 class LocalityService
 {
-    protected int $code;
 
-    public function __construct(int $code)
+    public function __construct(protected int $code)
     {
-        $this->code = $code;
+        //
     }
 
     public function store(User $user): Model|bool|Locality

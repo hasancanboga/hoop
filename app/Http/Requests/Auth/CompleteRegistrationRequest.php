@@ -30,7 +30,12 @@ class CompleteRegistrationRequest extends FormRequest
         return [
             'first_name' => ['required', 'string', 'max:100', new RealName],
             'last_name' => ['required', 'string', 'max:100', new RealName],
-            'birth_year' => 'required|numeric|min:1920|max:2020',
+            'date_of_birth' => [
+                'required',
+                'date',
+                'after:' . today()->subYears(100)->toDateString(),
+                'before:' . today()->subYears(5)->toDateString()
+            ],
             'gender' => 'required|string|in:m,f',
             'email' => 'nullable|string|email|max:255|unique:users',
             'locality' => ['nullable', new GeonamesCodeExists],
