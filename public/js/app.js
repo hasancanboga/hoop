@@ -27181,7 +27181,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.form.date_of_birth = $event;
     }),
     required: "",
-    autocomplete: "date_of_birth"
+    autocomplete: "date_of_birth",
+    placeholder: "YYYY-MM-DD"
   }, null, 8
   /* PROPS */
   , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_breeze_label, {

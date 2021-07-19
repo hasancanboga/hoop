@@ -29,7 +29,7 @@
             <breeze-label for="date_of_birth" :value="lang.get('validation.attributes.date_of_birth')" class="inline-block"/>
             <ExclamationCircleIcon class="h-5 w-5 text-gray-500 inline mx-2"/>
             <breeze-input id="date_of_birth" type="text" class="mt-1 block w-full" v-model="form.date_of_birth" required
-                          autocomplete="date_of_birth"/>
+                          autocomplete="date_of_birth" placeholder="YYYY-MM-DD"/>
         </div>
 
         <div class="mt-4">
