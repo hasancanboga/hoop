@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
 
         Model::preventLazyLoading(!app()->isProduction());
 
-        if (app()->isProduction()) {
+        if (app()->environment(['production', 'staging'])) {
             URL::forceScheme('https');
         }
     }

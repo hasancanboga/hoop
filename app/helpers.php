@@ -9,7 +9,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
  */
 function otp(): int
 {
-    return config('app.env') === 'local' ? 1234 : rand(1000, 9999);
+    return app()->env(['local', 'staging']) ? 1234 : rand(1000, 9999);
 }
 
 function current_user(): ?Authenticatable
