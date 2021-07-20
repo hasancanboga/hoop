@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\Api\UserController;
 use App\Traits\Followable;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -117,7 +119,7 @@ class User extends Authenticatable
         return Carbon::parse($this->date_of_birth)->age;
     }
 
-    public function timeline($withUsers = false)
+    public function timeline($withUsers = false): Collection
     {
         $followedIds = $this->follows()->pluck('id');
 
@@ -158,5 +160,18 @@ class User extends Authenticatable
         }
         $this->username = $username;
         $this->save();
+    }
+
+    /**
+     * Returns the path to this specific user's show method.
+     * Can be used for profile sharing in the future.
+     *
+     * @param string $append
+     * @return string
+     */
+    public function path(string $append = ''): string
+    {
+        $path = action([UserController::class, 'show'], $this->username);
+        return $append ? $path . '/' . $append : $path;
     }
 }

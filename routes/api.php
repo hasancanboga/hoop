@@ -25,6 +25,8 @@ Route::middleware([
     'register.completed:api',
     'register.parent:api'
 ])->group(function () {
+    Route::patch('/user', [UserController::class, 'update']);
+
     Route::get('/users/{user:username}', [UserController::class, 'show']);
 
     Route::post('/users/{user:username}/follow', [FollowController::class, 'store']);
