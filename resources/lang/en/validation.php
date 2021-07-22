@@ -164,5 +164,7 @@ return [
         'gender' => "Gender",
         'city' => "City",
         'country' => "Country",
+        'username' => "Username",
+        'profile_image' => "Profile Image",
     ],
 ];

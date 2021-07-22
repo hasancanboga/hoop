@@ -29,6 +29,8 @@ class User extends Authenticatable
         'phone',
         'first_name',
         'last_name',
+        'username',
+        'profile_image',
         'gender',
         'date_of_birth',
         'email',
@@ -49,6 +51,8 @@ class User extends Authenticatable
         'otp',
         'otp_expiry',
         'remember_token',
+        'created_at',
+        'updated_at',
     ];
 
     /**
@@ -126,8 +130,8 @@ class User extends Authenticatable
         $posts = Post::when($withUsers, function ($query) {
             return $query->with('user');
         })
-            ->whereIn('user_id', $followedIds)
-            ->orWhere('user_id', $this->id);
+                     ->whereIn('user_id', $followedIds)
+                     ->orWhere('user_id', $this->id);
 
         return $posts->latest()->get();
     }
@@ -137,9 +141,9 @@ class User extends Authenticatable
         return $this->hasMany(Post::class)->latest();
     }
 
-    public function getAvatarAttribute(): string
+    public function getProfileImageAttribute($value): string
     {
-        return "https://i.pravatar.cc/120?u=" . $this->phone;
+        return asset('storage/' . $value);
     }
 
     public function generateUniqueUsername()

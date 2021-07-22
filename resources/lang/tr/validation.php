@@ -164,6 +164,8 @@ return [
         'gender' => "Cinsiyet",
         'city' => "Şehir",
         'country' => "Ülke",
+        'username' => "Kullanıcı Adı",
+        'profile_image' => "Profil Resmi",
     ],
 
 ];

@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Models\User;
 use App\Rules\GeonamesCodeExists;
 use App\Rules\RealName;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -22,7 +25,7 @@ class UserController extends Controller
         return $user;
     }
 
-    public function update(Request $request)
+    public function update(Request $request): Response|Application|ResponseFactory
     {
         $validated = $request->validate([
             'first_name' => ['required', 'string', 'max:100', new RealName],
@@ -47,11 +50,14 @@ class UserController extends Controller
                 Rule::unique('users')->ignore($request->user()),
             ],
             'locality' => ['nullable', new GeonamesCodeExists],
+            'profile_image' => ['required', 'file'],
         ]);
+
+        $validated['profile_image'] = $request->file('profile_image')->store('profile_images');
 
         $request->user()->update($validated);
 
-        return response($request->user(), 200);
+        return response($request->user());
     }
 
 

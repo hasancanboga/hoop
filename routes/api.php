@@ -17,7 +17,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/complete-registration', [CompleteRegistrationController::class, 'store']);
     Route::post('/register-parent', [RegisterParentController::class, 'store'])
-        ->middleware('register.completed:api');
+         ->middleware('register.completed:api');
 });
 
 Route::middleware([
@@ -25,7 +25,7 @@ Route::middleware([
     'register.completed:api',
     'register.parent:api'
 ])->group(function () {
-    Route::patch('/user', [UserController::class, 'update']);
+    Route::post('/user/update', [UserController::class, 'update']);
 
     Route::get('/users/{user:username}', [UserController::class, 'show']);
 
