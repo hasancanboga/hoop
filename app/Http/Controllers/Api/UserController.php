@@ -50,10 +50,13 @@ class UserController extends Controller
                 Rule::unique('users')->ignore($request->user()),
             ],
             'locality' => ['nullable', new GeonamesCodeExists],
-            'profile_image' => ['required', 'file'],
+            'profile_image' => ['file'],
         ]);
 
-        $validated['profile_image'] = $request->file('profile_image')->store('profile_images');
+        if (request('avatar')) {
+            $validated['profile_image'] = $request->file('profile_image')
+                ->store('profile_images');
+        }
 
         $request->user()->update($validated);
 
