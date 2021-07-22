@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\ExploreController;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\TimelineController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\FollowController;
 use App\Http\Controllers\Api\Auth\LoginController;
@@ -17,7 +19,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::post('/complete-registration', [CompleteRegistrationController::class, 'store']);
     Route::post('/register-parent', [RegisterParentController::class, 'store'])
-         ->middleware('register.completed:api');
+        ->middleware('register.completed:api');
 });
 
 Route::middleware([
@@ -33,7 +35,8 @@ Route::middleware([
     Route::post('/users/{user:username}/unfollow', [FollowController::class, 'destroy']);
 
     Route::get('/posts', [PostController::class, 'index']);
-    Route::get('/posts/timeline', [PostController::class, 'timeline']);
+    Route::get('/timeline', [TimelineController::class, 'index']);
+    Route::get('/explore', [ExploreController::class, 'index']);
     Route::get('/posts/{post}', [PostController::class, 'show']);
     Route::post('/posts', [PostController::class, 'store']);
 });

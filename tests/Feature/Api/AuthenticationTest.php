@@ -2,6 +2,8 @@
 
 namespace Tests\Feature\Api;
 
+use App\Http\Controllers\Api\Auth\ConfirmOtpController;
+use App\Http\Controllers\Api\Auth\LoginController;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -14,7 +16,7 @@ class AuthenticationTest extends TestCase
     public function test_register_request()
     {
         /** @noinspection PhpUndefinedMethodInspection */
-        $response = $this->postJson('/api/login', [
+        $response = $this->postJson(action([LoginController::class, 'store']), [
             'phone' => $this->faker->unique()->numerify('53########'),
             'phone_country' => 'TR',
         ]);
@@ -26,7 +28,7 @@ class AuthenticationTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->postJson('/api/login', [
+        $response = $this->postJson(action([LoginController::class, 'store']), [
             'phone' => $user->phone,
             'phone_country' => phone($user->phone)->getCountry(),
         ]);
@@ -38,7 +40,7 @@ class AuthenticationTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->postJson('/api/confirm-otp', [
+        $response = $this->postJson(action([ConfirmOtpController::class, 'store']), [
             'phone' => $user->phone,
             'otp' => '1234',
         ]);
@@ -50,7 +52,7 @@ class AuthenticationTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $response = $this->postJson('/api/confirm-otp', [
+        $response = $this->postJson(action([ConfirmOtpController::class, 'store']), [
             'phone' => $user->phone,
             'otp' => 'wrong-otp',
         ]);

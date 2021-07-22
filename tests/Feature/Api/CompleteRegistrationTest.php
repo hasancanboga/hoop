@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Api;
 
+use App\Http\Controllers\Api\Auth\CompleteRegistrationController;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -14,7 +15,7 @@ class CompleteRegistrationTest extends TestCase
 
     public function test_sanctum_authorization()
     {
-        $response = $this->postJson('/api/complete-registration');
+        $response = $this->postJson(action([CompleteRegistrationController::class, 'store']));
         $response->assertUnauthorized();
     }
 
@@ -34,7 +35,7 @@ class CompleteRegistrationTest extends TestCase
             ])
         );
 
-        $response = $this->postJson('/api/complete-registration', [
+        $response = $this->postJson(action([CompleteRegistrationController::class, 'store']), [
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
             'gender' => $this->faker->randomElement(['m', 'f']),
@@ -61,9 +62,14 @@ class CompleteRegistrationTest extends TestCase
             ])
         );
 
-        $response = $this->postJson('/api/complete-registration');
+        $response = $this->postJson(action([CompleteRegistrationController::class, 'store']));
 
         $response->assertStatus(422);
-        $response->assertJsonValidationErrors(['first_name', 'last_name', 'gender', 'date_of_birth']);
+        $response->assertJsonValidationErrors([
+            'first_name',
+            'last_name',
+            'gender',
+            'date_of_birth'
+        ]);
     }
 }

@@ -130,8 +130,8 @@ class User extends Authenticatable
         $posts = Post::when($withUsers, function ($query) {
             return $query->with('user');
         })
-                     ->whereIn('user_id', $followedIds)
-                     ->orWhere('user_id', $this->id);
+            ->whereIn('user_id', $followedIds)
+            ->orWhere('user_id', $this->id);
 
         return $posts->latest()->get();
     }

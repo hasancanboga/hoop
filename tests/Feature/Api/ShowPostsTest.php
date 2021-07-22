@@ -6,6 +6,7 @@
 namespace Tests\Feature\Api;
 
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\TimelineController;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -52,7 +53,7 @@ class ShowPostsTest extends TestCase
 
         Sanctum::actingAs($user1);
 
-        $response = $this->getJson(action([PostController::class, 'timeline']));
+        $response = $this->getJson(action([TimelineController::class, 'index']));
 
         $response->assertJsonCount(2);
         $response->assertJsonFragment(['id' => $post1->id]);

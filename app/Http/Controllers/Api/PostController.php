@@ -21,11 +21,6 @@ class PostController extends Controller
         return $request->user()->posts;
     }
 
-    public function timeline(Request $request)
-    {
-        return $request->user()->timeline(true);
-    }
-
     public function store(Request $request)
     {
         $validated = $request->validate([

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Api;
 
+use App\Http\Controllers\Api\Auth\RegisterParentController;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -14,7 +15,7 @@ class RegisterParentTest extends TestCase
 
     public function test_sanctum_authorization()
     {
-        $response = $this->postJson('/api/register-parent');
+        $response = $this->postJson(action([RegisterParentController::class, 'store']));
         $response->assertUnauthorized();
     }
 
@@ -27,7 +28,7 @@ class RegisterParentTest extends TestCase
         );
 
         /** @noinspection PhpUndefinedMethodInspection */
-        $response = $this->postJson('/api/register-parent', [
+        $response = $this->postJson(action([RegisterParentController::class, 'store']), [
             'parent_first_name' => $this->faker->firstName(),
             'parent_last_name' => $this->faker->lastName(),
             'parent_phone' => $this->faker->unique()->numerify('53########'),
@@ -45,9 +46,13 @@ class RegisterParentTest extends TestCase
             ])
         );
 
-        $response = $this->postJson('/api/register-parent');
+        $response = $this->postJson(action([RegisterParentController::class, 'store']));
 
         $response->assertStatus(422);
-        $response->assertJsonValidationErrors(['parent_first_name', 'parent_last_name', 'parent_phone']);
+        $response->assertJsonValidationErrors([
+            'parent_first_name',
+            'parent_last_name',
+            'parent_phone'
+        ]);
     }
 }
