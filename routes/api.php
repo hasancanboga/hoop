@@ -35,7 +35,7 @@ Route::middleware([
     Route::post('/users/{user:username}/unfollow', [FollowController::class, 'destroy']);
 
     Route::get('/posts', [PostController::class, 'index']);
-    Route::get('/timeline', [TimelineController::class, 'index']);
+    Route::get('/timeline',TimelineController::class);
     Route::get('/explore', [ExploreController::class, 'index']);
     Route::get('/posts/{post}', [PostController::class, 'show']);
     Route::post('/posts', [PostController::class, 'store']);

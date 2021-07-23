@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class TimelineController extends Controller
 {
-    public function index(Request $request)
+    public function __invoke(Request $request)
     {
         return $request->user()->timeline(true);
     }

@@ -18,7 +18,7 @@ class PostController extends Controller
 
     public function index(Request $request)
     {
-        return $request->user()->posts;
+        return $request->user()->posts()->latest()->paginate(10);
     }
 
     public function store(Request $request)

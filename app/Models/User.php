@@ -5,12 +5,12 @@ namespace App\Models;
 use App\Http\Controllers\Api\UserController;
 use App\Traits\Followable;
 use Carbon\Carbon;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -123,7 +123,7 @@ class User extends Authenticatable
         return Carbon::parse($this->date_of_birth)->age;
     }
 
-    public function timeline($withUsers = false): Collection
+    public function timeline($withUsers = false): LengthAwarePaginator
     {
         $followedIds = $this->follows()->pluck('id');
 
@@ -133,7 +133,7 @@ class User extends Authenticatable
             ->whereIn('user_id', $followedIds)
             ->orWhere('user_id', $this->id);
 
-        return $posts->latest()->get();
+        return $posts->latest()->paginate(10);
     }
 
     public function posts(): HasMany
