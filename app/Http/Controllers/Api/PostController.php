@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\User;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -16,9 +18,9 @@ class PostController extends Controller
         return Post::with('user')->find($id);
     }
 
-    public function index(Request $request)
+    public function index(User $user): LengthAwarePaginator
     {
-        return $request->user()->posts()->latest()->paginate(10);
+        return $user->posts()->latest()->paginate(10);
     }
 
     public function store(Request $request)

@@ -133,12 +133,17 @@ class User extends Authenticatable
             ->whereIn('user_id', $followedIds)
             ->orWhere('user_id', $this->id);
 
-        return $posts->latest()->paginate(10);
+        return $posts->withCount('likes')->latest()->paginate(10);
+    }
+
+    public function likes(): HasMany
+    {
+        return $this->hasMany(Like::class);
     }
 
     public function posts(): HasMany
     {
-        return $this->hasMany(Post::class)->latest();
+        return $this->hasMany(Post::class)->withCount('likes')->latest();
     }
 
     public function getProfileImageAttribute($value): string

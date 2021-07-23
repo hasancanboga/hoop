@@ -12,6 +12,33 @@
 
 namespace App\Models{
 /**
+ * App\Models\Like
+ *
+ * @mixin IdeHelperLike
+ * @property int $id
+ * @property int $user_id
+ * @property int $post_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @method static \Illuminate\Database\Eloquent\Builder|Like newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Like newQuery()
+ * @method static \Illuminate\Database\Query\Builder|Like onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Like query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Like whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Like whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Like whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Like wherePostId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Like whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Like whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|Like withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Like withoutTrashed()
+ */
+	class IdeHelperLike extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * App\Models\Locality
  *
  * @mixin IdeHelperLocality
@@ -47,6 +74,8 @@ namespace App\Models{
  * @property string $body
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Like[] $likes
+ * @property-read int|null $likes_count
  * @property-read \App\Models\User $user
  * @method static \Database\Factories\PostFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Post newModelQuery()
@@ -77,7 +106,7 @@ namespace App\Models{
  * @property string|null $parent_first_name
  * @property string|null $parent_last_name
  * @property string|null $parent_phone
- * @property string|null $profile_image
+ * @property string $profile_image
  * @property string|null $otp
  * @property string|null $otp_expiry
  * @property string|null $remember_token
@@ -86,9 +115,10 @@ namespace App\Models{
  * @property-read \Illuminate\Database\Eloquent\Collection|User[] $follows
  * @property-read int|null $follows_count
  * @property-read int $age
- * @property-read string $avatar
  * @property-read string $full_name
  * @property-read string|null $parent_full_name
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Like[] $likes
+ * @property-read int|null $likes_count
  * @property-read \App\Models\Locality|null $locality
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count

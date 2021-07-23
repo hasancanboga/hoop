@@ -27,7 +27,7 @@ class FollowTest extends TestCase
         $response->assertOK();
         $this->assertTrue($user1->isFollowing($user2));
 
-        $response = $this->postJson(action(
+        $response = $this->deleteJson(action(
             [FollowController::class, 'destroy'],
             ['user' => $user2]
         ));

@@ -19,7 +19,7 @@ class ShowPostsTest extends TestCase
 
     public function test_sanctum_authorization()
     {
-        $response = $this->getJson(action([PostController::class, 'store']));
+        $response = $this->postJson(action([PostController::class, 'store']));
         $response->assertUnauthorized();
     }
 
@@ -35,9 +35,9 @@ class ShowPostsTest extends TestCase
 
     public function test_users_posts_can_be_retrieved()
     {
-        Sanctum::actingAs(User::factory()->hasPosts(5)->create());
-        $response = $this->getJson(action([PostController::class, 'index']));
-        $response->assertJsonCount(5);
+        $user = Sanctum::actingAs(User::factory()->hasPosts(5)->create());
+        $response = $this->getJson(action([PostController::class, 'index'], $user->username));
+        $response->assertJsonCount(5, 'data');
     }
 
     public function test_timeline_can_be_retrieved_and_contains_follows_posts()
@@ -53,9 +53,9 @@ class ShowPostsTest extends TestCase
 
         Sanctum::actingAs($user1);
 
-        $response = $this->getJson(action([TimelineController::class, 'index']));
+        $response = $this->getJson(action(TimelineController::class));
 
-        $response->assertJsonCount(2);
+        $response->assertJsonCount(2, 'data');
         $response->assertJsonFragment(['id' => $post1->id]);
         $response->assertJsonFragment(['id' => $post2->id]);
         $response->assertJsonMissing(['id' => $post3->id]);
