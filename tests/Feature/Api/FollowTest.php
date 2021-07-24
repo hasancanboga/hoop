@@ -1,4 +1,4 @@
-<?php /** @noinspection PhpParamsInspection */
+<?php
 
 namespace Tests\Feature\Api;
 
@@ -12,7 +12,26 @@ class FollowTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @noinspection PhpUndefinedMethodInspection */
+    public function test_sanctum_authorization()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->postJson(action(
+            [FollowController::class, 'store'],
+            ['user' => $user]
+        ));
+        $response->assertUnauthorized();
+
+        $response = $this->deleteJson(action(
+            [FollowController::class, 'destroy'],
+            ['user' => $user]
+        ));
+        $response->assertUnauthorized();
+    }
+
+    /** @noinspection PhpUndefinedMethodInspection
+     * @noinspection PhpParamsInspection
+     */
     public function test_follow_and_unfollow_user()
     {
         $user1 = User::factory()->create();

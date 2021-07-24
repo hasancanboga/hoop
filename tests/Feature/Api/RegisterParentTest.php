@@ -38,7 +38,7 @@ class RegisterParentTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_complete_registration_validation_rules()
+    public function test_register_parent_validation_rules()
     {
         Sanctum::actingAs(
             User::factory()->create([

@@ -8,7 +8,6 @@ use App\Models\Like;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\Response;
 
@@ -47,6 +46,6 @@ trait Likable
 
     public function isLikedBy(User $user): bool
     {
-        return (bool)$user->likes->where('post_id', $this->id)->count();
+        return $this->likes()->where('user_id', $this->id)->exists();
     }
 }
