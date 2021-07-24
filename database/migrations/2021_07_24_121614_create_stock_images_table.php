@@ -15,6 +15,11 @@ class CreateStockImagesTable extends Migration
     {
         Schema::create('stock_images', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('image_id')
+                ->constrained()
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
+            $table->boolean('active');
             $table->timestamps();
         });
     }
