@@ -146,9 +146,9 @@ class User extends Authenticatable
         return $this->hasMany(Post::class)->withCount('likes')->latest();
     }
 
-    public function getProfileImageAttribute($value): string
+    public function getProfileImageAttribute($value): ?string
     {
-        return asset('storage/' . $value);
+        return $value ? asset('storage/' . $value) : null;
     }
 
     public function generateUniqueUsername()
