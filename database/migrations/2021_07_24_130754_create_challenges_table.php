@@ -21,14 +21,13 @@ class CreateChallengesTable extends Migration
             $table->integer('max_age');
             $table->integer('max_participants')->nullable();
             $table->string('reward');
+
             $table->foreignId('stock_image_id')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('set null');
-            $table->foreignId('video_id')
-                ->constrained()
-                ->onUpdate('cascade')
-                ->onDelete('set null');;
+
+            $table->string('video');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
             $table->timestamps();

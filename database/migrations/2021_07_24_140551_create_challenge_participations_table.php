@@ -27,10 +27,7 @@ class CreateChallengeParticipationsTable extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');;
 
-            $table->foreignId('video_id')
-                ->constrained()
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+            $table->string('video');
 
             $table->timestamps();
         });
