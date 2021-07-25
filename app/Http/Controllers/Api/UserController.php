@@ -54,7 +54,8 @@ class UserController extends Controller
         ]);
 
         if (request('profile_image')) {
-            $validated['profile_image'] = $request->file('profile_image')
+            $validated['profile_image'] = $request
+                ->file('profile_image')
                 ->store('profile_images');
         }
 

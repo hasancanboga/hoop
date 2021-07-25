@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
 /**
@@ -133,6 +134,7 @@ class User extends Authenticatable
             ->whereIn('user_id', $followedIds)
             ->orWhere('user_id', $this->id);
 
+        /** @noinspection PhpUndefinedMethodInspection */
         return $posts->withCount('likes')->latest()->paginate(10);
     }
 
@@ -148,7 +150,7 @@ class User extends Authenticatable
 
     public function getProfileImageAttribute($value): ?string
     {
-        return $value ? asset('storage/' . $value) : null;
+        return $value ? Storage::url($value) : null;
     }
 
     public function generateUniqueUsername()
