@@ -12,9 +12,12 @@ return [
     | as the size rules. Feel free to tweak each of these messages here.
     |
     */
+
     'real_name' => 'The :attribute field contains an invalid character.',
     'phone' => 'The :attribute field contains an invalid number.',
+    'image_aspect_ratio' => 'The :attribute aspect ratio is invalid.',
 
+    // defaults:
     'accepted' => 'The :attribute must be accepted.',
     'active_url' => 'The :attribute is not a valid URL.',
     'after' => 'The :attribute must be a date after :date.',

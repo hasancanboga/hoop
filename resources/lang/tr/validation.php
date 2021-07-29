@@ -12,9 +12,12 @@ return [
     | as the size rules. Feel free to tweak each of these messages here.
     |
     */
+
     'real_name' => ':attribute geçersiz bir karakter içermektedir.',
     'phone' => ':attribute geçersiz bir numara içermektedir.',
+    'image_aspect_ratio' => ':attribute geçersiz bir en-boy oranı içermektedir.',
 
+    // defaults:
     'accepted' => ':attribute kabul edilmelidir.',
     'active_url' => ':attribute geçerli bir URL olmalıdır.',
     'after' => 'Girdiğiniz :attribute, :date tarihinden sonraki bir tarih olmalıdır.',

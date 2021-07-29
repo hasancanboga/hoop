@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Rules\GeonamesCodeExists;
 use App\Rules\RealName;
+use App\Rules\ValidImageAspectRatio;
+use App\Services\ImageService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 
@@ -50,13 +52,12 @@ class UserController extends Controller
                 Rule::unique('users')->ignore($request->user()),
             ],
             'locality' => ['nullable', new GeonamesCodeExists],
-            'profile_image' => ['image'],
+            'profile_image' => ['image', 'max:5000', new ValidImageAspectRatio],
         ]);
 
         if (request('profile_image')) {
-            $validated['profile_image'] = $request
-                ->file('profile_image')
-                ->store('profile_images');
+            $imageService = new ImageService($request->file('profile_image'));
+            $validated['profile_image'] = $imageService->store('profile_images');
         }
 
         $request->user()->update($validated);
