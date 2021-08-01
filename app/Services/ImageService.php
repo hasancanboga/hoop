@@ -14,7 +14,7 @@ class ImageService
     protected int $w;
     protected int $h;
     protected int $defaultSize = 1080;
-    protected string $extension = 'png';
+    protected string $extension = 'jpg';
 
     public function __construct(protected UploadedFile $file)
     {
@@ -30,10 +30,9 @@ class ImageService
      */
     public function store(string $path): string
     {
-        return Storage::put(
-            $this->generateName($path),
-            $this->compress()
-        );
+        $name = $this->generateName($path);
+        Storage::put($name, $this->compress());
+        return $name;
     }
 
     public function compress(): Image
@@ -58,7 +57,7 @@ class ImageService
             function ($constraint) {
                 $constraint->aspectRatio();
             }
-        )->save(null, 75, 'jpg');
+        )->save(null, 75, $this->extension);
     }
 
     public function generateName($path): string

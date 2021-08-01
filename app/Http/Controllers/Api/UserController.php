@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use App\Rules\GeonamesCodeExists;
 use App\Rules\RealName;
@@ -27,33 +28,9 @@ class UserController extends Controller
         return $user;
     }
 
-    public function update(Request $request): Response|Application|ResponseFactory
+    public function update(UpdateUserRequest $request): Response|Application|ResponseFactory
     {
-        $validated = $request->validate([
-            'first_name' => ['required', 'string', 'max:100', new RealName],
-            'last_name' => ['required', 'string', 'max:100', new RealName],
-            'username' => [
-                'string',
-                'required',
-                'max:255',
-            ],
-            'date_of_birth' => [
-                'required',
-                'date',
-                'after:' . today()->subYears(100)->toDateString(),
-                'before:' . today()->subYears(5)->toDateString()
-            ],
-            'gender' => ['required', 'string', 'in:m,f'],
-            'email' => [
-                'nullable',
-                'string',
-                'email',
-                'max:255',
-                Rule::unique('users')->ignore($request->user()),
-            ],
-            'locality' => ['nullable', new GeonamesCodeExists],
-            'profile_image' => ['image', 'max:5000', new ValidImageAspectRatio],
-        ]);
+        $validated = $request->validated();
 
         if (request('profile_image')) {
             $imageService = new ImageService($request->file('profile_image'));
