@@ -5,15 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
-use App\Rules\GeonamesCodeExists;
-use App\Rules\RealName;
-use App\Rules\ValidImageAspectRatio;
 use App\Services\ImageService;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -41,7 +39,8 @@ class UserController extends Controller
 
             try {
                 $validated['profile_image'] = $imageService->store();
-            } catch (\Exception $e) {
+                $this->deleteProfileImage();
+            } catch (Exception $e) {
                 return response(message($e->getMessage()), 400);
             }
         }
@@ -51,5 +50,13 @@ class UserController extends Controller
         return response($request->user());
     }
 
+    public function deleteProfileImage()
+    {
+        if (request()->user()->profile_image) {
+            // getRawOriginal() used in order to skip eloquent accessor (turns into URL)
+            Storage::delete(request()->user()->getRawOriginal('profile_image'));
+            request()->user()->update(['profile_image' => null]);
+        }
+    }
 
 }

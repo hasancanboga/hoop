@@ -8,6 +8,7 @@ use Aws\ResultInterface;
 use Aws\S3\S3Client;
 use Exception;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManagerStatic;
@@ -53,7 +54,7 @@ class ImageService
         }
 
         if ($this->hasError) {
-            $this->deleteImage();
+            $this->rollback();
             throw new Exception;
         }
 
@@ -92,9 +93,16 @@ class ImageService
         return $this->path . '/' . Str::random(40) . '.' . $this->extension;
     }
 
-    public function deleteImage()
+    public function delete($name)
     {
-        //
+        Storage::delete($name);
+    }
+
+    public function rollback()
+    {
+        foreach ($this->images as $name => $image) {
+            $this->delete($name);
+        }
     }
 
     public function getCommands(): array

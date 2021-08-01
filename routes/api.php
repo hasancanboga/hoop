@@ -30,6 +30,7 @@ Route::middleware([
 ])->group(function () {
 
     Route::post('/user/update', [UserController::class, 'update']);
+    Route::delete('/user/profile-image', [UserController::class, 'deleteProfileImage']);
     Route::get('/users/{user:username}', [UserController::class, 'show']);
     Route::post('/users/{user:username}/follow', [FollowController::class, 'store']);
     Route::delete('/users/{user:username}/follow', [FollowController::class, 'destroy']);
