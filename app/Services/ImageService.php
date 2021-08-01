@@ -49,13 +49,9 @@ class ImageService
 
         try {
             $pool->promise()->wait();
-        } catch (Exception) {
-            $this->hasError = true;
-        }
-
-        if ($this->hasError) {
+        } catch (Exception $e) {
             $this->rollback();
-            throw new Exception;
+            throw new Exception($e->getMessage());
         }
 
         return count($this->images) == 1
