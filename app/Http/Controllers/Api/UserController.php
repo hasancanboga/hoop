@@ -33,8 +33,17 @@ class UserController extends Controller
         $validated = $request->validated();
 
         if (request('profile_image')) {
-            $imageService = new ImageService($request->file('profile_image'));
-            $validated['profile_image'] = $imageService->store('profile_images');
+
+            $imageService = new ImageService(
+                [$request->file('profile_image')],
+                'profile_images'
+            );
+
+            try {
+                $validated['profile_image'] = $imageService->store();
+            } catch (\Exception) {
+                return response(message(__('misc.unknown_error')));
+            }
         }
 
         $request->user()->update($validated);

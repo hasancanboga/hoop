@@ -2,11 +2,6 @@
 
 use Illuminate\Contracts\Auth\Authenticatable;
 
-/**
- * Generates a one-time password
- *
- * @return int
- */
 function otp(): int
 {
     return app()->environment(['local', 'staging']) ? 1234 : rand(1000, 9999);
@@ -31,4 +26,20 @@ function message(string $message, array $extras = []): array
         $final[$key] = $value;
     }
     return $final;
+}
+
+function getExecutionTime($loopCount, $function): float
+{
+    $start = getCurrentMillis();
+    for ($i = 0; $i < $loopCount; $i++) {
+        $function();
+    }
+    $end = getCurrentMillis();
+    dump($end - $start);
+    return $end - $start;
+}
+
+function getCurrentMillis(): float
+{
+    return round(microtime(true) * 1000);
 }
