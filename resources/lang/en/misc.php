@@ -12,4 +12,5 @@ return [
     "remember_me" => "Remember Me",
     "confirm" => "Confirm",
     "dashboard" => "Dashboard",
+    "rekognition_failure" => "The image you uploaded may contain ':reason'. Please use another image.",
 ];

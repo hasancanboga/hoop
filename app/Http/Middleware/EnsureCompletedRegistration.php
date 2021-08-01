@@ -19,7 +19,7 @@ class EnsureCompletedRegistration
     {
         if (auth()->check() && !$request->user()->hasCompletedRegistration()) {
             if ($guards[0] == 'api') {
-                return response(['message' => 'complete_registration'], 400);
+                return response(message('complete_registration'), 401);
             }
             return redirect(route('register.complete'));
         }

@@ -19,7 +19,7 @@ class EnsureParentRegistered
     {
         if (auth()->check() && $request->user()->age < 13 && !$request->user()->hasRegisteredParent()) {
             if ($guards[0] == 'api') {
-                return response(['message' => 'parent_registration'], 400);
+                return response(message('parent_registration'), 401);
             }
             return redirect(route('register.parent'));
         }

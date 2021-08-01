@@ -12,4 +12,6 @@ return [
     "remember_me" => "Beni Hatırla",
     "confirm" => "Onayla",
     "dashboard" => "Anasayfa",
+    "rekognition_failure" => "Yüklediğiniz resim ':reason' içeriyor olabilir. Lütfen başka bir resim kullanınız.",
+
 ];

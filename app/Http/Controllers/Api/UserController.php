@@ -35,14 +35,14 @@ class UserController extends Controller
         if (request('profile_image')) {
 
             $imageService = new ImageService(
-                [$request->file('profile_image')],
+                $request->file('profile_image'),
                 'profile_images'
             );
 
             try {
                 $validated['profile_image'] = $imageService->store();
-            } catch (\Exception) {
-                return response(message(__('misc.unknown_error')));
+            } catch (\Exception $e) {
+                return response(message($e->getMessage()), 400);
             }
         }
 

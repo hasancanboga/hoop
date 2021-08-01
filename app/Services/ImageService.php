@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use Aws\CommandInterface;
 use Aws\CommandPool;
 use Aws\Exception\AwsException;
 use Aws\ResultInterface;
@@ -15,6 +14,7 @@ use Intervention\Image\ImageManagerStatic;
 
 class ImageService
 {
+    protected S3Client $client;
     protected array $images;
     protected bool $hasError = false;
     protected int $defaultSize = 1080;
@@ -22,13 +22,17 @@ class ImageService
 
     public function __construct(protected array|UploadedFile $files, protected string $path)
     {
+        $this->client = new S3Client(config('aws'));
+
         if (!is_array($files)) {
-            $files = [$files];
+            $this->files = [$files];
         }
 
-        foreach ($files as $file) {
-            $this->images[$this->generateName()] = ImageManagerStatic::make($file->getPathname())
-                ->orientate();
+        foreach ($this->files as $file) {
+            $this->images[$this->generateName()] = $this->compress(
+                ImageManagerStatic::make($file->getPathname())
+                    ->orientate()
+            );
         }
     }
 
@@ -38,17 +42,9 @@ class ImageService
      */
     public function store(): array|string
     {
-        // Laravel S3 Driver mode (single file upload at a time):
-        // Storage::put($name, $this->compress());
-        // return $name;
+        $this->rekognize();
 
-        // Native AWS mode with Guzzle promises (Multiple file uploads):
-
-        $s3 = new S3Client(config('aws'));
-
-        $commands = $this->getCommands($s3);
-
-        $pool = $this->getCommandPool($s3, $commands);
+        $pool = $this->getCommandPool($this->getCommands());
 
         try {
             $pool->promise()->wait();
@@ -98,28 +94,15 @@ class ImageService
 
     public function deleteImage()
     {
-
+        //
     }
 
-    public function rekognize()
-    {
-        // MultipartUploader
-        // $rekognition = new RekognitionClient(config('aws'));
-        // enable support for multiple file uploads before this.
-    }
-
-    /**
-     * @param S3Client $s3
-     * @return array
-     */
-    public function getCommands(S3Client $s3): array
+    public function getCommands(): array
     {
         $commands = [];
 
         foreach ($this->images as $name => $image) {
-            $image = $this->compress($image);
-
-            $commands[] = $s3->getCommand('PutObject', [
+            $commands[] = $this->client->getCommand('PutObject', [
                 'Bucket' => config('filesystems.disks.s3.bucket'),
                 'Key' => $name,
                 'Body' => $image,
@@ -131,16 +114,15 @@ class ImageService
     }
 
     /**
-     * @param S3Client $s3
      * @param array $commands
      * @return CommandPool
      */
-    public function getCommandPool(S3Client $s3, array $commands): CommandPool
+    public function getCommandPool(array $commands): CommandPool
     {
-        return new CommandPool($s3, $commands, [
+        return new CommandPool($this->client, $commands, [
             'concurrency' => 5,
-            'before' => function (CommandInterface $cmd) {
-                // gc_collect_cycles();
+            'before' => function () {
+                gc_collect_cycles();
             },
             'fulfilled' => function (ResultInterface $result) {
                 //
@@ -149,6 +131,23 @@ class ImageService
                 throw new Exception($reason);
             },
         ]);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function rekognize(): void
+    {
+        $rekognition = new RekognitionService($this->images);
+        if ($rekognize = $rekognition->rekognize()) {
+            if ($rekognize == 'Connection Error') {
+                throw new Exception(__('misc.unknown_error'));
+            } else {
+                throw new Exception(__('misc.rekognition_failure', [
+                    'reason' => __($rekognize['ParentName'])
+                ]));
+            }
+        }
     }
 
 }
