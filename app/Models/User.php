@@ -131,10 +131,10 @@ class User extends Authenticatable
         $posts = Post::when($withUsers, function ($query) {
             return $query->with('user');
         })
+            ->with('images')
             ->whereIn('user_id', $followedIds)
             ->orWhere('user_id', $this->id);
 
-        /** @noinspection PhpUndefinedMethodInspection */
         return $posts->withCount('likes')->latest()->paginate(10);
     }
 
@@ -185,4 +185,14 @@ class User extends Authenticatable
         $path = action([UserController::class, 'show'], $this->username);
         return $append ? $path . '/' . $append : $path;
     }
+
+    public function deleteProfileImage()
+    {
+        if ($this->profile_image) {
+            // getRawOriginal() used in order to skip eloquent accessor (turns into URL)
+            Storage::delete($this->getRawOriginal('profile_image'));
+            $this->update(['profile_image' => null]);
+        }
+    }
+
 }

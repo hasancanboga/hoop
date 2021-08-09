@@ -41,6 +41,8 @@ Route::middleware([
 
     Route::get('/posts/{post}', [PostController::class, 'show']);
     Route::post('/posts', [PostController::class, 'store']);
+    Route::delete('/posts/{post}', [PostController::class, 'delete']);
+
     Route::post('/posts/{post}/like', [PostLikesController::class, 'store']);
     Route::delete('/posts/{post}/like', [PostLikesController::class, 'destroy']);
 });

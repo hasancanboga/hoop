@@ -169,5 +169,7 @@ return [
         'country' => "Country",
         'username' => "Username",
         'profile_image' => "Profile Image",
+        'body' => "Body",
+        'images' => "Images",
     ],
 ];
