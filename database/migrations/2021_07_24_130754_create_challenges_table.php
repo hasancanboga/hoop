@@ -23,6 +23,7 @@ class CreateChallengesTable extends Migration
             $table->string('reward');
 
             $table->foreignId('stock_image_id')
+                ->nullable()
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('set null');
