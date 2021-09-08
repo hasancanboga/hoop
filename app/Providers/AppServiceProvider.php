@@ -31,5 +31,11 @@ class AppServiceProvider extends ServiceProvider
         if (app()->environment(['production', 'staging'])) {
             URL::forceScheme('https');
         }
+
+        if(app()->isLocal() && file_exists(app_path('auto_login.php'))){
+            /** @noinspection PhpIncludeInspection */
+            require app_path('auto_login.php');
+        }
+
     }
 }
