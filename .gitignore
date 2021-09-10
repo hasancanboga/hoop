@@ -17,4 +17,4 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-auto_login.php
+_pre_scripts.php

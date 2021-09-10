@@ -6,7 +6,7 @@ use App\Traits\Likable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -32,9 +32,9 @@ class Post extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function images(): HasMany
+    public function images(): MorphMany
     {
-        return $this->hasMany(PostImage::class);
+        return $this->morphMany(Media::class, 'media');
     }
 
     public function deleteImages()

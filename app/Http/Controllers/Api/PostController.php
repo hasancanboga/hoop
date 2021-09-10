@@ -46,13 +46,17 @@ class PostController extends Controller
             );
 
             try {
-                $validated['images'] = (array)$imageService->store();
+                $imageService->store();
             } catch (Exception $e) {
                 return response(message($e->getMessage()), 400);
             }
 
-            foreach ($validated['images'] as $path) {
-                $postImages[] = ['path' => $path];
+            foreach ($imageService->images as $image) {
+                $postImages[] = [
+                    'collection' => $image['collection'],
+                    'file_name' => $image['file_name'],
+                    'mime_type' => $image['mime_type'],
+                ];
             }
         }
 

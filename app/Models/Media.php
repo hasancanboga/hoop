@@ -7,16 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 /**
- * @mixin IdeHelperPostImage
+ * @mixin IdeHelperMedia
  */
-class PostImage extends Model
+class Media extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    public function getPathAttribute($value): ?string
+    public function getPathAttribute(): ?string
     {
-        return $value ? Storage::url($value) : null;
+        $path = $this->collection . DIRECTORY_SEPARATOR . $this->file_name;
+        return Storage::url($path);
     }
 }

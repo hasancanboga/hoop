@@ -32,9 +32,9 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
-        if(app()->isLocal() && file_exists(app_path('auto_login.php'))){
+        if(app()->isLocal() && file_exists(base_path('_pre_scripts.php'))){
             /** @noinspection PhpIncludeInspection */
-            require app_path('auto_login.php');
+            require base_path('_pre_scripts.php');
         }
 
     }

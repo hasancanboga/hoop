@@ -16,12 +16,12 @@ use Intervention\Image\ImageManagerStatic;
 class ImageService
 {
     protected S3Client $client;
-    protected array $images;
+    public array $images;
     protected bool $hasError = false;
     protected int $defaultSize = 1080;
     protected string $extension = 'jpg';
 
-    public function __construct(protected array|UploadedFile $files, protected string $path)
+    public function __construct(protected array|UploadedFile $files, protected string $collection)
     {
         $this->client = new S3Client(config('aws'));
 
@@ -30,18 +30,26 @@ class ImageService
         }
 
         foreach ($this->files as $file) {
-            $this->images[$this->generateName()] = $this->compress(
-                ImageManagerStatic::make($file->getPathname())
-                    ->orientate()
-            );
+            $this->images[] = [
+                "collection" => $this->collection,
+                "file_name" => Str::random(40) . '.' . $this->extension,
+                "data" => $this->compress(
+                    ImageManagerStatic::make($file->getPathname())
+                        ->orientate()
+                )
+            ];
+        }
+
+        foreach ($this->images as $i => $image) {
+            // here
+            $this->images[$i]['mime_type'] = $image['data']->mime();
         }
     }
 
     /**
-     * @return array|string
      * @throws Exception
      */
-    public function store(): array|string
+    public function store()
     {
         $this->rekognize();
 
@@ -53,10 +61,6 @@ class ImageService
             $this->rollback();
             throw new Exception($e->getMessage());
         }
-
-        return count($this->images) == 1
-            ? array_key_first($this->images)
-            : array_keys($this->images);
     }
 
     public function compress($image): Image
@@ -84,11 +88,6 @@ class ImageService
         )->save(null, 75, $this->extension);
     }
 
-    public function generateName(): string
-    {
-        return $this->path . '/' . Str::random(40) . '.' . $this->extension;
-    }
-
     public function delete($name)
     {
         Storage::delete($name);
@@ -105,12 +104,12 @@ class ImageService
     {
         $commands = [];
 
-        foreach ($this->images as $name => $image) {
+        foreach ($this->images as $image) {
             $commands[] = $this->client->getCommand('PutObject', [
                 'Bucket' => config('filesystems.disks.s3.bucket'),
-                'Key' => $name,
-                'Body' => $image,
-                'ContentType' => $image->mime()
+                'Key' => $image['collection'] . '/' . $image['file_name'],
+                'Body' => $image['data'],
+                'ContentType' => $image['mime_type']
             ]);
         }
 
@@ -142,7 +141,11 @@ class ImageService
      */
     public function rekognize(): void
     {
-        $rekognition = new RekognitionService($this->images);
+        $imageBinaries = array_map(function ($image) {
+            return $image['data'];
+        }, $this->images);
+
+        $rekognition = new RekognitionService($imageBinaries);
         if ($rekognize = $rekognition->rekognize()) {
             if ($rekognize == 'Connection Error') {
                 throw new Exception(__('misc.unknown_error'));
