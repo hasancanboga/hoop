@@ -37,6 +37,11 @@ class Post extends Model
         return $this->morphMany(Media::class, 'model');
     }
 
+    // public function videos(): MorphMany
+    // {
+    //     return $this->morphMany(Media::class, 'model');
+    // }
+
     public function deleteImages()
     {
         if ($this->images) {

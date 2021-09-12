@@ -67,6 +67,7 @@ class PostController extends Controller
         ]);
 
         $post->images()->createMany($postImages);
+        // $post->videos()->createMany($postVideos);
 
         return response(null, 200);
     }
