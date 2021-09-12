@@ -69,7 +69,7 @@ class PostController extends Controller
         $post->images()->createMany($postImages);
         // $post->videos()->createMany($postVideos);
 
-        return response(null, 200);
+        return response($post->load(['user', 'images']), 200);
     }
 
     public function delete(Post $post)

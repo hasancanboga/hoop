@@ -16,12 +16,16 @@ class Media extends Model
     protected $guarded = [];
 
     protected $appends = [
-        'path'
+        'url'
     ];
 
     public function getPathAttribute(): ?string
     {
-        $path = $this->collection . '/' . $this->file_name;
-        return Storage::url($path);
+        return $this->collection . '/' . $this->file_name;
+    }
+
+    public function getUrlAttribute(): ?string
+    {
+        return Storage::url($this->path);
     }
 }

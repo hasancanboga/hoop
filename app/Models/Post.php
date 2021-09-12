@@ -47,7 +47,7 @@ class Post extends Model
         if ($this->images) {
             // getRawOriginal() used in order to skip eloquent accessor (turns into URL)
             foreach($this->images as $image){
-                Storage::delete($image->getRawOriginal('path'));
+                Storage::delete($image->path);
             }
         }
     }
