@@ -34,7 +34,7 @@ class Post extends Model
 
     public function images(): MorphMany
     {
-        return $this->morphMany(Media::class, 'media');
+        return $this->morphMany(Media::class, 'model');
     }
 
     public function deleteImages()

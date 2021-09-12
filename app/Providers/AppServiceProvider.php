@@ -33,7 +33,6 @@ class AppServiceProvider extends ServiceProvider
         }
 
         if(app()->isLocal() && file_exists(base_path('_pre_scripts.php'))){
-            /** @noinspection PhpIncludeInspection */
             require base_path('_pre_scripts.php');
         }
 

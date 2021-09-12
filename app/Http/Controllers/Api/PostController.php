@@ -55,6 +55,7 @@ class PostController extends Controller
                 $postImages[] = [
                     'collection' => $image['collection'],
                     'file_name' => $image['file_name'],
+                    'type' => 'image',
                     'mime_type' => $image['mime_type'],
                 ];
             }

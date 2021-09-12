@@ -41,7 +41,6 @@ class ImageService
         }
 
         foreach ($this->images as $i => $image) {
-            // here
             $this->images[$i]['mime_type'] = $image['data']->mime();
         }
     }

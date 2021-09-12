@@ -18,6 +18,7 @@ class CreateMediaTable extends Migration
             $table->morphs('model');
             $table->string('collection');
             $table->string('file_name');
+            $table->string('type');
             $table->string('mime_type');
             $table->timestamps();
         });
