@@ -1,4 +1,5 @@
 {
+    "name": "hoop",
     "private": true,
     "engines": {
         "node": "14.16.x"
