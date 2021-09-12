@@ -87,15 +87,10 @@ class ImageService
         )->save(null, 75, $this->extension);
     }
 
-    public function delete($name)
-    {
-        Storage::delete($name);
-    }
-
     public function rollback()
     {
-        foreach ($this->images as $name => $image) {
-            $this->delete($name);
+        foreach ($this->images as $image) {
+            Storage::delete($image['collection'] . '/' . $image['file_name']);
         }
     }
 

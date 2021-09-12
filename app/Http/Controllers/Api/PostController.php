@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use App\Models\User;
 use App\Rules\ValidImageAspectRatio;
 use App\Services\ImageService;
+use App\Services\VideoService;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -21,7 +23,7 @@ class PostController extends Controller
 {
     public function show(int $id): Model|Collection|Builder|array|null
     {
-        return Post::with('user')->find($id);
+        return Post::with('user', 'images', 'videos')->find($id);
     }
 
     public function index(User $user): LengthAwarePaginator
@@ -29,15 +31,12 @@ class PostController extends Controller
         return $user->posts()->latest()->paginate(10);
     }
 
-    public function store(Request $request): Response|Application|ResponseFactory
+    public function store(StorePostRequest $request): Response|Application|ResponseFactory
     {
-        $validated = $request->validate([
-            'body' => ['required', 'max:255'],
-            'images' => ['array', 'max:1'],
-            'images.*' => ['image', 'max:5000', new ValidImageAspectRatio],
-        ]);
+        $validated = $request->validated();
 
         $postImages = [];
+        $postVideos = [];
 
         if (request('images')) {
             $imageService = new ImageService(
@@ -61,15 +60,38 @@ class PostController extends Controller
             }
         }
 
+        if (request('videos')) {
+            $videoService = new VideoService(
+                $request->file('videos'),
+                'post_videos'
+            );
+
+            try {
+                $videoService->store();
+            } catch (Exception $e) {
+                return response(message($e->getMessage()), 400);
+            }
+
+            foreach ($videoService->videos as $video) {
+                $postImages[] = [
+                    'collection' => $video['collection'],
+                    'file_name' => $video['file_name'],
+                    'type' => 'video',
+                    'mime_type' => $video['mime_type'],
+                ];
+            }
+        }
+
+
         $post = Post::create([
             'user_id' => auth()->id(),
             'body' => $validated['body'],
         ]);
 
         $post->images()->createMany($postImages);
-        // $post->videos()->createMany($postVideos);
+        $post->videos()->createMany($postVideos);
 
-        return response($post->load(['user', 'images']), 200);
+        return response($post->load(['user', 'images', 'videos']), 200);
     }
 
     public function delete(Post $post)

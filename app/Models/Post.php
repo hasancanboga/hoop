@@ -24,6 +24,9 @@ class Post extends Model
             if ($post->images->isNotEmpty()) {
                 $post->deleteImages();
             }
+            if ($post->videos->isNotEmpty()) {
+                $post->deleteVideos();
+            }
         });
     }
 
@@ -34,20 +37,30 @@ class Post extends Model
 
     public function images(): MorphMany
     {
-        return $this->morphMany(Media::class, 'model');
+        return $this->morphMany(Media::class, 'model')->where('type', 'image');
     }
 
-    // public function videos(): MorphMany
-    // {
-    //     return $this->morphMany(Media::class, 'model');
-    // }
+    public function videos(): MorphMany
+    {
+        return $this->morphMany(Media::class, 'model')->where('type', 'video');
+    }
 
     public function deleteImages()
     {
         if ($this->images) {
-            // getRawOriginal() used in order to skip eloquent accessor (turns into URL)
             foreach($this->images as $image){
                 Storage::delete($image->path);
+                $image->delete();
+            }
+        }
+    }
+
+    public function deleteVideos()
+    {
+        if ($this->videos) {
+            foreach($this->videos as $video){
+                Storage::delete($video->path);
+                $video->delete();
             }
         }
     }
