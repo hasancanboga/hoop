@@ -40,6 +40,11 @@ class Post extends Model
         return $this->morphMany(Media::class, 'model')->where('type', 'image');
     }
 
+    public function scopePublished($query)
+    {
+        return $query->where('published', true);
+    }
+
     public function videos(): MorphMany
     {
         return $this->morphMany(Media::class, 'model')->where('type', 'video');

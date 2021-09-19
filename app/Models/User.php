@@ -131,9 +131,13 @@ class User extends Authenticatable
         $posts = Post::when($withUsers, function ($query) {
             return $query->with('user');
         })
-            ->with('images')
-            ->whereIn('user_id', $followedIds)
-            ->orWhere('user_id', $this->id);
+            ->with(['images', 'videos'])
+            ->where('published', '=', 1)
+            ->where(function ($query) use ($followedIds) {
+                $query->whereIn('user_id', $followedIds)
+                    ->orWhere('user_id', $this->id);
+            });
+
 
         return $posts->withCount('likes')->latest()->paginate(10);
     }

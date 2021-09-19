@@ -17,9 +17,11 @@ class CreateMediaTable extends Migration
             $table->id();
             $table->morphs('model');
             $table->string('collection');
-            $table->string('file_name');
+            $table->string('file_name')->nullable();
             $table->string('type');
-            $table->string('mime_type');
+            $table->string('mime_type')->nullable();
+            $table->string('temp_file_name');
+            $table->boolean('processed')->default(false);
             $table->timestamps();
         });
     }
