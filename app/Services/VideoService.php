@@ -2,39 +2,16 @@
 
 namespace App\Services;
 
-use Aws\CommandPool;
-use Aws\Exception\AwsException;
-use Aws\ResultInterface;
-use Aws\S3\S3Client;
+use App\Models\Media;
 use Exception;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class VideoService
 {
-    protected S3Client $client;
-    public array $videos;
-    protected bool $hasError = false;
-    protected int $defaultSize = 1080;
-    protected string $extension = 'jpg';
 
-    public function __construct(protected array|UploadedFile $files, protected string $collection)
+    public function __construct(protected Media $video)
     {
-        $this->client = new S3Client(config('aws'));
-
-        if (!is_array($files)) {
-            $this->files = [$files];
-        }
-
-        foreach ($this->files as $file) {
-            $this->videos[] = [
-                "collection" => $this->collection,
-                "file_name" => Str::random(40) . '.' . $file->getClientOriginalExtension(),
-                "data" => $file->getContent(),
-                "mime_type" => $file->getMimeType(),
-            ];
-        }
+        //
     }
 
     /**
@@ -43,59 +20,31 @@ class VideoService
     public function store()
     {
         // $this->rekognize();
+        // left here:
+        // look at StartContentModeration and GetContentModeration
+        // instead of DetectModerationLabels
+        // and fix the timeout problem.
 
-        $pool = $this->getCommandPool($this->getCommands());
+        $fileName = $this->video->collection . '/' . $this->video->id . '.' . $this->video->getTempFileExtension();
 
-        try {
-            $pool->promise()->wait();
-        } catch (Exception $e) {
-            $this->rollback();
-            throw new Exception($e->getMessage());
-        }
+        Storage::put(
+            $fileName,
+            Storage::disk('local')->get($this->video->temp_file_name)
+        );
+
+        $this->video->file_name = $fileName;
+        $this->video->mime_type = Storage::disk('local')
+            ->mimeType($this->video->temp_file_name);
+        $this->video->save();
+
+        Storage::disk('local')->delete($this->video->temp_file_name);
     }
+
 
     public function rollback()
     {
-        foreach ($this->videos as $video) {
-            Storage::delete($video['collection'] . '/' . $video['file_name']);
-        }
-    }
-
-    public function getCommands(): array
-    {
-        $commands = [];
-
-        foreach ($this->videos as $video) {
-
-            $commands[] = $this->client->getCommand('PutObject', [
-                'Bucket' => config('filesystems.disks.s3.bucket'),
-                'Key' => $video['collection'] . '/' . $video['file_name'],
-                'Body' => $video['data'],
-                'ContentType' => $video['mime_type']
-            ]);
-        }
-
-        return $commands;
-    }
-
-    /**
-     * @param array $commands
-     * @return CommandPool
-     */
-    public function getCommandPool(array $commands): CommandPool
-    {
-        return new CommandPool($this->client, $commands, [
-            'concurrency' => 5,
-            'before' => function () {
-                gc_collect_cycles();
-            },
-            'fulfilled' => function (ResultInterface $result) {
-                //
-            },
-            'rejected' => function (AwsException $reason) {
-                throw new Exception($reason);
-            },
-        ]);
+        Storage::delete($this->video->file_name);
+        Storage::disk('local')->delete($this->video->temp_file_name);
     }
 
     /**
@@ -103,20 +52,17 @@ class VideoService
      */
     public function rekognize(): void
     {
-        // $imageBinaries = array_map(function ($image) {
-        //     return $image['data'];
-        // }, $this->images);
-        //
-        // $rekognition = new RekognitionService($imageBinaries);
-        // if ($rekognize = $rekognition->rekognize()) {
-        //     if ($rekognize == 'Connection Error') {
-        //         throw new Exception(__('misc.unknown_error'));
-        //     } else {
-        //         throw new Exception(__('misc.rekognition_failure', [
-        //             'reason' => __($rekognize['ParentName'])
-        //         ]));
-        //     }
-        // }
+        $rekognition = new RekognitionService($this->video);
+        if ($rekognize = $rekognition->rekognize()) {
+            $this->rollback();
+            if ($rekognize == 'Connection Error') {
+                throw new Exception(__('misc.unknown_error'));
+            } else {
+                throw new Exception(__('misc.rekognition_failure', [
+                    'reason' => __($rekognize['ParentName'])
+                ]));
+            }
+        }
     }
 
 }

@@ -45,4 +45,10 @@ class Media extends Model
         return File::get($this->getTempFilePath());
     }
 
+    public function getTempFileExtension(): string
+    {
+        $exploded = explode('.', $this->temp_file_name);
+        return $exploded[count($exploded) - 1];
+    }
+
 }

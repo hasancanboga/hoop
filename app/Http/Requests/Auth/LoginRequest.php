@@ -6,7 +6,10 @@ use App\Exceptions\SmsException;
 use App\Models\User;
 use App\Services\SmsService;
 use Illuminate\Auth\Events\Lockout;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -43,7 +46,7 @@ class LoginRequest extends FormRequest
      * @throws ValidationException
      * @noinspection PhpUndefinedFieldInspection
      */
-    public function loginOrRegister()
+    public function loginOrRegister(): Response|Application|ResponseFactory
     {
         $this->ensureIsNotRateLimited();
 
@@ -70,6 +73,8 @@ class LoginRequest extends FormRequest
         }
 
         RateLimiter::clear($this->throttleKey());
+
+        return response(['phone' => $user->phone]);
     }
 
 
