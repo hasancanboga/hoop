@@ -4,13 +4,14 @@ namespace App\Jobs;
 
 use App\Models\Post;
 use App\Services\ImageService;
-use App\Services\VideoService;
 use Exception;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class StorePost implements ShouldQueue
 {
@@ -33,8 +34,14 @@ class StorePost implements ShouldQueue
      */
     public function handle()
     {
-        if (!$this->post->images->isEmpty()) {
-            // left here: copy from store2 inside PostController
+        foreach ($this->post->images as $image) {
+            $imageService = new ImageService($image);
+            try {
+                $imageService->store();
+            } catch (Exception $e) {
+                Log::channel('info')->info($e->getMessage(), ['image' => $image]);
+                // todo: send notification to user here.
+            }
         }
     }
 }

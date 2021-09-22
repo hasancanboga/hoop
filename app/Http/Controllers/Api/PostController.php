@@ -43,11 +43,11 @@ class PostController extends Controller
         }
 
         if (request('videos')) {
-            foreach (request('videos') as $image) {
+            foreach (request('videos') as $video) {
                 $postImages[] = [
                     'collection' => 'post_videos',
                     'type' => 'video',
-                    'temp_file_name' => $image->store('temp/post-videos', 'local')
+                    'temp_file_name' => $video->store('temp/post-videos', 'local')
                 ];
             }
         }

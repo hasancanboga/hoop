@@ -2,47 +2,21 @@
 
 namespace App\Services;
 
-use Aws\CommandPool;
-use Aws\Exception\AwsException;
-use Aws\ResultInterface;
-use Aws\S3\S3Client;
+use App\Models\Media;
 use Exception;
-use Illuminate\Http\UploadedFile;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Intervention\Image\Image;
 use Intervention\Image\ImageManagerStatic;
 
 class ImageService
 {
-    protected S3Client $client;
-    public array $images;
-    protected bool $hasError = false;
     protected int $defaultSize = 1080;
     protected string $extension = 'jpg';
 
-    public function __construct(protected array|UploadedFile $files, protected string $collection)
+    public function __construct(protected Media $image)
     {
-        $this->client = new S3Client(config('aws'));
-
-        if (!is_array($files)) {
-            $this->files = [$files];
-        }
-
-        foreach ($this->files as $file) {
-            $this->images[] = [
-                "collection" => $this->collection,
-                "file_name" => Str::random(40) . '.' . $this->extension,
-                "data" => $this->compress(
-                    ImageManagerStatic::make($file->getPathname())
-                        ->orientate()
-                )
-            ];
-        }
-
-        foreach ($this->images as $i => $image) {
-            $this->images[$i]['mime_type'] = $image['data']->mime();
-        }
+        //
     }
 
     /**
@@ -50,16 +24,25 @@ class ImageService
      */
     public function store()
     {
+        try {
+            $compressed = $this->compress(ImageManagerStatic::make($this->image->getTempFile()))
+                ->orientate();
+        } catch (FileNotFoundException) {
+            $this->rollback();
+            return;
+        }
+
         $this->rekognize();
 
-        $pool = $this->getCommandPool($this->getCommands());
+        $fileName = $this->image->collection . '/' . $this->image->id . '.' . $this->extension;
 
-        try {
-            $pool->promise()->wait();
-        } catch (Exception $e) {
-            $this->rollback();
-            throw new Exception($e->getMessage());
-        }
+        Storage::put($fileName, $compressed);
+
+        $this->image->file_name = $fileName;
+        $this->image->mime_type = $compressed->mime();
+        $this->image->save();
+
+        Storage::disk('local')->delete($this->image->temp_file_name);
     }
 
     public function compress($image): Image
@@ -84,50 +67,13 @@ class ImageService
             function ($constraint) {
                 $constraint->aspectRatio();
             }
-        )->save(null, 75, $this->extension);
+        )->save($this->image->getTempFilePath(), 75, $this->extension);
     }
 
     public function rollback()
     {
-        foreach ($this->images as $image) {
-            Storage::delete($image['collection'] . '/' . $image['file_name']);
-        }
-    }
-
-    public function getCommands(): array
-    {
-        $commands = [];
-
-        foreach ($this->images as $image) {
-            $commands[] = $this->client->getCommand('PutObject', [
-                'Bucket' => config('filesystems.disks.s3.bucket'),
-                'Key' => $image['collection'] . '/' . $image['file_name'],
-                'Body' => $image['data'],
-                'ContentType' => $image['mime_type']
-            ]);
-        }
-
-        return $commands;
-    }
-
-    /**
-     * @param array $commands
-     * @return CommandPool
-     */
-    public function getCommandPool(array $commands): CommandPool
-    {
-        return new CommandPool($this->client, $commands, [
-            'concurrency' => 5,
-            'before' => function () {
-                gc_collect_cycles();
-            },
-            'fulfilled' => function (ResultInterface $result) {
-                //
-            },
-            'rejected' => function (AwsException $reason) {
-                throw new Exception($reason);
-            },
-        ]);
+        Storage::delete($this->image->file_name);
+        Storage::disk('local')->delete($this->image->temp_file_name);
     }
 
     /**
@@ -135,12 +81,9 @@ class ImageService
      */
     public function rekognize(): void
     {
-        $imageBinaries = array_map(function ($image) {
-            return $image['data'];
-        }, $this->images);
-
-        $rekognition = new RekognitionService($imageBinaries);
+        $rekognition = new RekognitionService($this->image);
         if ($rekognize = $rekognition->rekognize()) {
+            $this->rollback();
             if ($rekognize == 'Connection Error') {
                 throw new Exception(__('misc.unknown_error'));
             } else {
