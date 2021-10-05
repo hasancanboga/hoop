@@ -44,6 +44,9 @@ class StorePost implements ShouldQueue
                 Log::channel('info')->info($e->getMessage(), ['image' => $image]);
                 // todo: send notification to user here.
             }
+            $image->processed = true;
+            $image->approved = true;
+            $image->save();
         }
 
         foreach ($this->post->videos as $video) {
@@ -54,8 +57,10 @@ class StorePost implements ShouldQueue
                 Log::channel('info')->info($e->getMessage(), ['video' => $video]);
                 // todo: send notification to user here.
             }
+            $image->processed = true;
+            $image->approved = false; // will be approved manually by an admin
+            $image->save();
         }
-
-        // approve post
+        
     }
 }

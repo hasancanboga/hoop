@@ -22,6 +22,7 @@ class CreateMediaTable extends Migration
             $table->string('mime_type')->nullable();
             $table->string('temp_file_name');
             $table->boolean('processed')->default(false);
+            $table->boolean('approved')->default(false);
             $table->timestamps();
         });
     }

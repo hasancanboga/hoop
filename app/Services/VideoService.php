@@ -21,9 +21,6 @@ class VideoService
     {
         // $this->rekognize();
 
-        // left here: fix the timeout problem.
-        // and add approving
-
         $fileName = $this->video->collection . '/' . $this->video->id . '.' . $this->video->getTempFileExtension();
 
         Storage::put(
