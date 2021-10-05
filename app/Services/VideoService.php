@@ -20,10 +20,9 @@ class VideoService
     public function store()
     {
         // $this->rekognize();
-        // left here:
-        // look at StartContentModeration and GetContentModeration
-        // instead of DetectModerationLabels
-        // and fix the timeout problem.
+
+        // left here: fix the timeout problem.
+        // and add approving
 
         $fileName = $this->video->collection . '/' . $this->video->id . '.' . $this->video->getTempFileExtension();
 
@@ -52,6 +51,8 @@ class VideoService
      */
     public function rekognize(): void
     {
+        // look at StartContentModeration and GetContentModeration
+        // instead of DetectModerationLabels
         $rekognition = new RekognitionService($this->video);
         if ($rekognize = $rekognition->rekognize()) {
             $this->rollback();
