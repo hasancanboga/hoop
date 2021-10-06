@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -51,4 +52,8 @@ class Media extends Model
         return $exploded[count($exploded) - 1];
     }
 
+    public function mediable(): MorphTo
+    {
+        return $this->morphTo('model');
+    }
 }

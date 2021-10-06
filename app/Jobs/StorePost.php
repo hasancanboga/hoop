@@ -36,17 +36,23 @@ class StorePost implements ShouldQueue
      */
     public function handle()
     {
+        $published = true;
+
         foreach ($this->post->images as $image) {
             $imageService = new ImageService($image);
             try {
                 $imageService->store();
             } catch (Exception $e) {
-                Log::channel('info')->info($e->getMessage(), ['image' => $image]);
+                Log::channel('info')->info($e->getMessage(), ['media_id' => $image->id]);
                 // todo: send notification to user here.
+                return;
             }
+
             $image->processed = true;
             $image->approved = true;
             $image->save();
+
+            $published = true;
         }
 
         foreach ($this->post->videos as $video) {
@@ -54,13 +60,18 @@ class StorePost implements ShouldQueue
             try {
                 $videoService->store();
             } catch (Exception $e) {
-                Log::channel('info')->info($e->getMessage(), ['video' => $video]);
+                Log::channel('info')->info($e->getMessage(), ['media_id' => $video->id]);
                 // todo: send notification to user here.
+                return;
             }
-            $image->processed = true;
-            $image->approved = false; // will be approved manually by an admin
-            $image->save();
+            $video->processed = true;
+            $video->approved = false; // will be approved manually by an admin
+            $video->save();
+
+            $published = false;
         }
-        
+
+        $this->post->published = $published;
+        $this->post->save();
     }
 }

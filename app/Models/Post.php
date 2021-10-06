@@ -40,20 +40,20 @@ class Post extends Model
         return $this->morphMany(Media::class, 'model')->where('type', 'image');
     }
 
-    public function scopePublished($query)
-    {
-        return $query->where('published', true);
-    }
-
     public function videos(): MorphMany
     {
         return $this->morphMany(Media::class, 'model')->where('type', 'video');
     }
 
+    public function scopePublished($query)
+    {
+        return $query->where('published', true);
+    }
+
     public function deleteImages()
     {
         if ($this->images) {
-            foreach($this->images as $image){
+            foreach ($this->images as $image) {
                 Storage::delete($image->path);
                 $image->delete();
             }
@@ -63,7 +63,7 @@ class Post extends Model
     public function deleteVideos()
     {
         if ($this->videos) {
-            foreach($this->videos as $video){
+            foreach ($this->videos as $video) {
                 Storage::delete($video->path);
                 $video->delete();
             }
