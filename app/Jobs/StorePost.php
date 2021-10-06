@@ -48,10 +48,6 @@ class StorePost implements ShouldQueue
                 return;
             }
 
-            $image->processed = true;
-            $image->approved = true;
-            $image->save();
-
             $published = true;
         }
 
@@ -64,9 +60,6 @@ class StorePost implements ShouldQueue
                 // todo: send notification to user here.
                 return;
             }
-            $video->processed = true;
-            $video->approved = false; // will be approved manually by an admin
-            $video->save();
 
             $published = false;
         }

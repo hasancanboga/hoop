@@ -132,7 +132,7 @@ class User extends Authenticatable
             return $query->with('user');
         })
             ->with(['images', 'videos'])
-            ->where('published', '=', 1)
+            ->where('published', 1)
             ->where(function ($query) use ($followedIds) {
                 $query->whereIn('user_id', $followedIds)
                     ->orWhere('user_id', $this->id);

@@ -34,6 +34,8 @@ class ImageService
 
         $this->rekognize();
 
+        $this->image->processAndApprove();
+
         $fileName = $this->image->collection . '/' . $this->image->id . '.' . $this->extension;
 
         Storage::put($fileName, $compressed);
@@ -82,11 +84,15 @@ class ImageService
     public function rekognize(): void
     {
         $rekognition = new RekognitionService($this->image);
+
         if ($rekognize = $rekognition->rekognize()) {
             $this->rollback();
             if ($rekognize == 'Connection Error') {
                 throw new Exception(__('misc.unknown_error'));
             } else {
+
+                $this->image->process();
+
                 throw new Exception(__('misc.rekognition_failure', [
                     'reason' => __($rekognize['ParentName'])
                 ]));

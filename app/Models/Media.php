@@ -56,4 +56,23 @@ class Media extends Model
     {
         return $this->morphTo('model');
     }
+
+    function process()
+    {
+        $this->processed = true;
+        $this->save();
+    }
+
+    function approve()
+    {
+        $this->approved = true;
+        $this->save();
+    }
+
+    function processAndApprove()
+    {
+        $this->processed = true;
+        $this->approved = true;
+        $this->save();
+    }
 }
