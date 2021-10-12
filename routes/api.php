@@ -46,3 +46,7 @@ Route::middleware([
     Route::post('/posts/{post}/like', [PostLikesController::class, 'store']);
     Route::delete('/posts/{post}/like', [PostLikesController::class, 'destroy']);
 });
+
+if (app()->environment('local')) {
+    require __DIR__ . '/test.php';
+}
