@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration
             $table->string('profile_image')->nullable();
             $table->string('otp')->nullable();
             $table->dateTime('otp_expiry')->nullable();
+            $table->boolean('verified')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

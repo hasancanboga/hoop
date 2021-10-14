@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Spatie\Permission\Models\Role;
 
-class CreateRoles extends Migration
+class AddRoles extends Migration
 {
     private array $roles = [
         // user roles:
@@ -13,6 +13,7 @@ class CreateRoles extends Migration
         "admin",
         "intermediate_admin",
         "basketball_player",
+        "personal_trainer",
         "coach",
         "manager",
         "conditioner",
@@ -25,15 +26,14 @@ class CreateRoles extends Migration
         "basketball_fan",
 
         // organization roles:
-        "brand",
-        "foundation",
-        "team",
-        "educational_institution",
-        "sports_school",
-        "public_institution",
-        "media_organization",
-        "school",
-        "sports_field",
+        "org_brand",
+        "org_foundation",
+        "org_educational_institution",
+        "org_club",
+        "org_basketball_school",
+        "org_public_institution",
+        "org_media_organization",
+        "org_sports_field",
     ];
 
     /**
