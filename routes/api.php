@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ExploreController;
+use App\Http\Controllers\Api\LocalityController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\PostLikesController;
 use App\Http\Controllers\Api\TimelineController;
@@ -21,6 +22,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/complete-registration', [CompleteRegistrationController::class, 'store']);
     Route::post('/register-parent', [RegisterParentController::class, 'store'])
         ->middleware('register.completed:api');
+
+    Route::get('/cities', [LocalityController::class, 'cities']);
 });
 
 Route::middleware([
