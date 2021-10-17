@@ -51,7 +51,6 @@ class UpdateUserRequest extends FormRequest
                 Rule::unique('users')->ignore($this->user()),
             ],
             'locality' => ['nullable', new GeonamesCodeExists],
-            'profile_image' => ['image', 'max:5000', new ValidImageAspectRatio],
 
             // if it was multiple images, rules would be:
             // 'profile_image' => ['array', 'max:5'],

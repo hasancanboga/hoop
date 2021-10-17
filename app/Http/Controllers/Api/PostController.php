@@ -7,16 +7,24 @@ use App\Http\Requests\StorePostRequest;
 use App\Jobs\StorePost;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Response;
 
 class PostController extends Controller
 {
-    public function show(int $id): Model|Collection|Builder|array|null
+    public function show(int $id): Model|Collection|Response|Builder|array|Application|ResponseFactory
     {
-        return Post::with('user', 'images', 'videos')->find($id);
+        $post = Post::with('user', 'images', 'videos')->find($id);
+
+        if (!$post) {
+            return response(message(__('Post Not Found')), 404);
+        }
+        return $post;
     }
 
     /** @noinspection PhpUndefinedMethodInspection */
@@ -61,69 +69,6 @@ class PostController extends Controller
         $post->videos()->createMany($postVideos);
         dispatch(new StorePost($post));
     }
-
-    /*    public function store2(StorePostRequest $request): Response|Application|ResponseFactory
-        {
-            $validated = $request->validated();
-
-            $postImages = [];
-            $postVideos = [];
-
-            if (request('images')) {
-                $imageService = new ImageService(
-                    $request->file('images'),
-                    'post_images'
-                );
-
-                try {
-                    $imageService->store();
-                } catch (Exception $e) {
-                    return response(message($e->getMessage()), 400);
-                }
-
-                foreach ($imageService->images as $image) {
-                    $postImages[] = [
-                        'collection' => $image['collection'],
-                        'file_name' => $image['file_name'],
-                        'type' => 'image',
-                        'mime_type' => $image['mime_type'],
-                    ];
-                }
-            }
-
-            if (request('videos')) {
-                $videoService = new VideoService(
-                    $request->file('videos'),
-                    'post_videos'
-                );
-
-                try {
-                    $videoService->store();
-                } catch (Exception $e) {
-                    return response(message($e->getMessage()), 400);
-                }
-
-                foreach ($videoService->videos as $video) {
-                    $postImages[] = [
-                        'collection' => $video['collection'],
-                        'file_name' => $video['file_name'],
-                        'type' => 'video',
-                        'mime_type' => $video['mime_type'],
-                    ];
-                }
-            }
-
-
-            $post = Post::create([
-                'user_id' => auth()->id(),
-                'body' => $validated['body'],
-            ]);
-
-            $post->images()->createMany($postImages);
-            $post->videos()->createMany($postVideos);
-
-            return response($post->load(['user', 'images', 'videos']), 200);
-        }*/
 
     public function delete(Post $post)
     {

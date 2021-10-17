@@ -36,11 +36,9 @@ class ImageService
 
         $this->image->processAndApprove();
 
-        $fileName = $this->image->collection . '/' . $this->image->id . '.' . $this->extension;
+        Storage::put($this->getPath(), $compressed);
 
-        Storage::put($fileName, $compressed);
-
-        $this->image->file_name = $fileName;
+        $this->image->file_name = $this->getFilename();
         $this->image->mime_type = $compressed->mime();
         $this->image->save();
 
@@ -98,6 +96,16 @@ class ImageService
                 ]));
             }
         }
+    }
+
+    public function getFilename(): string
+    {
+        return $this->image->id . '.' . $this->extension;
+    }
+
+    public function getPath(): string
+    {
+        return $this->image->collection . '/' . $this->getFilename();
     }
 
 }

@@ -33,6 +33,7 @@ Route::middleware([
 ])->group(function () {
 
     Route::post('/user/update', [UserController::class, 'update']);
+    Route::post('/user/profile-image', [UserController::class, 'updateProfileImage']);
     Route::delete('/user/profile-image', [UserController::class, 'deleteProfileImage']);
     Route::get('/users/{user:username}', [UserController::class, 'show']);
     Route::post('/users/{user:username}/follow', [FollowController::class, 'store']);

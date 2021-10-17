@@ -9,6 +9,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
@@ -70,6 +71,10 @@ class User extends Authenticatable
         'full_name',
         'parent_full_name',
         // 'avatar',
+    ];
+
+    protected $with = [
+        'profile_image'
     ];
 
     public function username(): string
@@ -153,11 +158,6 @@ class User extends Authenticatable
         return $this->hasMany(Post::class)->withCount('likes')->latest();
     }
 
-    public function getProfileImageAttribute($value): ?string
-    {
-        return $value ? Storage::url($value) : null;
-    }
-
     public function generateUniqueUsername()
     {
         $username = strtolower(preg_replace(
@@ -193,11 +193,13 @@ class User extends Authenticatable
 
     public function deleteProfileImage()
     {
-        if ($this->profile_image) {
-            // getRawOriginal() used in order to skip eloquent accessor (turns into URL)
-            Storage::delete($this->getRawOriginal('profile_image'));
-            $this->update(['profile_image' => null]);
-        }
+        /** @noinspection PhpUndefinedFieldInspection */
+        Storage::delete($this->profile_image->path);
+        $this->profile_image()->delete();
     }
 
+    public function profile_image(): MorphOne
+    {
+        return $this->morphOne(Media::class, 'model');
+    }
 }
