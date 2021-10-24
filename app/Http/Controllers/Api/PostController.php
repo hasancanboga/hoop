@@ -19,7 +19,9 @@ class PostController extends Controller
 {
     public function show(int $id): Model|Collection|Response|Builder|array|Application|ResponseFactory
     {
-        $post = Post::with('user', 'images', 'videos')->find($id);
+        $post = Post::with('user', 'images', 'videos')
+            ->withCount('likes')
+            ->find($id);
 
         if (!$post) {
             return response(message(__('Post Not Found')), 404);
