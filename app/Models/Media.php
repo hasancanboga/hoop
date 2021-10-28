@@ -22,6 +22,10 @@ class Media extends Model
         'url'
     ];
 
+    protected $hidden = [
+        'temp_file_name'
+    ];
+
     public function getPathAttribute(): ?string
     {
         return $this->collection . '/' . $this->file_name;

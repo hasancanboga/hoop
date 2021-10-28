@@ -144,6 +144,15 @@ class User extends Authenticatable
                     ->orWhere('user_id', $this->id);
             });
 
+        // todo: temporarily giving the first 10 posts for testing
+        if (app()->environment(['local', 'staging'])) {
+            $posts = Post::when($withUsers, function ($query) {
+                return $query->with('user');
+            })
+                ->with(['images', 'videos'])
+                ->where('published', 1)
+                ->where('id', '<', 10);
+        }
 
         return $posts->withCount('likes')->latest()->paginate(10);
     }
@@ -193,7 +202,6 @@ class User extends Authenticatable
 
     public function deleteProfileImage()
     {
-        /** @noinspection PhpUndefinedFieldInspection */
         Storage::delete($this->profile_image->path);
         $this->profile_image()->delete();
     }
