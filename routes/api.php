@@ -44,6 +44,7 @@ Route::middleware([
     Route::get('/timeline', TimelineController::class);
 
     Route::get('/posts/{post}', [PostController::class, 'show']);
+    Route::get('/posts/{post}/comments', [PostController::class, 'comments']);
     Route::post('/posts', [PostController::class, 'store']);
     Route::delete('/posts/{post}', [PostController::class, 'delete']);
 

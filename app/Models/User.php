@@ -138,12 +138,13 @@ class User extends Authenticatable
             return $query->with('user');
         })
             ->with(['images', 'videos'])
-            ->where('published', 1)
+            ->published()
+            ->parent()
             ->where(function ($query) use ($followedIds) {
                 $query->whereIn('user_id', $followedIds)
                     ->orWhere('user_id', $this->id);
             })
-            ->withCount('likes')
+            ->withCount(['likes', 'comments'])
             ->latest()
             ->paginate(10);
 
@@ -153,9 +154,10 @@ class User extends Authenticatable
                 return $query->with('user');
             })
                 ->with(['images', 'videos'])
-                ->where('published', 1)
+                ->published()
+                ->parent()
                 ->where('id', '<', 10)
-                ->withCount('likes')
+                ->withCount(['likes', 'comments'])
                 ->latest()
                 ->paginate(10);
         }

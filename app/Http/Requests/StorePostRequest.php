@@ -27,6 +27,7 @@ class StorePostRequest extends FormRequest
     {
         return[
             'body' => ['required', 'max:255'],
+            'parent_id' => ['integer'],
             'images' => ['array', 'max:1'],
             'images.*' => ['image', 'max:5000', new ValidImageAspectRatio],
             'videos' => ['array', 'max:1'],

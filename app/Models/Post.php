@@ -6,6 +6,7 @@ use App\Traits\Likable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Storage;
 
@@ -30,6 +31,11 @@ class Post extends Model
         });
     }
 
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Post::class, 'parent_id', 'id');
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -48,6 +54,11 @@ class Post extends Model
     public function scopePublished($query)
     {
         return $query->where('published', true);
+    }
+
+    public function scopeParent($query)
+    {
+        return $query->where('parent_id', null);
     }
 
     public function deleteImages()

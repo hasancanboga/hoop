@@ -20,7 +20,7 @@ class PostController extends Controller
     public function show(int $id): Model|Collection|Response|Builder|array|Application|ResponseFactory
     {
         $post = Post::with('user', 'images', 'videos')
-            ->withCount('likes')
+            ->withCount(['likes', 'comments'])
             ->find($id);
 
         if (!$post) {
@@ -29,18 +29,37 @@ class PostController extends Controller
         return $post;
     }
 
+    public function comments(int $id): Response|LengthAwarePaginator|Application|ResponseFactory
+    {
+        if (!$post = Post::find($id)) {
+            return response(message(__('Post Not Found')), 404);
+        }
+
+        return $post->comments()->paginate(1);
+    }
+
     /** @noinspection PhpUndefinedMethodInspection */
     public function index(User $user): LengthAwarePaginator
     {
-        return $user->posts()->published()->with(['images', 'videos'])->latest()->paginate(10);
+        return $user
+            ->posts()
+            ->published()
+            ->with(['images', 'videos'])
+            ->withCount(['likes', 'comments'])
+            ->latest()
+            ->paginate(10);
     }
 
-    public function store(StorePostRequest $request)
+    public function store(StorePostRequest $request): Response|Application|ResponseFactory
     {
         $validated = $request->validated();
 
         $postImages = [];
         $postVideos = [];
+
+        if (request('parent_id') && (request('images') || request('videos'))) {
+            return response(message(__('Media is not allowed in comments.')), 400);
+        }
 
         if (request('images')) {
             foreach (request('images') as $image) {
@@ -64,12 +83,19 @@ class PostController extends Controller
 
         $post = Post::create([
             'user_id' => auth()->id(),
+            'parent_id' => request('parent_id'),
             'body' => $validated['body'],
         ]);
 
         $post->images()->createMany($postImages);
         $post->videos()->createMany($postVideos);
-        dispatch(new StorePost($post));
+
+        if (request('parent_id')) {
+            dispatch_sync(new StorePost($post));
+        } else {
+            dispatch(new StorePost($post));
+        }
+        return response(null);
     }
 
     public function delete(Post $post)
