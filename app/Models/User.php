@@ -142,7 +142,10 @@ class User extends Authenticatable
             ->where(function ($query) use ($followedIds) {
                 $query->whereIn('user_id', $followedIds)
                     ->orWhere('user_id', $this->id);
-            });
+            })
+            ->withCount('likes')
+            ->latest()
+            ->paginate(10);
 
         // todo: temporarily giving the first 10 posts for testing
         if (app()->environment(['local', 'staging'])) {
@@ -151,10 +154,13 @@ class User extends Authenticatable
             })
                 ->with(['images', 'videos'])
                 ->where('published', 1)
-                ->where('id', '<', 10);
+                ->where('id', '<', 10)
+                ->withCount('likes')
+                ->latest()
+                ->paginate(10);
         }
 
-        return $posts->withCount('likes')->latest()->paginate(10);
+        return $posts;
     }
 
     public function likes(): HasMany
