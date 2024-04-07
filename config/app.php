@@ -173,7 +173,6 @@ return [
          * Package Service Providers...
          */
 
-        Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider::class,
         MenaraSolutions\Geographer\Integrations\LaravelServiceProvider::class,
 
         /*
